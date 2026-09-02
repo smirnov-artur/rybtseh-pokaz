@@ -1,0 +1,72 @@
+/* assets/motion/filmstrip.css — «история как киноплёнка» (момент 1,
+   ЗАМЫСЕЛ-ПЛАН.md §3 «Артефакт», ЗАМЫСЕЛ-МАКСИМУМ.md §5). Всё здесь активно
+   только поверх состояния из filmstrip.js (класс .chron--rigged на .chron,
+   .chron__marker/.chron__nav создаются тем же файлом). Без JS/GSAP/Observer
+   .chron остаётся как в artefakt.css — нативный overflow-x:auto, клик. */
+
+.chron--rigged .chron__vp{
+  position:relative;
+  overflow:hidden;
+  touch-action:pan-y;      /* вертикальная прокрутка страницы не блокируется */
+  cursor:grab;
+  padding-top:11px;
+  padding-bottom:11px;
+}
+.chron--rigged .chron__vp.is-dragging{cursor:grabbing}
+.chron--rigged .chron__track{will-change:transform}
+
+/* перфорация плёнки — верх и низ окна ленты, только CSS, без картинок */
+.chron--rigged .chron__vp::before,
+.chron--rigged .chron__vp::after{
+  content:"";
+  position:absolute; left:0; right:0;
+  height:7px;
+  background-image:repeating-linear-gradient(90deg,
+    var(--cork) 0 5px, transparent 5px 7px, transparent 7px 19px, var(--cork) 19px 21px);
+  opacity:.6;
+  pointer-events:none;
+}
+.chron--rigged .chron__vp::before{top:0}
+.chron--rigged .chron__vp::after{bottom:0}
+
+/* риска-указатель по центру окна — под ней всегда «текущий» кадр */
+.chron__marker{
+  position:absolute; top:9px; bottom:9px; left:50%;
+  width:1px; transform:translateX(-50%);
+  background:var(--ember);
+  opacity:.4;
+  pointer-events:none;
+  z-index:2;
+}
+
+/* панель ‹ год › под лентой — создаётся JS-ом, без него не появляется */
+.chron__nav{
+  display:flex; align-items:center; justify-content:center;
+  gap:clamp(14px,2vw,26px);
+  margin-top:clamp(10px,1.6vh,18px);
+}
+.chron__btn{
+  width:34px;height:34px;flex:0 0 auto;border-radius:50%;
+  border:1px solid var(--cork);background:transparent;color:var(--cream);
+  display:grid;place-items:center;font-size:17px;line-height:1;
+  cursor:pointer;
+  transition:border-color var(--t-240) var(--ca-inout3);
+}
+.chron__btn:hover,.chron__btn:focus-visible{border-color:var(--drift)}
+.chron__btn:disabled{opacity:.3;cursor:default}
+.chron__year{
+  font-family:var(--fm,'JetBrains Mono',monospace);
+  font-variant-numeric:tabular-nums;
+  font-size:clamp(19px,2.4vw,28px);
+  letter-spacing:.03em;
+  min-width:5ch;
+  text-align:center;
+}
+
+@media (max-width:520px){
+  .chron__btn{width:44px;height:44px}   /* цель нажатия под палец */
+}
+
+@media (prefers-reduced-motion:reduce){
+  .chron--rigged .chron__vp{cursor:default}
+}

@@ -1,0 +1,53 @@
+/* assets/motion/room.css — «следующий зал»: переход между страницами
+   (волна 5, момент 2). Работает вместе с room.js: .room-veil/.room-stamp
+   создаются только им, а html.room-in — синхронным инлайн-скриптом в
+   <head> каждой страницы (до первой отрисовки, до этого файла и до
+   room.js). Без JS ни один из трёх классов никогда не появляется —
+   страница выглядит так же, как до этого момента. z-index ниже курсора
+   (--rc-z:9990 в cursor.css) — курсор остаётся поверх вуали и штампа. */
+
+.room-veil{
+  position:fixed; inset:0; z-index:9200;
+  background:var(--walnut); opacity:1;
+  pointer-events:none;
+}
+
+.room-stamp{
+  position:fixed; top:50%; left:50%; z-index:9300;
+  transform:translate(-50%,-50%);
+  opacity:0;
+  pointer-events:none;
+  display:flex; align-items:center; justify-content:center;
+  padding:clamp(14px,2vw,26px) clamp(22px,3.4vw,46px);
+  border:1px solid var(--drift);
+  background:var(--bark-05);
+}
+.room-stamp span{
+  font-family:var(--ff);
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+  font-size:clamp(20px,4vw,40px);
+  line-height:1.1;
+  color:var(--cream);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:78vw;
+}
+
+/* до старта room.js: та же вуаль, что и .room-veil, но включена классом
+   на <html> — единственная защита от белой вспышки при прямом заходе
+   после клика на предыдущей странице. Намеренно html::before, не body:
+   ::before/::after body уже заняты (диагональ шума и соляной bloom —
+   см. artefakt.css) — html::before нигде на сайте не используется. */
+html.room-in::before{
+  content:"";
+  position:fixed; inset:0; z-index:9200;
+  background:var(--walnut);
+  pointer-events:none;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .room-veil,.room-stamp,html.room-in::before{display:none}
+}

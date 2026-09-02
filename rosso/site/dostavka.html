@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru" data-cursor-theme="rosso">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Доставка — Рыбцех Клевцова · режим 0…−8&nbsp;°C в&nbsp;пути</title>
+<meta name="description" content="Самовывоз в&nbsp;Волгодонске, доставка на дом по городу и&nbsp;Ростову-на-Дону, отправка транспортной компанией по России в&nbsp;режиме 0…−8&nbsp;°C. По ЮФО от 1&nbsp;тонны бесплатно. Тарифы и&nbsp;сроки ТК — по телефону.">
+<link rel="canonical" href="https://xn--90ai5awd2a.xn--p1ai/dostavka.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<meta name="theme-color" content="#000000">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Рыбцех Клевцова">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://xn--90ai5awd2a.xn--p1ai/dostavka.html">
+<meta property="og:title" content="Доставка — режим 0…−8&nbsp;°C на всём пути">
+<meta property="og:description" content="Три способа получить рыбу: самовывоз с&nbsp;пер.&nbsp;Исторический&nbsp;35, доставка на дом по Волгодонску и&nbsp;Ростову-на-Дону, транспортная компания по России.">
+<meta property="og:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-dostavka.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Открытый рефрижератор ночью, холодный пар">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Доставка — режим 0…−8&nbsp;°C на всём пути">
+<meta name="twitter:description" content="Три способа получить рыбу: самовывоз с&nbsp;пер.&nbsp;Исторический&nbsp;35, доставка на дом по Волгодонску и&nbsp;Ростову-на-Дону, транспортная компания по России.">
+<meta name="twitter:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-dostavka.jpg">
+
+<link rel="preload" as="image" href="assets/img/poster-dostavka-live.jpg" fetchpriority="high">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSans-cyr.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSans-lat.woff2" crossorigin>
+<link rel="stylesheet" href="assets/rosso.css">
+<link rel="stylesheet" href="assets/motion/core.css">
+<link rel="stylesheet" href="assets/motion/cut.css">
+<link rel="stylesheet" href="assets/cursor.css">
+<link rel="stylesheet" href="assets/gl/rosso-gl.css">
+<style>
+/* ---- специфика страницы «Доставка» ---- */
+
+/* Упаковка: кадр 1:1 + регламент тары */
+.pack{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1px;background:var(--s4);border:1px solid var(--s4)}
+@media(max-width:860px){.pack{grid-template-columns:1fr}}
+.pack .ph{aspect-ratio:1/1}
+@media(max-width:860px){.pack .ph{aspect-ratio:16/10}}
+.pack-body{background:var(--s2);padding:clamp(22px,2.8vw,38px);display:flex;flex-direction:column;justify-content:center}
+.pack-body .hd{margin-bottom:16px}
+.pack-list{display:flex;flex-direction:column}
+.pack-list li{
+  border-top:1px solid var(--s4);padding:13px 0;
+  display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;justify-content:space-between;
+}
+.pack-list li:first-child{border-top:0;padding-top:0}
+.pack-list b{font-weight:600;font-size:13px;letter-spacing:.02em}
+.pack-list span{color:var(--fumo);font-size:12px}
+.pack-note{margin-top:18px;color:var(--piombo);font-size:11px;line-height:1.7}
+
+/* Температурная шкала под колонками: 0 → −8 °C одной полосой */
+.temp-scale{
+  margin-top:1px;border:1px solid var(--s4);border-top:0;background:var(--s2);
+  padding:clamp(22px,2.8vw,34px) clamp(18px,2.6vw,34px);
+}
+.temp-scale-top{
+  display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 22px;
+  margin-bottom:18px;
+}
+.temp-scale-lbl{font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--piombo)}
+.temp-scale-top p{color:var(--fumo);font-size:12px}
+.temp-scale-bar{position:relative;height:3px;background:var(--s4)}
+.temp-scale-bar::after{
+  content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--fumo),var(--rosso));
+  transform-origin:0 50%;scale:0 1;transition:scale var(--d5) var(--e-igloo);transition-delay:var(--d2);
+}
+.temp-scale.in .temp-scale-bar::after{scale:1 1}
+.ts-tick{position:absolute;top:-3px;width:1px;height:9px;background:var(--s4)}
+.ts-tick.ts-end{background:var(--rosso);width:2px}
+.temp-scale-vals{display:flex;justify-content:space-between;margin-top:12px}
+.temp-scale-vals b{
+  font-family:var(--ff);font-weight:700;font-size:clamp(18px,1.8vw,24px);
+  letter-spacing:var(--tr-40);font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+@media (prefers-reduced-motion: reduce){
+  .temp-scale-bar::after{scale:1 1!important;transition:none!important}
+}
+</style>
+<script src="assets/metrika-config.js" defer></script>
+<script src="assets/metrika.js" defer></script>
+<noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXX" style="position:absolute;left:-9999px" alt=""></div></noscript>
+</head>
+<body>
+<!-- Иконки мессенджеров: тонкий контур currentColor, без фирменных заливок -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.3 20.7l4.3-1.1A8.8 8.8 0 1 0 12 3.2Z"/><path d="M9.1 8.2h1.2l.9 2-1 .8a5.4 5.4 0 0 0 2.5 2.5l.8-1 2 .9v1.2a1 1 0 0 1-1 1 6.9 6.9 0 0 1-6.4-6.4 1 1 0 0 1 1-1Z"/></symbol>
+<symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.4 3.9 2.9 10.8a.45.45 0 0 0 0 .85l4.6 1.6 1.7 4.9a.45.45 0 0 0 .8.12l2.4-2.9 4.5 3.3a.45.45 0 0 0 .7-.25l3.5-13.9a.45.45 0 0 0-.7-.52Z"/><path d="m7.5 13.25 12.3-8.6-9.6 11.8"/></symbol>
+<symbol id="i-vb" viewBox="0 0 24 24"><path d="M8.4 4.4h1.9l1.4 3.1-1.7 1.2a9.5 9.5 0 0 0 4.7 4.7l1.2-1.7 3.1 1.4v1.9a1.8 1.8 0 0 1-1.9 1.8A13.4 13.4 0 0 1 4.7 6.3a1.8 1.8 0 0 1 1.8-1.9Z"/><path d="M13.9 3.1a6.3 6.3 0 0 1 5.1 5.1M13.5 6.4a3.1 3.1 0 0 1 2.3 2.3"/></symbol>
+<symbol id="i-max" viewBox="0 0 24 24"><path d="M4 4.6h16a1.6 1.6 0 0 1 1.6 1.6v9.2a1.6 1.6 0 0 1-1.6 1.6h-6.4l-3.7 3.3a.4.4 0 0 1-.66-.3V17H4a1.6 1.6 0 0 1-1.6-1.6V6.2A1.6 1.6 0 0 1 4 4.6Z"/><path d="m7.9 13.6 1.7-4.2 2.4 3.1 2.4-3.1 1.7 4.2"/></symbol>
+</defs></svg>
+<a class="skip" href="#main">К&nbsp;содержанию</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><b>Рыбцех Клевцова</b><span>Волгодонск · с&nbsp;1967</span></a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="index.html">Главная</a><a href="price.html">Прайс</a><a href="opt.html">Опт</a>
+      <a href="dostavka.html">Доставка</a><a href="magazin.html">Магазин</a><a href="istoria.html">Наша история</a>
+    </nav>
+    <a class="tel" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>
+    <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="drawer" id="drawer">
+  <a href="index.html"><i>01</i>Главная</a>
+  <a href="price.html"><i>02</i>Прайс</a>
+  <a href="opt.html"><i>03</i>Опт</a>
+  <a href="dostavka.html"><i>04</i>Доставка</a>
+  <a href="magazin.html"><i>05</i>Магазин</a>
+  <a href="istoria.html"><i>06</i>Наша история</a>
+  <div class="dr-foot"><a class="cap" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></div>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero short vig">
+    <div class="hero-media">
+      <video data-autoplay muted playsinline loop preload="none"
+             poster="assets/img/poster-dostavka-live.jpg" aria-hidden="true">
+        <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/dostavka-live.webm"><source src="assets/video/dostavka-live.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow" data-rv="up">Самовывоз · город · транспортная компания</p>
+      <h1 class="title-card" data-split>Доставка</h1>
+    </div>
+  </section>
+
+  <!-- 01 КАК ПОЛУЧИТЬ -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="sec-head" data-rv="up">
+        <span class="sec-idx">01</span>
+        <h2>Как получить</h2>
+        <p class="sec-note">Три способа: прилавок, город, транспортная компания</p>
+      </div>
+      <div class="cols" data-rv-group>
+        <div class="col" data-rv="up">
+          <span class="col-n">01 · САМОВЫВОЗ</span>
+          <h3 class="hd">Из магазина при цехе</h3>
+          <ul>
+            <li><s></s>Волгодонск, пер.&nbsp;Исторический&nbsp;35 (Красный Яр)</li>
+            <li><s></s>Пн–пт 9:00–19:00, сб–вс 9:00–17:00, без перерыва</li>
+            <li><s></s>Отгрузку оптовой партии согласуйте заранее по телефону</li>
+          </ul>
+        </div>
+        <div class="col" data-rv="up">
+          <span class="col-n">02 · ВОЛГОДОНСК И&nbsp;РОСТОВ</span>
+          <h3 class="hd">Доставка на дом</h3>
+          <ul>
+            <li><s></s>Привозим на дом</li>
+            <li><s></s>Заказ до 1000&nbsp;₽ — доставка 100&nbsp;₽</li>
+            <li><s></s>Заказ от 1000&nbsp;₽ — бесплатно</li>
+          </ul>
+        </div>
+        <div class="col" data-rv="up">
+          <span class="col-n">03 · ПО РОССИИ</span>
+          <h3 class="hd">Транспортной компанией</h3>
+          <ul>
+            <li><s></s>Транспортная компания на выбор клиента и&nbsp;за его счёт</li>
+            <li><s></s>Режим 0…−8&nbsp;°C обязателен: без него ответственность за груз на заказчике</li>
+            <li><s></s>По ЮФО от 1&nbsp;тонны доставка бесплатно</li>
+            <li><s></s>Тарифы и&nbsp;сроки транспортной компании уточняйте по телефону</li>
+          </ul>
+        </div>
+      </div>
+      <div class="temp-scale" data-rv="up">
+        <div class="temp-scale-top">
+          <span class="temp-scale-lbl">Температурный контракт</span>
+          <p>Один режим на всём пути: склад, фургон, транспортная компания.</p>
+        </div>
+        <div class="temp-scale-bar" aria-hidden="true">
+          <i class="ts-tick" style="left:0%"></i>
+          <i class="ts-tick" style="left:25%"></i>
+          <i class="ts-tick" style="left:50%"></i>
+          <i class="ts-tick" style="left:75%"></i>
+          <i class="ts-tick ts-end" style="left:100%"></i>
+        </div>
+        <div class="temp-scale-vals">
+          <b>0&nbsp;°C</b>
+          <b><span data-count>−8</span>&nbsp;°C</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline">
+
+  <!-- 02 УПАКОВКА -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <span class="sec-idx">02</span>
+        <h2>Упаковка</h2>
+        <p class="sec-note">Три формата тары по ГОСТ</p>
+      </div>
+      <div class="pack rev">
+        <figure class="ph"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/sklad-320.avif 320w, assets/img/rsp/sklad-640.avif 640w, assets/img/rsp/sklad-1280.avif 1280w, assets/img/rsp/sklad-1377.avif 1377w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/sklad-320.webp 320w, assets/img/rsp/sklad-640.webp 640w, assets/img/rsp/sklad-1280.webp 1280w, assets/img/rsp/sklad-1377.webp 1377w"><img class="ph-img" loading="lazy" width="1377" height="768" src="assets/img/sklad.jpg" alt="Гофроящики на паллете, красная лента на коробке" data-gl="reveal" data-gl-grain="0.014" decoding="async"></picture></figure>
+        <div class="pack-body">
+          <h3 class="hd">Гофроящик по ГОСТ</h3>
+          <ul class="pack-list">
+            <li><b>Гофроящик ГОСТ-92</b><span>10&nbsp;кг · массовые позиции</span></li>
+            <li><b>Гофроящик ГОСТ-105</b><span>5&nbsp;кг · рыбец, чехонь, сельдь и&nbsp;скумбрия холодного копчения</span></li>
+            <li><b>Ведро 11&nbsp;л</b><span>8&nbsp;кг нетто · слабосолёная рыба</span></li>
+          </ul>
+          <p class="pack-note">Хранение 0…−8&nbsp;°C. Срок хранения леща — 2&nbsp;месяца.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="news">
+    <div class="wrap rev">
+      <h3>Согласуем отправку</h3>
+      <p>Способ получения, тара и&nbsp;отгрузка партии — по телефону. Опт — Антон Дмитриевич, розница — Маргарита Георгиевна.</p>
+      <a class="btn-red" href="tel:+79287702170" aria-label="Позвонить: опт, Антон Дмитриевич, +7 928 770-21-70">+7&nbsp;928&nbsp;770-21-70</a>
+      <p class="msgs">
+        <a class="msg" href="https://wa.me/79287702170" target="_blank" rel="noopener" aria-label="Написать в WhatsApp: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+        <a class="msg" href="https://t.me/+79287702170" target="_blank" rel="noopener" aria-label="Написать в Telegram: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+        <a class="msg" href="viber://chat?number=%2B79287702170" aria-label="Написать в Viber: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+      
+        <!-- MAX: вставить ссылку max.ru/u/<хеш> от Антона Дмитриевича и раскомментировать
+          <a class="msg" href="https://max.ru/u/ХЕШ" target="_blank" rel="noopener" aria-label="Написать в MAX: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-max"/></svg>MAX</a>
+        -->
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer id="foot">
+  <div class="wrap">
+    <div class="f-lead">
+      <p class="f-mark">Рыбцех Клевцова</p>
+      <p class="dim">Вяленая и&nbsp;копчёная рыба Цимлянского водохранилища. Волгодонск, семейное дело с&nbsp;1967 года.</p>
+    </div>
+    <div class="fgrid2">
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a class="ink-line" href="index.html">Главная</a></li>
+          <li><a class="ink-line" href="price.html">Прайс</a></li>
+          <li><a class="ink-line" href="opt.html">Опт</a></li>
+          <li><a class="ink-line" href="dostavka.html">Доставка</a></li>
+          <li><a class="ink-line" href="magazin.html">Магазин</a></li>
+          <li><a class="ink-line" href="istoria.html">Наша история</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Опт</h4>
+        <ul>
+          <li><a href="tel:+79287702170" aria-label="Позвонить — опт, Антон Дмитриевич, +7 928 770-21-70">Антон Дмитриевич · +7&nbsp;928&nbsp;770-21-70</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79287702170" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79287702170" target="_blank" rel="noopener" aria-label="Написать в Telegram — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79287702170" aria-label="Написать в Viber — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        
+          <!-- MAX: вставить ссылку max.ru/u/<хеш> от Антона Дмитриевича и раскомментировать
+            <a class="msg" href="https://max.ru/u/ХЕШ" target="_blank" rel="noopener" aria-label="Написать в MAX: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-max"/></svg>MAX</a>
+          -->
+        </p>
+        <ul>
+          <li><p>Партия от 100&nbsp;кг в&nbsp;ассортименте</p></li>
+          <li><p>Формируется за 10–14 дней, предоплата 50%</p></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Розница</h4>
+        <ul>
+          <li><a href="tel:+79185949685" aria-label="Позвонить — розница, Маргарита Георгиевна, +7 918 594-96-85">Маргарита Георгиевна · +7&nbsp;918&nbsp;594-96-85</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79185949685" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79185949685" target="_blank" rel="noopener" aria-label="Написать в Telegram — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79185949685" aria-label="Написать в Viber — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+        <ul>
+          <li><p>Наличие, вес, розничный заказ</p></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Технолог</h4>
+        <ul>
+          <li><a href="tel:+79289650095" aria-label="Позвонить — технолог, Ольга Михайловна, +7 928 96-500-95">Ольга Михайловна · +7&nbsp;928&nbsp;96-500-95</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79289650095" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79289650095" target="_blank" rel="noopener" aria-label="Написать в Telegram — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79289650095" aria-label="Написать в Viber — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+        <ul>
+          <li><p>Технология, документы, ветеринарные справки</p></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-place">
+      <p><b>Магазин при цехе</b> — Волгодонск, пер.&nbsp;Исторический&nbsp;35 (Красный Яр)</p>
+      <p>Пн–пт 9:00–19:00 · сб–вс 9:00–17:00 · без перерыва и&nbsp;выходных</p>
+      <p><a href="mailto:ak806@me.com">ak806@me.com</a> · <a href="mailto:info@k-fish.ru">info@k-fish.ru</a> · ИП Клевцов Д.А., Ростовская обл., г. Волгодонск</p>
+    </div>
+    <div class="f-social">
+      <a href="tel:+79287702170"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></i>Позвонить</a>
+      <a href="mailto:ak806@me.com"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg></i>Написать</a>
+      <a href="https://vk.com/klevtsov_fish" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7c.7 6 4 10 8.5 10h1v-4c1.5.2 2.8 1.5 3.5 4H20c-.6-3-2-4.8-3.5-5.6C18 10.6 19.4 8.8 20 7h-2.7c-.8 2.3-2.2 4-3.8 4.3V7h-2.6v7C8.6 13 6.8 10 6.5 7z"/></svg></i>ВКонтакте</a>
+    </div>
+  </div>
+</footer>
+<div class="f-strip">
+  <div class="wrap">
+    <span>© 2026 ИП Клевцов Д.А.</span><span>РЫБЦЕХ.РФ</span><a href="price.html">Прайс не является офертой</a>
+  </div>
+</div>
+
+<script src="assets/schema.js"></script>
+<script>
+  RybtsehSchema.inject(RybtsehSchema.breadcrumbList());
+  RybtsehSchema.inject(RybtsehSchema.organization());
+</script>
+<script src="assets/motion/vendor/gsap.min.js" defer></script>
+<script src="assets/motion/vendor/CustomEase.min.js" defer></script>
+<script src="assets/motion/vendor/Flip.min.js" defer></script>
+<script src="assets/motion/vendor/SplitText.min.js" defer></script>
+<script src="assets/motion/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/motion/vendor/Observer.min.js" defer></script>
+<script src="assets/motion/core.js" defer></script>
+<script src="assets/motion/cut.js" defer></script>
+<script src="assets/rosso.js" defer></script>
+<script src="assets/cursor.js" defer></script>
+<script defer src="assets/gl/rosso-gl.js"></script>
+</body>
+</html>

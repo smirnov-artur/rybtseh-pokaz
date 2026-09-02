@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="ru" data-order-theme="artefakt" data-cursor-theme="artefakt">
+<head>
+<script>try{var _t=+sessionStorage.getItem('rm-room-t')||0;if(sessionStorage.getItem('rm-room')&&(Date.now()-_t)<4000)document.documentElement.classList.add('room-in');}catch(e){}</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Прайс рыбцеха Клевцова — опт и&nbsp;розница, 50 позиций</title>
+<meta name="description" content="Прайс от 05.08.2026: вяленая, холодного копчения и слабосолёная рыба, икра. Розничная и оптовая цена за килограмм в одной строке. НДС 5% включён.">
+<link rel="canonical" href="https://xn--90ai5awd2a.xn--p1ai/price.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<meta name="theme-color" content="#100904">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Рыбцех Клевцова">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://xn--90ai5awd2a.xn--p1ai/price.html">
+<meta property="og:title" content="Прайс — опт и розница рыбцеха Клевцова">
+<meta property="og:description" content="Опт от 100&nbsp;кг в ассортименте, не менее 10&nbsp;кг по позиции. Заказ формируется за 10–14 дней, предоплата 50%. Цены с НДС 5%.">
+<meta property="og:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-price.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Крупная соль и золотая чешуйка леща крупным планом">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Прайс — опт и розница рыбцеха Клевцова">
+<meta name="twitter:description" content="Опт от 100&nbsp;кг в ассортименте, не менее 10&nbsp;кг по позиции. Заказ формируется за 10–14 дней, предоплата 50%. Цены с НДС 5%.">
+<meta name="twitter:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-price.jpg">
+
+<link rel="preload" as="image" fetchpriority="high" href="assets/img/rsp/sol-1600.avif" imagesrcset="assets/img/rsp/sol-320.avif 320w, assets/img/rsp/sol-640.avif 640w, assets/img/rsp/sol-1280.avif 1280w, assets/img/rsp/sol-1600.avif 1600w" imagesizes="(max-width: 1024px) 100vw, 1440px">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/GolosText-cyr.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/GolosText-lat.woff2" crossorigin>
+<link rel="stylesheet" href="assets/artefakt.css">
+<link rel="stylesheet" href="assets/motion/core.css">
+<link rel="stylesheet" href="assets/motion/room.css">
+<link rel="stylesheet" href="assets/motion/ledger.css">
+<link rel="stylesheet" href="assets/order.css">
+<link rel="stylesheet" href="assets/cursor.css">
+<script src="assets/metrika-config.js"></script>
+<script src="assets/metrika.js" defer></script>
+<!-- номер счётчика — только в assets/metrika-config.js, здесь его нарочно нет -->
+<noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXX" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<style>
+  /* ---- специфика страницы «Прайс» ---- */
+  /* герой «ПРАЙС» собран общим правилом .hero--short из assets/artefakt.css — тут не перебиваем */
+  #pReset[hidden]{display:none}
+  /* соль в кадре светлее прочих героев — притемняем верх и низ, иначе метки теряются */
+  .hero--short .hero__scrim{
+    background:
+      linear-gradient(180deg,rgba(16,9,4,.88) 0%,rgba(16,9,4,.46) 34%,rgba(16,9,4,.34) 58%,rgba(16,9,4,.88) 100%),
+      linear-gradient(90deg,rgba(16,9,4,.62) 0%,rgba(16,9,4,.12) 46%,rgba(16,9,4,.34) 100%);
+  }
+  .price__intro{
+    display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--gap);
+    align-items:end;padding-bottom:clamp(18px,2.6vh,30px);border-bottom:1px dashed var(--cork);
+  }
+  .price__meta{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+  .price__meta .bs{max-width:44ch;color:var(--drift)}
+
+  /* второй ряд инструментов: режим цены · сортировка · счётчик */
+  .price__bar{
+    display:flex;flex-wrap:wrap;gap:12px clamp(16px,2.4vw,38px);align-items:center;
+    padding:0 0 clamp(14px,2vh,22px);
+  }
+  .price__bar .lbl{line-height:1.3}
+  .price__seg{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .price__seg > .lbl{margin-right:2px}
+  .price__count{margin-left:auto;display:flex;gap:8px 18px;align-items:baseline;flex-wrap:wrap}
+
+  /* активная колонка цены подсвечивается кремом, вторая уходит в drift */
+  .table.is-opt .pr__p--o{color:var(--cream)}
+  .table.is-opt .pr__p--r{color:var(--drift)}
+  .table .pr:hover .pr__p{color:var(--cream)}
+  .thead span.is-on{color:var(--cream)}
+  .thead{top:clamp(50px,6.4vh,62px)}
+
+  .pr__v{font-size:var(--micro);letter-spacing:.05em;text-transform:uppercase;color:var(--drift)}
+  .price__hint{display:none;padding-top:14px}
+  .table.is-opt ~ .price__hint{display:block}
+  .price__legal{margin-top:clamp(16px,2.4vh,26px);max-width:86ch}
+
+  /* зал «Как читать прайс» */
+  .read__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:var(--gap);align-items:center}
+  .read__cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(20px,2.6vw,38px)}
+  .read__ph{width:100%;max-width:min(34vw,470px);justify-self:end}
+
+  /* зал «Заказ» */
+  .order__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--gap);align-items:end}
+
+  @media (max-width:1180px){
+    .price__intro{grid-template-columns:minmax(0,1fr);align-items:start}
+    .read__grid,.order__grid{grid-template-columns:minmax(0,1fr)}
+    .read__ph{max-width:min(100%,520px);justify-self:start}
+  }
+  @media (max-width:860px){
+    .price__count{margin-left:0;width:100%}
+    .price__bar{gap:12px 22px}
+  }
+
+  /* Заявка (order.js) и кнопка связи .fab делят нижний правый угол.
+     --fab-h меряет artefakt.js по реальной высоте .fab-btn (ResizeObserver
+     не нужен — считает на load/resize/fonts.ready) — тем же приёмом поднимаем
+     пусковую кнопку заявки над .fab, чтобы они не наезжали ни на одной
+     ширине (аудит доступности 01.09, Б1). */
+  .ord-fab{bottom:calc(clamp(14px,2.6vw,26px) + var(--fab-h,38px) + 14px)}
+  @media (max-width:760px){
+    /* Мобильный лист заявки (.ord-panel z-index:875) выше .fab (z-index:62),
+       поэтому визуально уже не закрыт — но пока лист открыт, кнопка связи
+       всё равно остаётся в DOM поверх той же зоны экрана: убираем её из
+       поля клика и фокуса, а не полагаемся на один только слой. */
+    @supports selector(:has(*)) {
+      body:has(.ord-panel.is-on) .fab{opacity:0;visibility:hidden;pointer-events:none}
+    }
+  }
+  @media (min-width:761px){
+    .ord-panel{bottom:calc(clamp(14px,2.6vw,26px) + var(--fab-h,38px) + 14px)}
+    /* Открытая панель заказа на десктопе плавает над страницей и закрывает
+       колонку цен справа (дефект акта готовности) — пока панель открыта
+       (order.js ставит .ord-panel.is-on), сужаем таблицу прайса, чтобы цены
+       оставались читаемы. Тот же приём, что на «Россо» (её price.html,
+       :has(.ord-panel.is-on)), подогнан под разметку и переменные «Артефакта»:
+       у таблицы нет своего .wrap — сужаем #table напрямую. */
+    @supports selector(:has(*)) {
+      body:has(.ord-panel.is-on) #table{
+        padding-right:calc(var(--pad) + 400px);
+        transition:padding-right .25s var(--e-inout3);
+      }
+    }
+  }
+</style>
+</head>
+<body class="pg-price">
+<!-- Иконки мессенджеров: тонкий контур currentColor, без фирменных заливок -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.3 20.7l4.3-1.1A8.8 8.8 0 1 0 12 3.2Z"/><path d="M9.1 8.2h1.2l.9 2-1 .8a5.4 5.4 0 0 0 2.5 2.5l.8-1 2 .9v1.2a1 1 0 0 1-1 1 6.9 6.9 0 0 1-6.4-6.4 1 1 0 0 1 1-1Z"/></symbol>
+<symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.4 3.9 2.9 10.8a.45.45 0 0 0 0 .85l4.6 1.6 1.7 4.9a.45.45 0 0 0 .8.12l2.4-2.9 4.5 3.3a.45.45 0 0 0 .7-.25l3.5-13.9a.45.45 0 0 0-.7-.52Z"/><path d="m7.5 13.25 12.3-8.6-9.6 11.8"/></symbol>
+<symbol id="i-vb" viewBox="0 0 24 24"><path d="M8.4 4.4h1.9l1.4 3.1-1.7 1.2a9.5 9.5 0 0 0 4.7 4.7l1.2-1.7 3.1 1.4v1.9a1.8 1.8 0 0 1-1.9 1.8A13.4 13.4 0 0 1 4.7 6.3a1.8 1.8 0 0 1 1.8-1.9Z"/><path d="M13.9 3.1a6.3 6.3 0 0 1 5.1 5.1M13.5 6.4a3.1 3.1 0 0 1 2.3 2.3"/></symbol>
+<symbol id="i-max" viewBox="0 0 24 24"><path d="M4 4.6h16a1.6 1.6 0 0 1 1.6 1.6v9.2a1.6 1.6 0 0 1-1.6 1.6h-6.4l-3.7 3.3a.4.4 0 0 1-.66-.3V17H4a1.6 1.6 0 0 1-1.6-1.6V6.2A1.6 1.6 0 0 1 4 4.6Z"/><path d="m7.9 13.6 1.7-4.2 2.4 3.1 2.4-3.1 1.7 4.2"/></symbol>
+</defs></svg>
+<a class="skip" href="#main">К&nbsp;содержанию</a>
+
+<nav class="nav" id="nav">
+  <a class="nav__logo" href="index.html">РЫБЦЕХЪ</a>
+  <div class="nav__menu">
+    <a href="index.html">Главная</a>
+    <a href="price.html">Прайс</a>
+    <a href="istoria.html">Наша история</a>
+    <a href="opt.html">Оптовикам</a>
+    <a href="dostavka.html">Доставка</a>
+    <a href="magazin.html">Магазин</a>
+  </div>
+  <a class="nav__tel" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>
+  <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><span></span><span></span></button>
+</nav>
+
+<div class="drawer" id="drawer">
+  <a href="index.html">Главная</a>
+  <a href="price.html">Прайс</a>
+  <a href="istoria.html">Наша история</a>
+  <a href="opt.html">Оптовикам</a>
+  <a href="dostavka.html">Доставка</a>
+  <a href="magazin.html">Магазин</a>
+  <div class="drawer__foot">
+    <a class="lbl lbl--cream" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>
+    <a class="lbl" href="mailto:ak806@me.com">ak806@me.com</a>
+  </div>
+</div>
+
+<div class="vlabel" aria-hidden="true"><span>ПРАЙС · 05.08.2026</span></div>
+
+<header class="hero hero--short" id="main">
+  <div class="hero__media">
+    <figure class="ph ph--fill ph--shot">
+      <picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/sol-320.avif 320w, assets/img/rsp/sol-640.avif 640w, assets/img/rsp/sol-1280.avif 1280w, assets/img/rsp/sol-1600.avif 1600w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/sol-320.webp 320w, assets/img/rsp/sol-640.webp 640w, assets/img/rsp/sol-1280.webp 1280w, assets/img/rsp/sol-1600.webp 1600w"><img class="ph__img" src="assets/img/sol.jpg" alt="Крупная соль и золотая чешуйка леща крупным планом" fetchpriority="high" width="1600" height="1600" decoding="async"></picture>
+      <div class="ph__corners"><i></i><i></i><i></i><i></i></div>
+    </figure>
+  </div>
+  <div class="hero__scrim"></div>
+
+  <div class="hero__top">
+    <span class="lbl lbl--cream">Розница и&nbsp;опт · цена за килограмм</span>
+    <span class="lbl lbl--em" data-price-tpl="{n} позиций">50 позиций</span>
+  </div>
+
+  <h1 class="hero__plate plate" data-plate data-max="190"><span>ПРАЙС</span></h1>
+</header>
+
+<section class="sec sec--flow" id="s01" data-quiet>
+  <div class="sec__head"><span>01 / Прайс-лист</span></div>
+
+  <div class="price__intro">
+    <h2 class="d" data-split>Прайс<br>целиком.</h2>
+    <div class="price__meta" data-rv>
+      <span class="lbl">Прайс от <span id="pDate">05.08.2026</span></span>
+      <span class="lbl lbl--cream"><span class="cnt" id="pTotal" data-count-from="0">50</span> <span id="pTotalWord">позиций в&nbsp;прайсе</span></span>
+      <p class="bs">Цена — за килограмм, икра — за банку. Оптовая цена действует от 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции.</p>
+    </div>
+  </div>
+
+  <div class="price__tools" data-rv data-delay="1">
+    <div class="chips" id="fCat" role="group" aria-label="Фильтр по обработке">
+      <button class="chip is-on" type="button" data-f="all" aria-pressed="true">Все</button>
+      <button class="chip" type="button" data-f="вяленая" aria-pressed="false">Вяленая</button>
+      <button class="chip" type="button" data-f="холодного копчения" aria-pressed="false">Копчёная</button>
+      <button class="chip" type="button" data-f="слабосолёная" aria-pressed="false">Слабосолёная</button>
+      <button class="chip" type="button" data-f="икра" aria-pressed="false">Икра</button>
+    </div>
+    <label class="search">
+      <span class="lbl">Поиск по названию</span>
+      <input type="search" id="q" placeholder="лещ, форель, икра…" autocomplete="off" spellcheck="false">
+    </label>
+  </div>
+
+  <div class="price__bar">
+    <div class="price__seg" id="fMode" role="group" aria-label="Тип цены">
+      <span class="lbl">Цены</span>
+      <button class="chip is-on" type="button" data-m="retail" aria-pressed="true">Розница</button>
+      <button class="chip" type="button" data-m="opt" aria-pressed="false">Опт</button>
+    </div>
+    <div class="price__seg" id="fSort" role="group" aria-label="Сортировка">
+      <span class="lbl">Порядок</span>
+      <button class="chip is-on" type="button" data-s="group" aria-pressed="true">По разделам</button>
+      <button class="chip" type="button" data-s="asc" aria-pressed="false">Дешевле</button>
+      <button class="chip" type="button" data-s="desc" aria-pressed="false">Дороже</button>
+      <button class="chip" type="button" data-s="name" aria-pressed="false">По алфавиту</button>
+    </div>
+    <div class="price__count">
+      <span class="lbl lbl--cream" id="pShown" aria-live="polite">—</span>
+      <button class="link" type="button" id="pReset" hidden>Показать всё</button>
+    </div>
+  </div>
+
+  <div class="table" id="table">
+    <div class="thead"><span>Наименование</span><span id="thOpt">Опт</span><span id="thRet" class="is-on">Розница</span></div>
+    <div id="tbody">
+      <noscript><p class="bs" style="padding:2em 0">Прайс собирается из единого файла цен, для этого нужен JavaScript. Если он выключен, позвоните: опт — <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>, розница — <a href="tel:+79185949685">+7&nbsp;918&nbsp;594-96-85</a>.</p></noscript>
+    </div>
+  </div>
+
+  <p class="lbl price__hint" id="optHint">Оптовая цена действует при заказе от 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции. Заказ формируется за 10–14 дней, предоплата 50%.</p>
+
+  <div class="price__note">
+    <div class="fact"><span class="lbl">Опт</span><p class="bs">От 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции.</p></div>
+    <div class="fact"><span class="lbl">Срок</span><p class="bs">Заказ формируется за 10–14 дней.</p></div>
+    <div class="fact"><span class="lbl">Оплата</span><p class="bs">Предоплата 50%. Полный пакет документов.</p></div>
+    <div class="fact"><span class="lbl">Доставка</span><p class="bs">По ЮФО от 1&nbsp;тонны — бесплатно. По России — транспортной компанией на выбор клиента и&nbsp;за его счёт, в&nbsp;режиме 0…−8&nbsp;°C. Тарифы и&nbsp;сроки транспортной компании уточняйте по телефону.</p></div>
+  </div>
+
+  <p class="nano price__legal" id="pLegal">Цены указаны с&nbsp;учётом НДС 5% и&nbsp;не являются публичной офертой. Товар обмену и&nbsp;возврату не подлежит.</p>
+</section>
+
+<section class="sec" id="s02" data-quiet>
+  <div class="sec__head"><span>02 / Как читать прайс</span></div>
+
+  <div class="read__grid">
+    <div>
+      <h2 class="h" data-rv>Вес,<br>фасовка,<br>партия.</h2>
+      <p class="bs" data-rv style="margin-top:clamp(14px,2vh,22px)">Три вещи объясняют разницу в&nbsp;цене внутри одного вида рыбы. Остальное уточняйте по телефону.</p>
+
+      <div class="read__cols" style="margin-top:clamp(24px,3.4vh,44px)">
+        <div class="fact" data-rv>
+          <span class="lbl">Вес в&nbsp;строке</span>
+          <p class="bs">Категория рядом с&nbsp;названием — вес одной рыбы: 350–500&nbsp;г, 700–900&nbsp;г, отборный 1,2–1,5&nbsp;кг. Чем крупнее рыба, тем выше цена за килограмм.</p>
+        </div>
+        <div class="fact" data-rv data-delay="1">
+          <span class="lbl">Единицы</span>
+          <p class="bs">Вся рыба — цена за килограмм. Икра — цена за банку, объём указан в&nbsp;строке.</p>
+        </div>
+        <div class="fact" data-rv data-delay="2">
+          <span class="lbl">Фасовка</span>
+          <p class="bs">Гофроящик ГОСТ-92 по 10&nbsp;кг. Рыбец, чехонь, сельдь и&nbsp;скумбрия холодного копчения — ГОСТ-105 по 5&nbsp;кг. Слабосолёная — ведро 11&nbsp;л, 8&nbsp;кг нетто.</p>
+        </div>
+        <div class="fact" data-rv data-delay="3">
+          <span class="lbl">Опт</span>
+          <p class="bs">От 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции. Заказ формируется за 10–14 дней, предоплата 50%.</p>
+        </div>
+        <div class="fact" data-rv>
+          <span class="lbl">Хранение</span>
+          <p class="bs">0…−8&nbsp;°C, срок 2&nbsp;месяца (лещ). Тот же режим обязателен в&nbsp;пути.</p>
+        </div>
+        <div class="fact" data-rv data-delay="1">
+          <span class="lbl">Документы</span>
+          <p class="bs">Полный пакет документов на каждую партию. НДС 5% уже включён в&nbsp;цену.</p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="ph ph--shot read__ph" style="--ar:1/1" data-rv>
+      <picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/podacha-plast-320.avif 320w, assets/img/rsp/podacha-plast-640.avif 640w, assets/img/rsp/podacha-plast-1280.avif 1280w, assets/img/rsp/podacha-plast-1600.avif 1600w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/podacha-plast-320.webp 320w, assets/img/rsp/podacha-plast-640.webp 640w, assets/img/rsp/podacha-plast-1280.webp 1280w, assets/img/rsp/podacha-plast-1600.webp 1600w"><img class="ph__img" src="assets/img/podacha-plast.jpg" alt="Пласт вяленого леща на столе: долька лимона, укроп, крупная соль, стопка бумаг" loading="lazy" width="1600" height="1600" decoding="async"></picture>
+    </figure>
+  </div>
+</section>
+
+<section class="sec sec--tight" id="s03" data-quiet>
+  <div class="sec__head"><span>03 / Заказ</span></div>
+
+  <div class="order__grid">
+    <div class="reveal__col">
+      <h2 class="h" data-rv>Считаем<br>партию.</h2>
+      <p class="bs" data-rv>Назовите позиции и&nbsp;вес — посчитаем партию, срок и&nbsp;способ отправки. Позиции вне прайса уточняйте по телефону.</p>
+    </div>
+    <div class="contacts">
+      <div class="person" data-rv>
+        <span class="lbl">Опт и&nbsp;партнёрства</span>
+        <a href="tel:+79287702170" aria-label="Позвонить — опт, Антон Дмитриевич, +7 928 770-21-70">+7&nbsp;928&nbsp;770-21-70</a>
+        <span class="lbl">Антон Дмитриевич</span>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79287702170" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79287702170" target="_blank" rel="noopener" aria-label="Написать в Telegram — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79287702170" aria-label="Написать в Viber — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+          <!-- MAX: вставить ссылку max.ru/u/<хеш> от Антона Дмитриевича и&nbsp;раскомментировать -->
+          <!--
+          <a class="msg" href="https://max.ru/u/ХЕШ" target="_blank" rel="noopener" aria-label="Написать в MAX — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-max"/></svg>MAX</a>
+          -->
+        </p>
+      </div>
+      <div class="person" data-rv data-delay="1">
+        <span class="lbl">Розница</span>
+        <a href="tel:+79185949685" aria-label="Позвонить — розница, Маргарита Георгиевна, +7 918 594-96-85">+7&nbsp;918&nbsp;594-96-85</a>
+        <span class="lbl">Маргарита Георгиевна</span>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79185949685" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79185949685" target="_blank" rel="noopener" aria-label="Написать в Telegram — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79185949685" aria-label="Написать в Viber — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+      </div>
+      <div class="person" data-rv data-delay="2">
+        <span class="lbl">Почта</span>
+        <a href="mailto:ak806@me.com" style="font-size:clamp(15px,1.25vw,19px);text-transform:none">ak806@me.com</a>
+        <span class="lbl">Волгодонск, пер. Исторический 35</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="btns" style="margin-top:clamp(22px,3.4vh,40px)">
+    <a class="pill" href="tel:+79287702170">Заказать · +7&nbsp;928&nbsp;770-21-70</a>
+    <a class="link" href="opt.html">Условия опта</a>
+    <a class="link" href="dostavka.html">Доставка и&nbsp;холод в&nbsp;пути</a>
+  </div>
+</section>
+
+<footer class="foot" data-quiet>
+  <div class="foot__plate plate" data-plate><span>РЫБЦЕХЪ</span></div>
+  <div class="foot__specs">
+    <div><span class="lbl">С&nbsp;1967 года</span><p class="bs" style="margin-top:10px">Семья Клевцовых сушит рыбу шестое десятилетие. Официальное производство — с&nbsp;2003 года.</p></div>
+    <div><span class="lbl">Упаковка</span><p class="bs" style="margin-top:10px">Гофроящик ГОСТ-92 по 10&nbsp;кг, ГОСТ-105 по 5&nbsp;кг, ведро 11&nbsp;л. Документы на каждую партию.</p></div>
+    <div><span class="lbl">Хранение</span><p class="bs" style="margin-top:10px">0…−8&nbsp;°C. Срок хранения леща — 2&nbsp;месяца.</p></div>
+    <div class="foot__cta"><a class="ghost" href="opt.html">Условия опта</a><span class="lbl" id="footCount">50 позиций прайса</span></div>
+  </div>
+  <div class="foot__nav">
+    <a class="lbl" href="index.html">Главная</a><a class="lbl" href="price.html">Прайс</a>
+    <a class="lbl" href="istoria.html">Наша история</a><a class="lbl" href="opt.html">Оптовикам</a>
+    <a class="lbl" href="dostavka.html">Доставка</a><a class="lbl" href="magazin.html">Магазин</a>
+  </div>
+  <div class="foot__people">
+    <div class="fp">
+      <span class="lbl lbl--em">Опт</span>
+      <a class="fp__tel" href="tel:+79287702170" aria-label="Позвонить — опт, Антон Дмитриевич, +7 928 770-21-70">+7&nbsp;928&nbsp;770-21-70</a>
+      <span class="lbl">Антон Дмитриевич</span>
+      <p class="msgs">
+        <a class="msg" href="https://wa.me/79287702170" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+        <a class="msg" href="https://t.me/+79287702170" target="_blank" rel="noopener" aria-label="Написать в Telegram — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+        <a class="msg" href="viber://chat?number=%2B79287702170" aria-label="Написать в Viber — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        <!-- MAX: вставить ссылку max.ru/u/<хеш> от Антона Дмитриевича и&nbsp;раскомментировать -->
+        <!--
+        <a class="msg" href="https://max.ru/u/ХЕШ" target="_blank" rel="noopener" aria-label="Написать в MAX — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-max"/></svg>MAX</a>
+        -->
+      </p>
+    </div>
+    <div class="fp">
+      <span class="lbl lbl--em">Розница</span>
+      <a class="fp__tel" href="tel:+79185949685" aria-label="Позвонить — розница, Маргарита Георгиевна, +7 918 594-96-85">+7&nbsp;918&nbsp;594-96-85</a>
+      <span class="lbl">Маргарита Георгиевна</span>
+      <p class="msgs">
+        <a class="msg" href="https://wa.me/79185949685" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+        <a class="msg" href="https://t.me/+79185949685" target="_blank" rel="noopener" aria-label="Написать в Telegram — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+        <a class="msg" href="viber://chat?number=%2B79185949685" aria-label="Написать в Viber — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+      </p>
+    </div>
+    <div class="fp">
+      <span class="lbl lbl--em">Технолог</span>
+      <a class="fp__tel" href="tel:+79289650095" aria-label="Позвонить — технолог, Ольга Михайловна, +7 928 96-500-95">+7&nbsp;928&nbsp;96-500-95</a>
+      <span class="lbl">Ольга Михайловна</span>
+      <p class="msgs">
+        <a class="msg" href="https://wa.me/79289650095" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+        <a class="msg" href="https://t.me/+79289650095" target="_blank" rel="noopener" aria-label="Написать в Telegram — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+        <a class="msg" href="viber://chat?number=%2B79289650095" aria-label="Написать в Viber — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+      </p>
+    </div>
+  </div>
+  <div class="foot__place">
+    <span class="lbl lbl--cream">Магазин при цехе — Волгодонск, пер.&nbsp;Исторический&nbsp;35 (Красный Яр)</span>
+    <span class="lbl">Часы магазина: пн–пт 9:00–19:00 · сб–вс 9:00–17:00 · без перерыва и&nbsp;выходных</span>
+    <span class="lbl"><a href="mailto:ak806@me.com">ak806@me.com</a> · <a href="mailto:info@k-fish.ru">info@k-fish.ru</a> · <a href="https://vk.com/klevtsov_fish" target="_blank" rel="noopener">ВКонтакте</a></span>
+  </div>
+  <div class="foot__row">
+    <span class="lbl">ИП Клевцов Д.&nbsp;А. · РЫБЦЕХ.РФ</span>
+    <span class="lbl">Волгодонск · Ростовская область</span>
+    <span class="lbl">Узнайте, какой рыба должна быть на вкус!</span>
+    <span class="lbl lbl--em" data-price-tpl="Прайс от {d}">Прайс от 05.08.2026</span>
+  </div>
+  <p class="nano" style="margin-top:18px;max-width:80ch">Цены указаны с&nbsp;учётом НДС 5% и&nbsp;не являются публичной офертой. Товар обмену и&nbsp;возврату не подлежит. Хранение и&nbsp;перевозка — при температуре 0…−8&nbsp;°C.</p>
+</footer>
+
+<p class="nano nano--note stampnote" aria-hidden="true" data-price-tpl="* Цимлянское водохранилище · ГОСТ-92 · прайс от {d}">* Цимлянское водохранилище · ГОСТ-92 · прайс от 05.08.2026</p>
+
+<script src="assets/prices.js"></script>
+<script>
+/* ============================================================
+   Рендер прайса. Единственный источник данных — window.PRICES.
+   Цифры в разметку не вбиваются: всё считается из P.items.
+   ============================================================ */
+(function () {
+  'use strict';
+  var P = window.PRICES || {};
+  var ITEMS = (P.items || []).slice();
+
+  var $ = function (s) { return document.querySelector(s); };
+  var tbody = $('#tbody'), table = $('#table');
+  if (!tbody) return;
+
+  /* --- порядок и подписи разделов --- */
+  var ORDER = ['вяленая', 'вяленая и холодного копчения', 'холодного копчения', 'слабосолёная', 'икра'];
+  var TITLE = {
+    'вяленая': 'Вяленая',
+    'вяленая и холодного копчения': 'Вяленая и холодного копчения',
+    'холодного копчения': 'Холодного копчения',
+    'слабосолёная': 'Слабосолёная',
+    'икра': 'Икра'
+  };
+
+  var UNIT_TAG = { 'банка': 'за банку', 'шт': 'за штуку' };
+
+  var MONTH = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function norm(s) { return String(s == null ? '' : s).toLowerCase().replace(/ё/g, 'е'); }
+
+  function money(v) {
+    if (v == null || isNaN(v)) return '—';
+    var r = Math.round(v * 100) / 100;
+    var ip = Math.floor(r), fp = Math.round((r - ip) * 100);
+    var s = String(ip).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    if (fp) s += ',' + (fp < 10 ? '0' + fp : fp);
+    return s + ' ₽';
+  }
+  function plural(n, a, b, c) {
+    var n10 = n % 10, n100 = n % 100;
+    if (n10 === 1 && n100 !== 11) return a;
+    if (n10 >= 2 && n10 <= 4 && (n100 < 12 || n100 > 14)) return b;
+    return c;
+  }
+  function dateRu(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    if (!m) return String(iso || '—');
+    return parseInt(m[3], 10) + ' ' + MONTH[parseInt(m[2], 10) - 1] + ' ' + m[1];
+  }
+
+  /* --- состояние --- */
+  var state = { cat: 'all', q: '', mode: 'retail', sort: 'group' };
+
+  var params = new URLSearchParams(location.search);
+  if (norm(params.get('mode')) === 'opt') state.mode = 'opt';
+
+  function priceOf(it) { return state.mode === 'opt' ? it.price_opt : it.price_retail; }
+
+  function match(it) {
+    if (state.cat !== 'all' && norm(it.category).indexOf(norm(state.cat)) === -1) return false;
+    if (!state.q) return true;
+    var hay = norm(it.name + ' ' + (it.variant || '') + ' ' + it.category + ' ' + (it.notes || ''));
+    var words = state.q.split(/\s+/);
+    for (var i = 0; i < words.length; i++) { if (words[i] && hay.indexOf(words[i]) === -1) return false; }
+    return true;
+  }
+
+  function rowHTML(it) {
+    var tags = '';
+    if (/отборн/i.test(it.name)) tags += '<span class="tag">Отборный</span>';
+    if (it.notes === 'фирменный рецепт') tags += '<span class="tag">Фирменный рецепт</span>';
+    else if (it.notes) tags += '<span class="tag tag--dim">' + esc(it.notes) + '</span>';
+    if (it.unit && it.unit !== 'кг') tags += '<span class="tag tag--dim">' + esc(UNIT_TAG[it.unit] || ('цена за ' + it.unit)) + '</span>';
+    var v = it.variant ? '<span class="pr__v">' + esc(it.variant) + '</span>' : '';
+    return '<div class="pr">'
+      + '<div class="pr__n"><b>' + esc(it.name) + '</b>' + v + tags + '</div>'
+      + '<div class="pr__p pr__p--o" data-l="Опт">' + money(it.price_opt) + '</div>'
+      + '<div class="pr__p pr__p--r" data-l="Розница">' + money(it.price_retail) + '</div>'
+      + '</div>';
+  }
+
+  function render() {
+    var shown = ITEMS.filter(match);
+    var html = '';
+
+    if (!shown.length) {
+      html = '<div class="empty">Ничего не нашлось. Проверьте запрос или снимите фильтры. Позиции вне прайса — по телефону: <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></div>';
+    } else if (state.sort === 'group') {
+      var cats = ORDER.slice();
+      shown.forEach(function (it) { if (cats.indexOf(it.category) === -1) cats.push(it.category); });
+      cats.forEach(function (c) {
+        var part = shown.filter(function (it) { return it.category === c; });
+        if (!part.length) return;
+        html += '<div class="grp"><span class="lbl lbl--cream">' + esc(TITLE[c] || c) + '</span></div>';
+        part.forEach(function (it) { html += rowHTML(it); });
+      });
+    } else {
+      var list = shown.slice();
+      if (state.sort === 'name') {
+        list.sort(function (a, b) { return (a.name + ' ' + (a.variant || '')).localeCompare(b.name + ' ' + (b.variant || ''), 'ru'); });
+      } else {
+        var sign = state.sort === 'asc' ? 1 : -1;
+        list.sort(function (a, b) { return sign * ((priceOf(a) || 0) - (priceOf(b) || 0)); });
+      }
+      list.forEach(function (it) { html += rowHTML(it); });
+    }
+
+    tbody.innerHTML = html;
+
+    /* счётчики — только из данных */
+    var total = ITEMS.length;
+    var n = shown.length;
+    var word = plural(n, 'позиция', 'позиции', 'позиций');
+    var cnt = $('#pShown');
+    if (cnt) cnt.textContent = (n === total)
+      ? (total + ' ' + plural(total, 'позиция', 'позиции', 'позиций'))
+      : ('Показано ' + n + ' ' + word + ' из ' + total);
+    var reset = $('#pReset');
+    if (reset) reset.hidden = (state.cat === 'all' && !state.q);
+  }
+
+  /* --- переключение чипов --- */
+  function bindChips(sel, apply) {
+    var box = $(sel);
+    if (!box) return;
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('button.chip');
+      if (!b || !box.contains(b)) return;
+      Array.prototype.forEach.call(box.querySelectorAll('button.chip'), function (x) {
+        var on = x === b;
+        x.classList.toggle('is-on', on);
+        x.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      apply(b);
+      render();
+    });
+  }
+
+  bindChips('#fCat', function (b) { state.cat = b.getAttribute('data-f'); });
+  bindChips('#fSort', function (b) { state.sort = b.getAttribute('data-s'); });
+  bindChips('#fMode', function (b) { state.mode = b.getAttribute('data-m'); applyMode(true); });
+
+  function applyMode(push) {
+    var opt = state.mode === 'opt';
+    if (table) table.classList.toggle('is-opt', opt);
+    var to = $('#thOpt'), tr = $('#thRet');
+    if (to) to.classList.toggle('is-on', opt);
+    if (tr) tr.classList.toggle('is-on', !opt);
+    var hint = $('#optHint');
+    if (hint) hint.style.display = opt ? 'block' : 'none';
+    Array.prototype.forEach.call(document.querySelectorAll('#fMode .chip'), function (x) {
+      var on = x.getAttribute('data-m') === state.mode;
+      x.classList.toggle('is-on', on);
+      x.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (push && window.history && history.replaceState) {
+      var p = new URLSearchParams(location.search);
+      if (opt) p.set('mode', 'opt'); else p.delete('mode');
+      var qs = p.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+    }
+  }
+
+  var q = $('#q');
+  if (q) {
+    var t;
+    q.addEventListener('input', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { state.q = norm(q.value).trim(); render(); }, 120);
+    });
+  }
+  var reset = $('#pReset');
+  if (reset) reset.addEventListener('click', function () {
+    state.cat = 'all'; state.q = '';
+    if (q) q.value = '';
+    Array.prototype.forEach.call(document.querySelectorAll('#fCat .chip'), function (x) {
+      var on = x.getAttribute('data-f') === 'all';
+      x.classList.toggle('is-on', on);
+      x.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    render();
+  });
+
+  /* --- мета из файла цен --- */
+  var d = $('#pDate'); if (d) d.textContent = dateRu(P.updated);
+  var tot = $('#pTotal');
+  if (tot) { tot.textContent = String(ITEMS.length); tot.setAttribute('data-count', ITEMS.length); }
+  var totW = $('#pTotalWord');
+  if (totW) totW.textContent = plural(ITEMS.length, 'позиция', 'позиции', 'позиций') + ' в прайсе';
+  var fc = $('#footCount');
+  if (fc) fc.textContent = ITEMS.length + ' ' + plural(ITEMS.length, 'позиция', 'позиции', 'позиций') + ' прайса';
+  var legal = $('#pLegal');
+  if (legal && P.vat_note) legal.textContent = P.vat_note + ' Товар обмену и возврату не подлежит.';
+
+  applyMode(false);
+  render();
+})();
+</script>
+<script>
+/* JSON-LD прайса — строго из window.PRICES, руками цифры не вбиваем.
+   Наличие (availability) НЕ указываем: сайт им не управляет, врать нельзя. */
+(function () {
+  var P = window.PRICES;
+  if (!P || !P.items || !P.items.length) return;
+  var BASE = 'https://xn--90ai5awd2a.xn--p1ai/';
+  var ld = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Прайс рыбцеха Клевцова",
+    "description": P.vat_note || '',
+    "url": BASE + 'price.html',
+    "numberOfItems": P.items.length,
+    "itemListOrder": "https://schema.org/ItemListUnordered",
+    "itemListElement": P.items.map(function (it, n) {
+      return {
+        "@type": "ListItem",
+        "position": n + 1,
+        "item": {
+          "@type": "Product",
+          "name": it.name + (it.variant ? ', ' + it.variant : ''),
+          "category": it.category,
+          "brand": { "@type": "Brand", "name": "Рыбцех Клевцова" },
+          "offers": {
+            "@type": "Offer",
+            "price": it.price_retail,
+            "priceCurrency": P.currency || 'RUB',
+            "url": BASE + 'price.html',
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "unitText": it.unit
+            }
+          }
+        }
+      };
+    })
+  };
+  var s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(ld);
+  document.head.appendChild(s);
+})();
+</script>
+<script>
+/* Числа и дата прайса — только из window.PRICES; в разметке остаётся фолбэк. */
+(function(){
+  'use strict';
+  var P = window.PRICES; if (!P || !P.items) return;
+  var n = P.items.length;
+  var d = String(P.updated || '').split('-');
+  var dt = d.length === 3 ? d[2] + '.' + d[1] + '.' + d[0] : '';
+  var t = n % 10, h = n % 100;
+  var w = (t === 1 && h !== 11) ? 'позиция' : ((t >= 2 && t <= 4 && (h < 12 || h > 14)) ? 'позиции' : 'позиций');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-price-tpl]'), function (el) {
+    var s = el.getAttribute('data-price-tpl');
+    if (!dt && s.indexOf('{d}') > -1) return;
+    el.textContent = s.replace(/\{n\}/g, n).replace(/\{p\}/g, w).replace(/\{d\}/g, dt);
+  });
+})();
+</script>
+<script src="assets/order.js"
+        data-theme="artefakt"
+        data-rows=".table .pr"
+        data-root="#tbody"
+        data-name-cell=".pr__n"
+        data-page-opt="#fMode [data-m=&quot;opt&quot;]"
+        data-page-retail="#fMode [data-m=&quot;retail&quot;]"
+        data-mode-flags="#table:is-opt"></script>
+<script src="assets/schema.js"></script>
+<script>
+  RybtsehSchema.inject(RybtsehSchema.breadcrumbList('Прайс'));
+  RybtsehSchema.inject(RybtsehSchema.organization());
+</script>
+<script src="assets/artefakt.js" defer></script>
+<script src="assets/cursor.js" defer></script>
+<script src="assets/vlabel.js" defer></script>
+<script src="assets/motion/vendor/gsap.min.js" defer></script>
+<script src="assets/motion/vendor/CustomEase.min.js" defer></script>
+<script src="assets/motion/vendor/Flip.min.js" defer></script>
+<script src="assets/motion/vendor/SplitText.min.js" defer></script>
+<script src="assets/motion/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/motion/vendor/Observer.min.js" defer></script>
+<script src="assets/motion/core.js" defer></script>
+<script src="assets/motion/room.js" defer></script>
+<script src="assets/motion/ledger.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru" data-cursor-theme="rosso">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Наша история — Рыбцех Клевцова, семейное дело с&nbsp;1967 года</title>
+<meta name="description" content="Хроника семейного дела с&nbsp;1967 года: официальное производство с&nbsp;2003-го, компьютерная сушилка с&nbsp;2007-го, репортаж Первого канала 25.08.2008 и&nbsp;шестнадцать кадров из того эфира.">
+<link rel="canonical" href="https://xn--90ai5awd2a.xn--p1ai/istoria.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<meta name="theme-color" content="#000000">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Рыбцех Клевцова">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://xn--90ai5awd2a.xn--p1ai/istoria.html">
+<meta property="og:title" content="Наша история — семейное дело с&nbsp;1967 года">
+<meta property="og:description" content="От домашних вешал 1967 года до сушилки с&nbsp;климат-контролем. Репортаж Первого канала от 25.08.2008 и&nbsp;шестнадцать кадров из того эфира.">
+<meta property="og:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-istoria.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ряды вяленой рыбы на вешалах">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Наша история — семейное дело с&nbsp;1967 года">
+<meta name="twitter:description" content="От домашних вешал 1967 года до сушилки с&nbsp;климат-контролем. Репортаж Первого канала от 25.08.2008 и&nbsp;шестнадцать кадров из того эфира.">
+<meta name="twitter:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-istoria.jpg">
+
+<link rel="preload" as="image" href="assets/img/poster-oblet.jpg" fetchpriority="high">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSans-cyr.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSans-lat.woff2" crossorigin>
+<link rel="stylesheet" href="assets/rosso.css">
+<link rel="stylesheet" href="assets/motion/core.css">
+<link rel="stylesheet" href="assets/motion/cut.css">
+<link rel="stylesheet" href="assets/cursor.css">
+<link rel="stylesheet" href="assets/gl/rosso-gl.css">
+<style>
+/* ---- специфика страницы «Наша история» ---- */
+
+/* Фильм о производстве: 16:9 во всю ширину контента — центральный блок страницы.
+   Крупнее архивного репортажа 4:3 намеренно: сначала наше кино, потом хроника 2008. */
+#film{scroll-margin-top:56px}
+.film-stage{
+  max-width:1180px;margin-inline:auto;position:relative;
+  background:#000;border:1px solid var(--s4);
+}
+.film-stage video{width:100%;aspect-ratio:16/9;display:block;background:#000}
+.film-cap{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;
+  max-width:1180px;margin:14px auto 0;
+}
+
+/* Репортаж: видео 640×480 (4:3) — не растягиваем на всю ширину */
+.report{background:var(--s0)}
+.report-stage{max-width:720px;margin-inline:auto}
+.report-stage video{width:100%;aspect-ratio:4/3;background:#0a0a0a;display:block}
+.report-cap{
+  display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;
+  max-width:720px;margin:14px auto 0;
+}
+.report-quote{max-width:920px;margin:clamp(30px,4vw,48px) auto 0;text-align:center}
+.report-quote blockquote{
+  font-size:clamp(16px,1.7vw,22px);font-weight:500;line-height:1.5;
+  letter-spacing:var(--tr-18);color:var(--argento);margin:0 auto;max-width:44ch;
+}
+.report-quote figcaption{margin-top:12px}
+
+/* Галерея кадров репортажа: сдержанная сетка 1px-швами */
+.frames{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--s4)}
+.frames .ph{aspect-ratio:4/3}
+.frames .ph::after{
+  content:'';position:absolute;inset:0;z-index:2;background:#000;opacity:.22;
+  transition:opacity var(--t);pointer-events:none;
+}
+.frames .ph:hover::after{opacity:0}
+@media(max-width:900px){.frames{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.frames{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.frames-note{margin-top:14px;text-align:center}
+
+/* «Как мы делаем сегодня»: два кадра + регламент */
+.today-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--s4);
+  margin-bottom:clamp(28px,3.4vw,44px);
+}
+@media(max-width:760px){.today-grid{grid-template-columns:1fr}}
+.today-grid .ph{aspect-ratio:16/10}
+.reglament{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--s4);border:1px solid var(--s4)}
+@media(max-width:900px){.reglament{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.reglament{grid-template-columns:1fr}}
+.reg-item{background:var(--s2);padding:clamp(20px,2.4vw,30px);position:relative}
+.reg-item::after{
+  content:'';position:absolute;left:0;top:0;width:100%;height:1px;background:var(--rosso);
+  transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.7,.3,1);
+}
+.reg-item:hover::after{transform:scaleX(1)}
+.reg-item b{
+  display:block;font-family:var(--ff);font-weight:700;font-size:clamp(22px,2.2vw,30px);
+  line-height:1.1;letter-spacing:var(--tr-40);margin:10px 0 8px;white-space:nowrap;
+}
+.reg-item p{color:var(--fumo);font-size:12px}
+</style>
+<script src="assets/metrika-config.js" defer></script>
+<script src="assets/metrika.js" defer></script>
+<noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXX" style="position:absolute;left:-9999px" alt=""></div></noscript>
+</head>
+<body>
+<!-- Иконки мессенджеров: тонкий контур currentColor, без фирменных заливок -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.3 20.7l4.3-1.1A8.8 8.8 0 1 0 12 3.2Z"/><path d="M9.1 8.2h1.2l.9 2-1 .8a5.4 5.4 0 0 0 2.5 2.5l.8-1 2 .9v1.2a1 1 0 0 1-1 1 6.9 6.9 0 0 1-6.4-6.4 1 1 0 0 1 1-1Z"/></symbol>
+<symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.4 3.9 2.9 10.8a.45.45 0 0 0 0 .85l4.6 1.6 1.7 4.9a.45.45 0 0 0 .8.12l2.4-2.9 4.5 3.3a.45.45 0 0 0 .7-.25l3.5-13.9a.45.45 0 0 0-.7-.52Z"/><path d="m7.5 13.25 12.3-8.6-9.6 11.8"/></symbol>
+<symbol id="i-vb" viewBox="0 0 24 24"><path d="M8.4 4.4h1.9l1.4 3.1-1.7 1.2a9.5 9.5 0 0 0 4.7 4.7l1.2-1.7 3.1 1.4v1.9a1.8 1.8 0 0 1-1.9 1.8A13.4 13.4 0 0 1 4.7 6.3a1.8 1.8 0 0 1 1.8-1.9Z"/><path d="M13.9 3.1a6.3 6.3 0 0 1 5.1 5.1M13.5 6.4a3.1 3.1 0 0 1 2.3 2.3"/></symbol>
+<symbol id="i-max" viewBox="0 0 24 24"><path d="M4 4.6h16a1.6 1.6 0 0 1 1.6 1.6v9.2a1.6 1.6 0 0 1-1.6 1.6h-6.4l-3.7 3.3a.4.4 0 0 1-.66-.3V17H4a1.6 1.6 0 0 1-1.6-1.6V6.2A1.6 1.6 0 0 1 4 4.6Z"/><path d="m7.9 13.6 1.7-4.2 2.4 3.1 2.4-3.1 1.7 4.2"/></symbol>
+</defs></svg>
+<a class="skip" href="#main">К&nbsp;содержанию</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><b>Рыбцех Клевцова</b><span>Волгодонск · с&nbsp;1967</span></a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="index.html">Главная</a><a href="price.html">Прайс</a><a href="opt.html">Опт</a>
+      <a href="dostavka.html">Доставка</a><a href="magazin.html">Магазин</a><a href="istoria.html">Наша история</a>
+    </nav>
+    <a class="tel" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>
+    <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="drawer" id="drawer">
+  <a href="index.html"><i>01</i>Главная</a>
+  <a href="price.html"><i>02</i>Прайс</a>
+  <a href="opt.html"><i>03</i>Опт</a>
+  <a href="dostavka.html"><i>04</i>Доставка</a>
+  <a href="magazin.html"><i>05</i>Магазин</a>
+  <a href="istoria.html"><i>06</i>Наша история</a>
+  <div class="dr-foot"><a class="cap" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></div>
+</nav>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero short vig">
+    <div class="hero-media" data-cursor="Смотреть">
+      <video data-autoplay muted playsinline loop preload="none" data-plx="8"
+             poster="assets/img/poster-oblet.jpg" aria-hidden="true">
+        <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/oblet.webm"><source src="assets/video/oblet.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow" data-rv="up">Волгодонск · с&nbsp;1967 года</p>
+      <h1 class="title-card" data-split>Наша история</h1>
+    </div>
+  </section>
+
+  <!-- 01 ХРОНИКА -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <span class="sec-idx">01</span>
+        <h2>Шестое десятилетие</h2>
+        <p class="sec-note">От домашних вешал до климат-контроля</p>
+      </div>
+    </div>
+    <div class="chron">
+      <div class="chron-view" data-cursor-drag>
+        <div class="chron-track" data-rv-group data-st="2">
+          <article class="chron-item ink-wash" data-rv="up">
+            <span class="chron-mark">Начало</span>
+            <p class="chron-year" data-count>1967</p>
+            <h3 class="hd">Семья начала сушить рыбу</h3>
+            <p>Первые вешала — дома, для своих. Рыба — из Цимлянского водохранилища.</p>
+          </article>
+          <article class="chron-item ink-wash" data-rv="up">
+            <span class="chron-mark">Производство</span>
+            <p class="chron-year" data-count>2003</p>
+            <h3 class="hd">Официальное производство</h3>
+            <p>Семейный способ становится цехом: ИП, документы, ГОСТ на упаковку.</p>
+          </article>
+          <article class="chron-item ink-wash" data-rv="up">
+            <span class="chron-mark">Холод</span>
+            <p class="chron-year" data-count>2005</p>
+            <h3 class="hd">Американское холодильное оборудование</h3>
+            <p>Сырьё морозим при −20&nbsp;°C. По технологии достаточно −18.</p>
+          </article>
+          <article class="chron-item ink-wash" data-rv="up">
+            <span class="chron-mark">Климат-контроль</span>
+            <p class="chron-year" data-count>2007</p>
+            <h3 class="hd">Компьютерная сушилка</h3>
+            <p>За климатом следят компьютеры. Производство перестаёт зависеть от погоды: солить можно круглый год, а&nbsp;не только весной.</p>
+          </article>
+          <article class="chron-item ink-wash" data-rv="up">
+            <span class="chron-mark">Пресса</span>
+            <p class="chron-year" data-count>2008</p>
+            <h3 class="hd">Репортаж Первого канала</h3>
+            <p>25 августа 2008 года о&nbsp;цехе снял сюжет Первый канал. Запись — ниже.</p>
+          </article>
+          <article class="chron-item ink-wash" data-rv="up">
+            <span class="chron-mark">Сегодня</span>
+            <p class="chron-year" data-count>2026</p>
+            <h3 class="hd">Шестое десятилетие</h3>
+            <p>То же правило, что и&nbsp;в&nbsp;1967-м: соль в&nbsp;жабры, подвал +8&nbsp;°C, ровно двое суток в&nbsp;сушилке. К&nbsp;2027 году делу шестьдесят лет.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" data-rv="line">
+
+  <!-- 02 ФИЛЬМ О ПРОИЗВОДСТВЕ -->
+  <section class="pad" id="film">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <span class="sec-idx">02</span>
+        <h2>Кино о&nbsp;вялении</h2>
+        <p class="sec-note">Тридцать пять секунд · постановочная съёмка, 2026</p>
+      </div>
+      <div class="film-stage rev">
+        <video controls playsinline preload="none" poster="assets/img/poster-kino-30.jpg"
+               aria-label="Постановочный ролик о&nbsp;вялении рыбы, 35 секунд">
+          <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/kino-30.webm"><source src="assets/video/kino-30.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="film-cap rev" data-delay="1">
+        <span class="micro dim">Постановочная съёмка, 2026</span>
+        <span class="micro dim2">0:35 · без звука</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="hairline" data-rv="line">
+
+  <!-- 03 РЕПОРТАЖ -->
+  <section class="report pad" id="report">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <span class="sec-idx">03</span>
+        <h2>О&nbsp;нашей рыбе снимал Первый канал</h2>
+        <p class="sec-note">Эфир 25 августа 2008 года · репортаж Юлии Погореловой</p>
+      </div>
+      <div class="report-stage rev">
+        <video controls preload="none" poster="assets/img/poster-istoria-1tv.jpg"
+               aria-label="Репортаж Первого канала о&nbsp;рыбцехе, эфир 25 августа 2008 года">
+          <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/istoria-1tv.webm"><source src="assets/video/istoria-1tv.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="report-cap rev" data-delay="1">
+        <span class="micro dim">Первый канал, 2008</span>
+        <span class="micro dim2">Эфир 25.08.2008 · 3:40 · со звуком</span>
+      </div>
+      <figure class="report-quote rev" data-delay="2">
+        <blockquote>«Вялить рыбу Клевцова ещё отец учил»</blockquote>
+        <figcaption class="micro dim2">Первый канал, 25.08.2008. Правильно вялить рыбу — «непростое дело с&nbsp;массой хитростей, которые рыбаки передают от поколения к&nbsp;поколению»</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 04 КАДРЫ ИЗ РЕПОРТАЖА -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <span class="sec-idx">04</span>
+        <h2>Цех в&nbsp;2008 году</h2>
+        <p class="sec-note">Кадры из эфира Первого канала, 25.08.2008</p>
+      </div>
+      <div class="frames" data-rv-group data-st="1">
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/ryba-01-320.avif 320w, assets/img/rsp/1tv/ryba-01-640.avif 640w, assets/img/rsp/1tv/ryba-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/ryba-01-320.webp 320w, assets/img/rsp/1tv/ryba-01-640.webp 640w, assets/img/rsp/1tv/ryba-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/ryba-01.jpg" alt="Рыба на приёмке, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/ryba-02-320.avif 320w, assets/img/rsp/1tv/ryba-02-640.avif 640w, assets/img/rsp/1tv/ryba-02-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/ryba-02-320.webp 320w, assets/img/rsp/1tv/ryba-02-640.webp 640w, assets/img/rsp/1tv/ryba-02-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/ryba-02.jpg" alt="Рыба перед посолом, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/zamorozka-01-320.avif 320w, assets/img/rsp/1tv/zamorozka-01-640.avif 640w, assets/img/rsp/1tv/zamorozka-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/zamorozka-01-320.webp 320w, assets/img/rsp/1tv/zamorozka-01-640.webp 640w, assets/img/rsp/1tv/zamorozka-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/zamorozka-01.jpg" alt="Заморозка сырья, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sol-01-320.avif 320w, assets/img/rsp/1tv/sol-01-640.avif 640w, assets/img/rsp/1tv/sol-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sol-01-320.webp 320w, assets/img/rsp/1tv/sol-01-640.webp 640w, assets/img/rsp/1tv/sol-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/sol-01.jpg" alt="Соль для посола, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sol-zhabry-01-320.avif 320w, assets/img/rsp/1tv/sol-zhabry-01-640.avif 640w, assets/img/rsp/1tv/sol-zhabry-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sol-zhabry-01-320.webp 320w, assets/img/rsp/1tv/sol-zhabry-01-640.webp 640w, assets/img/rsp/1tv/sol-zhabry-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/sol-zhabry-01.jpg" alt="Соль закладывается в&nbsp;жабры, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/posol-01-320.avif 320w, assets/img/rsp/1tv/posol-01-640.avif 640w, assets/img/rsp/1tv/posol-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/posol-01-320.webp 320w, assets/img/rsp/1tv/posol-01-640.webp 640w, assets/img/rsp/1tv/posol-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/posol-01.jpg" alt="Посол рыбы в&nbsp;чанах, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/posol-02-320.avif 320w, assets/img/rsp/1tv/posol-02-640.avif 640w, assets/img/rsp/1tv/posol-02-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/posol-02-320.webp 320w, assets/img/rsp/1tv/posol-02-640.webp 640w, assets/img/rsp/1tv/posol-02-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/posol-02.jpg" alt="Рыба в&nbsp;посоле, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/posol-03-320.avif 320w, assets/img/rsp/1tv/posol-03-640.avif 640w, assets/img/rsp/1tv/posol-03-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/posol-03-320.webp 320w, assets/img/rsp/1tv/posol-03-640.webp 640w, assets/img/rsp/1tv/posol-03-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/posol-03.jpg" alt="Просоленная рыба, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="fade" data-cursor="Смотреть"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-01-320.avif 320w, assets/img/rsp/1tv/veshala-01-640.avif 640w, assets/img/rsp/1tv/veshala-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-01-320.webp 320w, assets/img/rsp/1tv/veshala-01-640.webp 640w, assets/img/rsp/1tv/veshala-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/veshala-01.jpg" alt="Рыба развешивается на вешала, кадр эфира 25.08.2008" data-gl="displace" data-gl-src="assets/img/1tv/veshala-04.jpg" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-02-320.avif 320w, assets/img/rsp/1tv/veshala-02-640.avif 640w, assets/img/rsp/1tv/veshala-02-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-02-320.webp 320w, assets/img/rsp/1tv/veshala-02-640.webp 640w, assets/img/rsp/1tv/veshala-02-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/veshala-02.jpg" alt="Ряды рыбы на вешалах, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-03-320.avif 320w, assets/img/rsp/1tv/veshala-03-640.avif 640w, assets/img/rsp/1tv/veshala-03-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-03-320.webp 320w, assets/img/rsp/1tv/veshala-03-640.webp 640w, assets/img/rsp/1tv/veshala-03-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/veshala-03.jpg" alt="Вешала с&nbsp;вяленой рыбой, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-04-320.avif 320w, assets/img/rsp/1tv/veshala-04-640.avif 640w, assets/img/rsp/1tv/veshala-04-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/veshala-04-320.webp 320w, assets/img/rsp/1tv/veshala-04-640.webp 640w, assets/img/rsp/1tv/veshala-04-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/veshala-04.jpg" alt="Рыба на вешалах крупным планом, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="fade" data-cursor="Смотреть"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-01-320.avif 320w, assets/img/rsp/1tv/sushilka-01-640.avif 640w, assets/img/rsp/1tv/sushilka-01-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-01-320.webp 320w, assets/img/rsp/1tv/sushilka-01-640.webp 640w, assets/img/rsp/1tv/sushilka-01-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/sushilka-01.jpg" alt="Сушилка изнутри, кадр эфира 25.08.2008" data-gl="displace" data-gl-src="assets/img/1tv/sushilka-04.jpg" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-02-320.avif 320w, assets/img/rsp/1tv/sushilka-02-640.avif 640w, assets/img/rsp/1tv/sushilka-02-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-02-320.webp 320w, assets/img/rsp/1tv/sushilka-02-640.webp 640w, assets/img/rsp/1tv/sushilka-02-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/sushilka-02.jpg" alt="Ряды рыбы в&nbsp;сушилке, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-03-320.avif 320w, assets/img/rsp/1tv/sushilka-03-640.avif 640w, assets/img/rsp/1tv/sushilka-03-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-03-320.webp 320w, assets/img/rsp/1tv/sushilka-03-640.webp 640w, assets/img/rsp/1tv/sushilka-03-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/sushilka-03.jpg" alt="Коридор сушилки, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-04-320.avif 320w, assets/img/rsp/1tv/sushilka-04-640.avif 640w, assets/img/rsp/1tv/sushilka-04-1280.avif 1280w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/1tv/sushilka-04-320.webp 320w, assets/img/rsp/1tv/sushilka-04-640.webp 640w, assets/img/rsp/1tv/sushilka-04-1280.webp 1280w"><img class="ph-img" loading="lazy" width="1280" height="736" src="assets/img/1tv/sushilka-04.jpg" alt="Готовая рыба в&nbsp;сушилке, кадр эфира 25.08.2008" data-plx="10" decoding="async"></picture></figure>
+      </div>
+      <p class="frames-note micro dim2 rev" data-delay="1">16 кадров из эфира · приёмка, соль, посол, вешала, сушилка</p>
+    </div>
+  </section>
+
+  <hr class="hairline" data-rv="line">
+
+  <!-- 05 КАК МЫ ДЕЛАЕМ СЕГОДНЯ -->
+  <section class="pad">
+    <div class="wrap">
+      <div class="sec-head rev">
+        <span class="sec-idx">05</span>
+        <h2>Как мы делаем сегодня</h2>
+        <p class="sec-note">Тот же способ. Оборудование, которое держит режим круглый год</p>
+      </div>
+      <div class="today-grid" data-rv-group>
+        <figure class="ph" data-rv="mask">
+          <video data-autoplay muted playsinline loop preload="none"
+                 poster="assets/img/poster-svet-loop.jpg" aria-label="Свет и&nbsp;пар в&nbsp;помещении цеха">
+            <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/svet-loop.webm"><source src="assets/video/svet-loop.mp4" type="video/mp4">
+          </video>
+        </figure>
+        <figure class="ph" data-rv="mask"><picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/vyalenie-320.avif 320w, assets/img/rsp/vyalenie-640.avif 640w, assets/img/rsp/vyalenie-1280.avif 1280w, assets/img/rsp/vyalenie-1363.avif 1363w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/vyalenie-320.webp 320w, assets/img/rsp/vyalenie-640.webp 640w, assets/img/rsp/vyalenie-1280.webp 1280w, assets/img/rsp/vyalenie-1363.webp 1363w"><img class="ph-img" loading="lazy" width="1363" height="784" src="assets/img/vyalenie.jpg" alt="Лещи на вешалах сушилки, вид снизу" decoding="async"></picture></figure>
+      </div>
+      <div class="reglament" data-rv-group data-st="2">
+        <div class="reg-item" data-rv="up">
+          <span class="micro dim2">Сырьё</span>
+          <b>Цимла</b>
+          <p>Вся речная рыба — только из Цимлянского водохранилища.</p>
+        </div>
+        <div class="reg-item" data-rv="up">
+          <span class="micro dim2">Заморозка</span>
+          <b data-count>−20&nbsp;°C</b>
+          <p>Морозим перед посолом. Норма — −18.</p>
+        </div>
+        <div class="reg-item" data-rv="up">
+          <span class="micro dim2">Посол</span>
+          <b data-count>+8&nbsp;°C</b>
+          <p>В&nbsp;подвале, по старому рецепту. Соль набивается в&nbsp;жабры.</p>
+        </div>
+        <div class="reg-item" data-rv="up">
+          <span class="micro dim2">Сушка</span>
+          <b data-count>48 часов</b>
+          <p>Ровно двое суток. Не полтора и&nbsp;не трое.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="news">
+    <div class="wrap rev">
+      <h3>Что делаем сегодня — в&nbsp;прайсе</h3>
+      <p><span data-pos-count data-count>50</span> позиций, опт и&nbsp;розница в&nbsp;одной строке. Опт — от 100&nbsp;кг.</p>
+      <a class="btn-red" href="price.html">Открыть прайс</a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="foot">
+  <div class="wrap">
+    <div class="f-lead">
+      <p class="f-mark">Рыбцех Клевцова</p>
+      <p class="dim">Вяленая и&nbsp;копчёная рыба Цимлянского водохранилища. Волгодонск, семейное дело с&nbsp;1967 года.</p>
+    </div>
+    <div class="fgrid2">
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a class="ink-line" href="index.html">Главная</a></li>
+          <li><a class="ink-line" href="price.html">Прайс</a></li>
+          <li><a class="ink-line" href="opt.html">Опт</a></li>
+          <li><a class="ink-line" href="dostavka.html">Доставка</a></li>
+          <li><a class="ink-line" href="magazin.html">Магазин</a></li>
+          <li><a class="ink-line" href="istoria.html">Наша история</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Опт</h4>
+        <ul>
+          <li><a href="tel:+79287702170" aria-label="Позвонить — опт, Антон Дмитриевич, +7 928 770-21-70">Антон Дмитриевич · +7&nbsp;928&nbsp;770-21-70</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79287702170" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79287702170" target="_blank" rel="noopener" aria-label="Написать в Telegram — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79287702170" aria-label="Написать в Viber — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        
+          <!-- MAX: вставить ссылку max.ru/u/<хеш> от Антона Дмитриевича и раскомментировать
+            <a class="msg" href="https://max.ru/u/ХЕШ" target="_blank" rel="noopener" aria-label="Написать в MAX: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-max"/></svg>MAX</a>
+          -->
+        </p>
+        <ul>
+          <li><p>Партия от 100&nbsp;кг в&nbsp;ассортименте</p></li>
+          <li><p>Формируется за 10–14 дней, предоплата 50%</p></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Розница</h4>
+        <ul>
+          <li><a href="tel:+79185949685" aria-label="Позвонить — розница, Маргарита Георгиевна, +7 918 594-96-85">Маргарита Георгиевна · +7&nbsp;918&nbsp;594-96-85</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79185949685" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79185949685" target="_blank" rel="noopener" aria-label="Написать в Telegram — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79185949685" aria-label="Написать в Viber — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+        <ul>
+          <li><p>Наличие, вес, розничный заказ</p></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Технолог</h4>
+        <ul>
+          <li><a href="tel:+79289650095" aria-label="Позвонить — технолог, Ольга Михайловна, +7 928 96-500-95">Ольга Михайловна · +7&nbsp;928&nbsp;96-500-95</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79289650095" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79289650095" target="_blank" rel="noopener" aria-label="Написать в Telegram — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79289650095" aria-label="Написать в Viber — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+        <ul>
+          <li><p>Технология, документы, ветеринарные справки</p></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-place">
+      <p><b>Магазин при цехе</b> — Волгодонск, пер.&nbsp;Исторический&nbsp;35 (Красный Яр)</p>
+      <p>Пн–пт 9:00–19:00 · сб–вс 9:00–17:00 · без перерыва и&nbsp;выходных</p>
+      <p><a href="mailto:ak806@me.com">ak806@me.com</a> · <a href="mailto:info@k-fish.ru">info@k-fish.ru</a> · ИП Клевцов Д.А., Ростовская обл., г. Волгодонск</p>
+    </div>
+    <div class="f-social">
+      <a href="tel:+79287702170"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></i>Позвонить</a>
+      <a href="mailto:ak806@me.com"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg></i>Написать</a>
+      <a href="https://vk.com/klevtsov_fish" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7c.7 6 4 10 8.5 10h1v-4c1.5.2 2.8 1.5 3.5 4H20c-.6-3-2-4.8-3.5-5.6C18 10.6 19.4 8.8 20 7h-2.7c-.8 2.3-2.2 4-3.8 4.3V7h-2.6v7C8.6 13 6.8 10 6.5 7z"/></svg></i>ВКонтакте</a>
+    </div>
+  </div>
+</footer>
+<div class="f-strip">
+  <div class="wrap">
+    <span>© 2026 ИП Клевцов Д.А.</span><span>РЫБЦЕХ.РФ</span><a href="price.html">Прайс не является офертой</a>
+  </div>
+</div>
+
+<script src="assets/prices.js"></script>
+<script>
+/* Счётчик позиций — только из window.PRICES, руками цифры не вбиваем */
+(function(){
+  var P = window.PRICES;
+  if (!P || !P.items) return;
+  document.querySelectorAll('[data-pos-count]').forEach(function(el){ el.textContent = P.items.length; });
+})();
+</script>
+<script src="assets/schema.js"></script>
+<script>
+  RybtsehSchema.inject(RybtsehSchema.breadcrumbList('Наша история'));
+  RybtsehSchema.inject(RybtsehSchema.organization());
+  RybtsehSchema.inject(RybtsehSchema.videoObject('production_film'));
+  RybtsehSchema.inject(RybtsehSchema.videoObject('report_1tv'));
+</script>
+<script src="assets/motion/vendor/gsap.min.js" defer></script>
+<script src="assets/motion/vendor/CustomEase.min.js" defer></script>
+<script src="assets/motion/vendor/Flip.min.js" defer></script>
+<script src="assets/motion/vendor/SplitText.min.js" defer></script>
+<script src="assets/motion/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/motion/vendor/Observer.min.js" defer></script>
+<script src="assets/motion/core.js" defer></script>
+<script src="assets/motion/cut.js" defer></script>
+<script src="assets/rosso.js" defer></script>
+<script src="assets/cursor.js" defer></script>
+<script src="assets/gl/rosso-gl.js" defer></script>
+</body>
+</html>

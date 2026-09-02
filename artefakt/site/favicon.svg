@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Рыбцехъ">
+  <rect width="64" height="64" fill="#100904"/>
+  <g fill="#ffedd7">
+    <rect x="18" y="14" width="28" height="22"/>
+    <rect x="18" y="14" width="8" height="38"/>
+  </g>
+  <rect x="26" y="20" width="12" height="10" fill="#dc5000"/>
+</svg>

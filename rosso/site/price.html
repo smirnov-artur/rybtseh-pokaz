@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ru" data-order-theme="rosso" data-cursor-theme="rosso">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Прайс Рыбцеха Клевцова — опт и&nbsp;розница, 50 позиций</title>
+<meta name="description" content="Прайс от 05.08.2026: вяленая, холодного копчения, слабосолёная рыба и&nbsp;икра. Опт и&nbsp;розница по каждой позиции, фильтры и&nbsp;поиск. НДС 5% включён.">
+<link rel="canonical" href="https://xn--90ai5awd2a.xn--p1ai/price.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon-180.png">
+<meta name="theme-color" content="#000000">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Рыбцех Клевцова">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://xn--90ai5awd2a.xn--p1ai/price.html">
+<meta property="og:title" content="Прайс Рыбцеха Клевцова — опт и&nbsp;розница">
+<meta property="og:description" content="Оптовая и&nbsp;розничная цена по каждой позиции — в&nbsp;одной строке. Опт от 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по позиции. НДС 5% включён.">
+<meta property="og:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-price.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Макро чешуи вяленой рыбы">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Прайс Рыбцеха Клевцова — опт и&nbsp;розница">
+<meta name="twitter:description" content="Оптовая и&nbsp;розничная цена по каждой позиции — в&nbsp;одной строке. Опт от 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по позиции. НДС 5% включён.">
+<meta name="twitter:image" content="https://xn--90ai5awd2a.xn--p1ai/assets/img/og/og-price.jpg">
+
+<link rel="preload" as="image" href="assets/img/cheshuya.jpg" fetchpriority="high">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSans-cyr.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/IBMPlexSans-lat.woff2" crossorigin>
+<link rel="stylesheet" href="assets/rosso.css">
+<link rel="stylesheet" href="assets/motion/core.css">
+<link rel="stylesheet" href="assets/motion/cut.css">
+<link rel="stylesheet" href="assets/order.css">
+<link rel="stylesheet" href="assets/cursor.css">
+<link rel="stylesheet" href="assets/gl/rosso-gl.css">
+<link rel="stylesheet" href="assets/motion/price-instrument.css">
+<style>
+/* ---- специфика страницы «Прайс» ---- */
+
+/* Компактная шапка на чешуе (приглушённый декор-фон) */
+.pr-hero{position:relative;background:var(--s0);overflow:hidden;display:flex;align-items:center;min-height:min(100svh,620px)}
+/* Было .pr-hero>img — <picture class="pic"> (display:contents) стоит между
+   ними в DOM, «>» никогда не совпадал: картинка жила в потоке на полную
+   свою высоту (784px) и раздувала герой на мобильном под сгиб. */
+.pr-hero>.pic>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.26;filter:brightness(.8)}
+.pr-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.74))}
+.pr-hero-in{
+  position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:10px;padding-block:clamp(24px,6svh,64px);width:100%;
+}
+.pr-hero .title-card{font-size:clamp(28px,3.4vw,46px)}
+.pr-meta{color:var(--argento)}
+
+/* Панель инструментов: переключатель цены, сортировка, счётчик */
+.pr-tools{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;margin-bottom:10px}
+.pr-tools .pr-count{margin-left:auto}
+@media(max-width:560px){.pr-tools .pr-count{margin-left:0;flex-basis:100%}}
+.sortg{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sortg .lbl{font-size:9px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--piombo);margin-right:4px}
+.dirmark{margin-left:6px}
+
+.seg{display:inline-flex;border:1px solid var(--argento);border-radius:9999px;overflow:visible}
+.seg button{
+  padding:6px 16px;font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;
+  color:var(--piombo);cursor:pointer;position:relative;transition:color var(--tq),background var(--tq);
+}
+.seg button:first-child{border-radius:9999px 0 0 9999px}
+.seg button:last-child{border-radius:0 9999px 9999px 0}
+/* АУДИТ М5: 26px высоты мало — невидимый нахлёст добирает до ~44px, вид не меняется */
+.seg button::before{content:'';position:absolute;inset:-9px}
+.seg button.on{background:var(--s0);color:#fff}
+.seg button:not(.on):hover,.seg button:not(.on):focus-visible{color:var(--rosso);outline:none}
+/* АУДИТ М6: .on отличается только цветом фона/текста — в forced-colors это
+   перекрашивается в общий системный цвет и состояния сливаются */
+@media (forced-colors:active){
+  .seg button.on{outline:2px solid Highlight;outline-offset:-3px}
+}
+
+.opt-note{margin:0 0 18px;max-width:72ch}
+.price-top .search{flex:1 1 260px;max-width:420px}
+@media(max-width:640px){.price-top .search{max-width:none}}
+
+/* Режим цены: видна только выбранная колонка */
+.pr-body.mode-retail .prtab thead th.co,.pr-body.mode-retail .prtab td.p.o{display:none}
+.pr-body.mode-opt .prtab thead th.cr,.pr-body.mode-opt .prtab td.p.r{display:none}
+.pr-body.mode-opt .prtab td.p.o{color:var(--s0);padding-right:0}
+.pr-body.mode-opt .prtab thead th.co{padding-right:0}
+.prtab thead th.co{padding-right:14px}
+
+/* Мобильная карточка: одна видимая цена занимает один слот */
+@media(max-width:760px){
+  .prtab tr.pr{grid-template-columns:1fr auto;grid-template-areas:"nm nm" "p u"}
+  .prtab tr.pr td.p.o,.prtab tr.pr td.p.r{grid-area:p;text-align:left;padding:0}
+}
+
+.pr-empty{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:baseline}
+.pr-empty[hidden]{display:none!important}
+.prtab tr.pr td.u{padding-left:16px}
+.none{display:none!important}
+
+.pr-actions{margin-top:26px}
+
+/* Заявка (order.js) и кнопка связи (.fab) делят нижний правый угол —
+   поднимаем пусковую кнопку и панель заявки над .fab, чтобы не наезжали. */
+.ord-fab{bottom:calc(clamp(14px,2.6vw,26px) + 64px)}
+@media(max-width:760px){
+  /* На мобильном панель заказа становится модальным листом (.ord-panel
+     z-index:875), а кнопка связи .fab (z-index:880) рисуется поверх её
+     нижнего угла. Пока лист открыт — прячем .fab, как модалка и должна. */
+  @supports selector(:has(*)) {
+    body:has(.ord-panel.is-on) .fab{opacity:0;visibility:hidden;pointer-events:none}
+  }
+}
+@media(min-width:761px){
+  .ord-panel{bottom:calc(clamp(14px,2.6vw,26px) + 64px)}
+  /* Открытая панель заказа на десктопе плавает над страницей и закрывает
+     колонку цен справа (дефект из акта готовности) — пока панель открыта
+     (order.js ставит .ord-panel.is-on), сужаем колонку прайса, чтобы цены
+     оставались читаемы; таблица уже умеет скроллиться по горизонтали. */
+  @supports selector(:has(*)) {
+    body:has(.ord-panel.is-on) #prBody>.wrap{
+      padding-right:calc(var(--gut) + 400px);
+      transition:padding-right .25s var(--e-inout3);
+    }
+  }
+}
+
+/* Печать: чистая таблица, обе цены, без интерфейса */
+@media print{
+  body{background:#fff!important;color:#000!important}
+  .topbar,.drawer,.skip,.price-top,.pr-tools,.opt-note,.pr-actions,.news,footer,.f-strip{display:none!important}
+  main{padding-top:0}
+  .wrap{padding-inline:0;max-width:none}
+  section.pad,.pad{padding-block:8px}
+  .pr-hero{background:none}
+  .pr-hero>img,.pr-hero>.pic>img,.pr-hero::after{display:none}
+  .pr-hero-in{padding-block:0 8px;align-items:flex-start;text-align:left;gap:4px}
+  .pr-hero .hero-eyebrow,.pr-hero .title-card{color:#000}
+  .pr-meta{color:#444}
+  .light{background:#fff}
+  .rev,[data-rv]{opacity:1!important;transform:none!important;scale:1 1!important}
+  [data-rv]>*{clip-path:none!important}
+  [data-rv] img,[data-rv] video,[data-rv] .ph-img{transform:none!important;scale:1!important}
+  [data-split] .sw>i{transform:none!important;opacity:1!important}
+  .prtab thead th.co,.prtab thead th.cr,.prtab td.p.o,.prtab td.p.r{display:table-cell!important}
+  .pr-body.mode-opt .prtab td.p.o{padding-right:14px;color:#666}
+  .pr-body.mode-opt .prtab thead th.co{padding-right:14px}
+  .tblwrap{overflow:visible}
+  .prtab{min-width:0}
+  .prtab tr.pr td,.prtab tbody.grp>tr.gt td{border-color:#bbb}
+}
+.prtab tr.pr.spec td.nm::after{content:'ФИРМЕННЫЙ РЕЦЕПТ'}
+</style>
+<script src="assets/metrika-config.js" defer></script>
+<script src="assets/metrika.js" defer></script>
+<noscript><div><img src="https://mc.yandex.ru/watch/XXXXXXX" style="position:absolute;left:-9999px" alt=""></div></noscript>
+</head>
+<body>
+<!-- Иконки мессенджеров: тонкий контур currentColor, без фирменных заливок -->
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.5 13.4L3.3 20.7l4.3-1.1A8.8 8.8 0 1 0 12 3.2Z"/><path d="M9.1 8.2h1.2l.9 2-1 .8a5.4 5.4 0 0 0 2.5 2.5l.8-1 2 .9v1.2a1 1 0 0 1-1 1 6.9 6.9 0 0 1-6.4-6.4 1 1 0 0 1 1-1Z"/></symbol>
+<symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.4 3.9 2.9 10.8a.45.45 0 0 0 0 .85l4.6 1.6 1.7 4.9a.45.45 0 0 0 .8.12l2.4-2.9 4.5 3.3a.45.45 0 0 0 .7-.25l3.5-13.9a.45.45 0 0 0-.7-.52Z"/><path d="m7.5 13.25 12.3-8.6-9.6 11.8"/></symbol>
+<symbol id="i-vb" viewBox="0 0 24 24"><path d="M8.4 4.4h1.9l1.4 3.1-1.7 1.2a9.5 9.5 0 0 0 4.7 4.7l1.2-1.7 3.1 1.4v1.9a1.8 1.8 0 0 1-1.9 1.8A13.4 13.4 0 0 1 4.7 6.3a1.8 1.8 0 0 1 1.8-1.9Z"/><path d="M13.9 3.1a6.3 6.3 0 0 1 5.1 5.1M13.5 6.4a3.1 3.1 0 0 1 2.3 2.3"/></symbol>
+<symbol id="i-max" viewBox="0 0 24 24"><path d="M4 4.6h16a1.6 1.6 0 0 1 1.6 1.6v9.2a1.6 1.6 0 0 1-1.6 1.6h-6.4l-3.7 3.3a.4.4 0 0 1-.66-.3V17H4a1.6 1.6 0 0 1-1.6-1.6V6.2A1.6 1.6 0 0 1 4 4.6Z"/><path d="m7.9 13.6 1.7-4.2 2.4 3.1 2.4-3.1 1.7 4.2"/></symbol>
+</defs></svg>
+<a class="skip" href="#main">К&nbsp;содержанию</a>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html"><b>Рыбцех Клевцова</b><span>Волгодонск · с&nbsp;1967</span></a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="index.html">Главная</a><a href="price.html">Прайс</a><a href="opt.html">Опт</a>
+      <a href="dostavka.html">Доставка</a><a href="magazin.html">Магазин</a><a href="istoria.html">Наша история</a>
+    </nav>
+    <a class="tel" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>
+    <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="drawer"><i></i><i></i></button>
+  </div>
+</header>
+<nav class="drawer" id="drawer">
+  <a href="index.html"><i>01</i>Главная</a>
+  <a href="price.html"><i>02</i>Прайс</a>
+  <a href="opt.html"><i>03</i>Опт</a>
+  <a href="dostavka.html"><i>04</i>Доставка</a>
+  <a href="magazin.html"><i>05</i>Магазин</a>
+  <a href="istoria.html"><i>06</i>Наша история</a>
+  <div class="dr-foot"><a class="cap" href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></div>
+</nav>
+
+<main id="main">
+
+  <!-- КОМПАКТНАЯ ШАПКА -->
+  <section class="pr-hero">
+    <picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/cheshuya-320.avif 320w, assets/img/rsp/cheshuya-640.avif 640w, assets/img/rsp/cheshuya-1280.avif 1280w, assets/img/rsp/cheshuya-1363.avif 1363w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/cheshuya-320.webp 320w, assets/img/rsp/cheshuya-640.webp 640w, assets/img/rsp/cheshuya-1280.webp 1280w, assets/img/rsp/cheshuya-1363.webp 1363w"><img width="1363" height="784" src="assets/img/cheshuya.jpg" alt="" aria-hidden="true" loading="eager" fetchpriority="high" data-gl="reveal" decoding="async"></picture>
+    <div class="wrap pr-hero-in">
+      <p class="hero-eyebrow rev in">Опт и&nbsp;розница · цены за килограмм</p>
+      <h1 class="title-card rev in" data-split>Прайс</h1>
+      <p class="pr-meta micro" id="prUpdated">Прайс загружается. Цены уточняйте по телефону: <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></p>
+    </div>
+  </section>
+
+  <!-- ИНСТРУМЕНТ -->
+  <section class="light pad pr-body mode-retail" id="prBody">
+    <div class="wrap">
+
+      <div class="price-top">
+        <div class="filters" id="prFilters" role="group" aria-label="Фильтр по категориям"></div>
+        <label class="search">
+          <span class="sr">Поиск по названию позиции</span>
+          <input id="prSearch" type="search" placeholder="Лещ, рыбец, икра…" autocomplete="off">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+        </label>
+      </div>
+
+      <div class="pr-tools">
+        <div class="seg" role="group" aria-label="Тип цены">
+          <button type="button" id="modeRetail" class="on" aria-pressed="true">Розница</button>
+          <button type="button" id="modeOpt" aria-pressed="false">Опт</button>
+        </div>
+        <div class="sortg" role="group" aria-label="Сортировка">
+          <span class="lbl">Порядок</span>
+          <button type="button" class="pill on" id="sortName" aria-pressed="true">По алфавиту</button>
+          <button type="button" class="pill" id="sortPrice" aria-pressed="false">По цене<span class="dirmark" id="sortDir" hidden>↑</span></button>
+        </div>
+        <p class="pr-count" id="prCount" aria-live="polite"></p>
+      </div>
+
+      <p class="opt-note bsm dim" id="optNote" hidden></p>
+
+      <div class="tblwrap" id="prWrap" data-rv="mask-up">
+        <table class="prtab" id="prTable">
+          <caption class="sr">Прайс: позиция, оптовая цена, розничная цена, единица измерения</caption>
+          <thead>
+            <tr>
+              <th scope="col">Позиция</th>
+              <th scope="col" class="n co">Опт</th>
+              <th scope="col" class="n cr">Розница</th>
+              <th scope="col" class="n">Ед.</th>
+            </tr>
+          </thead>
+        </table>
+        <noscript><p class="bsm dim" style="padding:2em 0">Прайс собирается из&nbsp;единого файла цен, для этого нужен JavaScript. Если он выключен, позвоните: опт — <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>, розница — <a href="tel:+79185949685">+7&nbsp;918&nbsp;594-96-85</a>.</p></noscript>
+      </div>
+
+      <div class="pr-empty" id="prEmpty" hidden>
+        <span>Ничего не нашлось. Проверьте запрос или снимите фильтры — либо позвоните: <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>.</span>
+        <button type="button" class="pill" id="prReset">Показать всё</button>
+      </div>
+      <p class="pr-empty" id="prFallback" hidden>
+        Прайс не загрузился. Цены уточняйте по телефону: <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>.
+      </p>
+
+      <!-- УСЛОВИЯ -->
+      <div class="sec-head" data-rv="up" style="margin-top:clamp(40px,5vw,64px)">
+        <span class="sec-idx">01</span>
+        <h2>Условия</h2>
+        <span class="rule"></span>
+        <p class="sec-note">Опт · доставка · хранение · икра</p>
+      </div>
+      <dl class="price-cond" data-rv-group data-st="2">
+        <div data-rv="up">
+          <dt>Опт</dt>
+          <dd>От 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции. Заказ формируется за 10–14 дней, предоплата 50%.</dd>
+        </div>
+        <div data-rv="up">
+          <dt>Доставка</dt>
+          <dd>По России — транспортной компанией на выбор клиента и&nbsp;за его счёт, в&nbsp;режиме 0…−8&nbsp;°C. По ЮФО от 1&nbsp;т — бесплатно. Тарифы и&nbsp;сроки транспортной компании уточняйте по телефону.</dd>
+        </div>
+        <div data-rv="up">
+          <dt>Хранение</dt>
+          <dd>0…−8&nbsp;°C. Срок хранения леща — 2&nbsp;месяца. Тара: гофроящик ГОСТ-92 по 10&nbsp;кг, ГОСТ-105 по 5&nbsp;кг, слабосолёная — ведро 11&nbsp;л, 8&nbsp;кг нетто.</dd>
+        </div>
+        <div data-rv="up">
+          <dt>Икра</dt>
+          <dd>Цена указана за банку, объём — в&nbsp;строке позиции. Розница — в&nbsp;магазине: Волгодонск, пер.&nbsp;Исторический&nbsp;35.</dd>
+        </div>
+      </dl>
+      <p class="price-legal" id="prLegal">Цены включают НДС 5%. Прайс не является публичной офертой.</p>
+
+      <div class="pr-actions" data-rv="up">
+        <a class="btn" href="opt.html">Все условия опта
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA: единственная красная масса страницы -->
+  <section class="news">
+    <div class="wrap" data-rv="up">
+      <h3>Собираете опт?</h3>
+      <p>Партия от 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции — уточним точные условия и&nbsp;сроки под вашу заявку.</p>
+      <a class="btn-red" href="opt.html" data-cursor="Оптовые цены">Запросить оптовые цены</a>
+    </div>
+  </section>
+
+</main>
+
+<footer id="foot">
+  <div class="wrap">
+    <div class="f-lead">
+      <p class="f-mark">Рыбцех Клевцова</p>
+      <p class="dim">Вяленая и&nbsp;копчёная рыба Цимлянского водохранилища. Волгодонск, семейное дело с&nbsp;1967 года.</p>
+    </div>
+    <div class="fgrid2">
+      <div>
+        <h4>Разделы</h4>
+        <ul>
+          <li><a class="ink-line" href="index.html">Главная</a></li>
+          <li><a class="ink-line" href="price.html">Прайс</a></li>
+          <li><a class="ink-line" href="opt.html">Опт</a></li>
+          <li><a class="ink-line" href="dostavka.html">Доставка</a></li>
+          <li><a class="ink-line" href="magazin.html">Магазин</a></li>
+          <li><a class="ink-line" href="istoria.html">Наша история</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Опт</h4>
+        <ul>
+          <li><a href="tel:+79287702170" aria-label="Позвонить — опт, Антон Дмитриевич, +7 928 770-21-70">Антон Дмитриевич · +7&nbsp;928&nbsp;770-21-70</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79287702170" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79287702170" target="_blank" rel="noopener" aria-label="Написать в Telegram — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79287702170" aria-label="Написать в Viber — опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        
+          <!-- MAX: вставить ссылку max.ru/u/<хеш> от Антона Дмитриевича и раскомментировать
+            <a class="msg" href="https://max.ru/u/ХЕШ" target="_blank" rel="noopener" aria-label="Написать в MAX: опт, Антон Дмитриевич"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-max"/></svg>MAX</a>
+          -->
+        </p>
+        <ul>
+          <li><p>Партия от 100&nbsp;кг в&nbsp;ассортименте</p></li>
+          <li><p>Формируется за 10–14 дней, предоплата 50%</p></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Розница</h4>
+        <ul>
+          <li><a href="tel:+79185949685" aria-label="Позвонить — розница, Маргарита Георгиевна, +7 918 594-96-85">Маргарита Георгиевна · +7&nbsp;918&nbsp;594-96-85</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79185949685" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79185949685" target="_blank" rel="noopener" aria-label="Написать в Telegram — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79185949685" aria-label="Написать в Viber — розница, Маргарита Георгиевна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+        <ul>
+          <li><p>Наличие, вес, розничный заказ</p></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Технолог</h4>
+        <ul>
+          <li><a href="tel:+79289650095" aria-label="Позвонить — технолог, Ольга Михайловна, +7 928 96-500-95">Ольга Михайловна · +7&nbsp;928&nbsp;96-500-95</a></li>
+        </ul>
+        <p class="msgs">
+          <a class="msg" href="https://wa.me/79289650095" target="_blank" rel="noopener" aria-label="Написать в WhatsApp — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+          <a class="msg" href="https://t.me/+79289650095" target="_blank" rel="noopener" aria-label="Написать в Telegram — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a class="msg" href="viber://chat?number=%2B79289650095" aria-label="Написать в Viber — технолог, Ольга Михайловна"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+        </p>
+        <ul>
+          <li><p>Технология, документы, ветеринарные справки</p></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-place">
+      <p><b>Магазин при цехе</b> — Волгодонск, пер.&nbsp;Исторический&nbsp;35 (Красный Яр)</p>
+      <p>Пн–пт 9:00–19:00 · сб–вс 9:00–17:00 · без перерыва и&nbsp;выходных</p>
+      <p><a href="mailto:ak806@me.com">ak806@me.com</a> · <a href="mailto:info@k-fish.ru">info@k-fish.ru</a> · ИП Клевцов Д.А., Ростовская обл., г. Волгодонск</p>
+    </div>
+    <div class="f-social">
+      <a href="tel:+79287702170"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></i>Позвонить</a>
+      <a href="mailto:ak806@me.com"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7"/></svg></i>Написать</a>
+      <a href="https://vk.com/klevtsov_fish" rel="noopener"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7c.7 6 4 10 8.5 10h1v-4c1.5.2 2.8 1.5 3.5 4H20c-.6-3-2-4.8-3.5-5.6C18 10.6 19.4 8.8 20 7h-2.7c-.8 2.3-2.2 4-3.8 4.3V7h-2.6v7C8.6 13 6.8 10 6.5 7z"/></svg></i>ВКонтакте</a>
+    </div>
+  </div>
+</footer>
+<div class="f-strip">
+  <div class="wrap">
+    <span>© 2026 ИП Клевцов Д.А.</span><span>РЫБЦЕХ.РФ</span><a href="price.html">Прайс не является офертой</a>
+  </div>
+</div>
+
+<script src="assets/prices.js"></script>
+<script>
+/* Прайс-инструмент: рендер ТОЛЬКО из window.PRICES, руками цифры не вбиваем */
+(function () {
+  'use strict';
+
+  var P = window.PRICES;
+  var body = document.getElementById('prBody');
+  var tbl = document.getElementById('prTable');
+  var wrap = document.getElementById('prWrap');
+  var filtersEl = document.getElementById('prFilters');
+  var searchEl = document.getElementById('prSearch');
+  var countEl = document.getElementById('prCount');
+  var emptyEl = document.getElementById('prEmpty');
+  var fallbackEl = document.getElementById('prFallback');
+  var updatedEl = document.getElementById('prUpdated');
+  var optNoteEl = document.getElementById('optNote');
+  var legalEl = document.getElementById('prLegal');
+  var dirMark = document.getElementById('sortDir');
+
+  if (!P || !P.items || !P.items.length) {
+    fallbackEl.hidden = false;
+    wrap.classList.add('none');
+    document.querySelector('.price-top').classList.add('none');
+    document.querySelector('.pr-tools').classList.add('none');
+    return;
+  }
+
+  /* ---------- утилиты ---------- */
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function fmt(v) {
+    var kop = Math.round(v * 100) % 100 !== 0;
+    return v.toLocaleString('ru-RU', {
+      minimumFractionDigits: kop ? 2 : 0,
+      maximumFractionDigits: 2
+    }) + ' ₽';
+  }
+  function plural(n) {
+    var m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return 'позиция';
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return 'позиции';
+    return 'позиций';
+  }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+  /* ---------- мета ---------- */
+  var d = (P.updated || '').split('-');
+  var upd = d.length === 3 ? d[2] + '.' + d[1] + '.' + d[0] : (P.updated || '');
+  updatedEl.innerHTML = 'Прайс от ' + upd + ' · <span data-count>' + P.items.length + '</span> ' + plural(P.items.length) +
+    ' · опт и розница';
+  if (P.opt_terms) {
+    optNoteEl.textContent = P.opt_terms + ' Икра — цена за банку, объём указан в строке.';
+    optNoteEl.hidden = false;
+  }
+  document.title = 'Прайс Рыбцеха Клевцова — опт и розница, ' + P.items.length + ' ' + plural(P.items.length);
+  legalEl.textContent = (P.vat_note || 'Прайс не является публичной офертой.') +
+    (upd ? ' Прайс от ' + upd + '.' : '') + ' Товар обмену и возврату не подлежит.';
+
+  /* ---------- категории ---------- */
+  var ORDER = ['вяленая', 'вяленая и холодного копчения', 'холодного копчения', 'слабосолёная', 'икра'];
+  var SHORT = {
+    'вяленая': 'Вяленая',
+    'вяленая и холодного копчения': 'Вяленая и х/к',
+    'холодного копчения': 'Х/к',
+    'слабосолёная': 'Слабосолёная',
+    'икра': 'Икра'
+  };
+  var cats = ORDER.filter(function (c) {
+    return P.items.some(function (i) { return i.category === c; });
+  });
+  P.items.forEach(function (i) {
+    if (cats.indexOf(i.category) < 0) cats.push(i.category);
+  });
+
+  /* ---------- рендер таблицы (один раз) ---------- */
+  var groups = {};
+  cats.forEach(function (cat) {
+    var tb = document.createElement('tbody');
+    tb.className = 'grp';
+    var gt = document.createElement('tr');
+    gt.className = 'gt';
+    gt.innerHTML = '<td colspan="4">' + esc(cap(cat)) + '</td>';
+    tb.appendChild(gt);
+    tbl.appendChild(tb);
+    groups[cat] = { tb: tb, rows: [] };
+  });
+  P.items.forEach(function (it) {
+    var tr = document.createElement('tr');
+    tr.className = 'pr' + (it.notes && it.notes.indexOf('фирменн') > -1 ? ' spec' : '');
+    var nm = esc(it.name) +
+      (it.variant ? ' <span class="sz">· ' + esc(it.variant) + '</span>' : '') +
+      (it.in_stock === false ? ' <span class="sz">· наличие уточняйте по телефону</span>' : '');
+    tr.innerHTML =
+      '<td class="nm">' + nm + '</td>' +
+      '<td class="p o" data-l="ОПТ">' + fmt(it.price_opt) + '</td>' +
+      '<td class="p r" data-l="РОЗНИЦА">' + fmt(it.price_retail) + '</td>' +
+      '<td class="u">' + esc(it.unit) + '</td>';
+    groups[it.category].tb.appendChild(tr);
+    groups[it.category].rows.push({
+      el: tr, it: it,
+      hay: (it.name + ' ' + (it.variant || '') + ' ' + it.category).toLowerCase()
+    });
+  });
+
+  /* ---------- фильтры-чипы ---------- */
+  var chips = [];
+  function addChip(catKey, label) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'pill' + (catKey === 'all' ? ' on' : '');
+    b.setAttribute('aria-pressed', catKey === 'all' ? 'true' : 'false');
+    b.dataset.cat = catKey;
+    b.textContent = label;
+    b.addEventListener('click', function () { setCat(catKey); });
+    filtersEl.appendChild(b);
+    chips.push(b);
+  }
+  addChip('all', 'Все');
+  cats.forEach(function (c) { addChip(c, SHORT[c] || cap(c)); });
+
+  /* ---------- состояние ---------- */
+  var state = { cat: 'all', q: '', mode: 'retail', sort: 'name', dir: 1 };
+
+  function price(it) { return state.mode === 'opt' ? it.price_opt : it.price_retail; }
+  function cmp(a, b) {
+    var r = state.sort === 'price'
+      ? (price(a.it) - price(b.it))
+      : a.it.name.localeCompare(b.it.name, 'ru');
+    if (r === 0) r = a.it.name.localeCompare(b.it.name, 'ru');
+    return r * state.dir;
+  }
+
+  function update() {
+    var q = state.q.trim().toLowerCase();
+    var total = 0;
+    cats.forEach(function (cat) {
+      var g = groups[cat];
+      g.rows.slice().sort(cmp).forEach(function (r) { g.tb.appendChild(r.el); });
+      var n = 0;
+      var visCat = state.cat === 'all' || state.cat === cat;
+      g.rows.forEach(function (r) {
+        var vis = visCat && (!q || r.hay.indexOf(q) > -1);
+        r.el.classList.toggle('hide', !vis);
+        if (vis) n++;
+      });
+      g.tb.classList.toggle('hide', n === 0);
+      total += n;
+    });
+    countEl.textContent = 'Показано ' + total + ' ' + plural(total) + ' из ' + P.items.length;
+    emptyEl.hidden = total !== 0;
+    wrap.classList.toggle('none', total === 0);
+  }
+
+  function setCat(cat) {
+    state.cat = cat;
+    chips.forEach(function (b) {
+      var on = b.dataset.cat === cat;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    update();
+  }
+
+  /* ---------- переключатель Розница/Опт ---------- */
+  var mRetail = document.getElementById('modeRetail');
+  var mOpt = document.getElementById('modeOpt');
+  function setMode(m) {
+    state.mode = m;
+    body.classList.toggle('mode-opt', m === 'opt');
+    body.classList.toggle('mode-retail', m !== 'opt');
+    mRetail.classList.toggle('on', m !== 'opt');
+    mOpt.classList.toggle('on', m === 'opt');
+    mRetail.setAttribute('aria-pressed', m !== 'opt' ? 'true' : 'false');
+    mOpt.setAttribute('aria-pressed', m === 'opt' ? 'true' : 'false');
+    if (state.sort === 'price') update();
+  }
+  mRetail.addEventListener('click', function () { setMode('retail'); });
+  mOpt.addEventListener('click', function () { setMode('opt'); });
+
+  /* ---------- сортировка ---------- */
+  var sName = document.getElementById('sortName');
+  var sPrice = document.getElementById('sortPrice');
+  function paintSort() {
+    var byName = state.sort === 'name';
+    sName.classList.toggle('on', byName);
+    sPrice.classList.toggle('on', !byName);
+    sName.setAttribute('aria-pressed', byName ? 'true' : 'false');
+    sPrice.setAttribute('aria-pressed', !byName ? 'true' : 'false');
+    dirMark.hidden = byName;
+    dirMark.textContent = state.dir > 0 ? '↑' : '↓';
+  }
+  sName.addEventListener('click', function () {
+    state.sort = 'name'; state.dir = 1; paintSort(); update();
+  });
+  sPrice.addEventListener('click', function () {
+    if (state.sort === 'price') state.dir = -state.dir;
+    else { state.sort = 'price'; state.dir = 1; }
+    paintSort(); update();
+  });
+
+  /* ---------- поиск, сброс, режим из URL ---------- */
+  searchEl.addEventListener('input', function () { state.q = searchEl.value; update(); });
+  document.getElementById('prReset').addEventListener('click', function () {
+    searchEl.value = ''; state.q = ''; setCat('all');
+  });
+
+  try {
+    if (new URLSearchParams(location.search).get('mode') === 'opt') setMode('opt');
+  } catch (e) { /* старые браузеры — остаётся розница */ }
+
+  update();
+})();
+</script>
+<script>
+/* [data-rv="mask-up"] у #prWrap: базовый слой (rosso.js) наблюдает элемент
+   с порогом 6% площади — для полотна в 50 строк (тысячи px высотой) это
+   почти никогда не набирается на обычной высоте экрана, штора не открывается.
+   Своя отдельная IntersectionObserver с порогом 0: открываем, как только
+   верхний край таблицы попал в кадр. rosso.js трогать нельзя — правим здесь. */
+(function () {
+  var el = document.getElementById('prWrap');
+  if (!el) return;
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (REDUCED || !('IntersectionObserver' in window)) { el.classList.add('in'); return; }
+  var io = new IntersectionObserver(function (en) {
+    en.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      el.classList.add('in');
+      io.unobserve(e.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0 });
+  io.observe(el);
+})();
+</script>
+<script src="assets/order.js"
+        data-theme="rosso"
+        data-rows="tr.pr"
+        data-root="#prTable"
+        data-name-cell=".nm"
+        data-page-opt="#modeOpt" data-page-retail="#modeRetail"
+        data-mode-flags="#prBody:mode-opt"></script>
+<script>
+/* JSON-LD прайса — строго из window.PRICES, руками цифры не вбиваем.
+   Наличие (availability) НЕ указываем: сайт им не управляет, врать нельзя. */
+(function () {
+  var P = window.PRICES;
+  if (!P || !P.items || !P.items.length) return;
+  var BASE = 'https://xn--90ai5awd2a.xn--p1ai/';
+  var ld = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Прайс Рыбцеха Клевцова",
+    "description": P.vat_note || '',
+    "url": BASE + 'price.html',
+    "numberOfItems": P.items.length,
+    "itemListOrder": "https://schema.org/ItemListUnordered",
+    "itemListElement": P.items.map(function (it, n) {
+      return {
+        "@type": "ListItem",
+        "position": n + 1,
+        "item": {
+          "@type": "Product",
+          "name": it.name + (it.variant ? ', ' + it.variant : ''),
+          "category": it.category,
+          "brand": { "@type": "Brand", "name": "Рыбцех Клевцова" },
+          "offers": {
+            "@type": "Offer",
+            "price": it.price_retail,
+            "priceCurrency": P.currency || 'RUB',
+            "url": BASE + 'price.html',
+            "eligibleQuantity": {
+              "@type": "QuantitativeValue",
+              "unitText": it.unit
+            }
+          }
+        }
+      };
+    })
+  };
+  var s = document.createElement('script');
+  s.type = 'application/ld+json';
+  s.textContent = JSON.stringify(ld);
+  document.head.appendChild(s);
+})();
+</script>
+<script src="assets/schema.js"></script>
+<script>
+  RybtsehSchema.inject(RybtsehSchema.breadcrumbList('Прайс'));
+  RybtsehSchema.inject(RybtsehSchema.organization());
+</script>
+<script src="assets/motion/vendor/gsap.min.js" defer></script>
+<script src="assets/motion/vendor/CustomEase.min.js" defer></script>
+<script src="assets/motion/vendor/Flip.min.js" defer></script>
+<script src="assets/motion/vendor/SplitText.min.js" defer></script>
+<script src="assets/motion/vendor/ScrollTrigger.min.js" defer></script>
+<script src="assets/motion/vendor/Observer.min.js" defer></script>
+<script src="assets/motion/core.js" defer></script>
+<script src="assets/motion/price-instrument.js" defer></script>
+<script src="assets/motion/cut.js" defer></script>
+<script src="assets/cursor.js" defer></script>
+<script src="assets/gl/rosso-gl.js" defer></script>
+<script src="assets/rosso.js" defer></script>
+</body>
+</html>

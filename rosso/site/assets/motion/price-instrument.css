@@ -1,0 +1,54 @@
+/* Россо · motion/price-instrument.css — момент 2 волны 3 (ЗАМЫСЕЛ-ПЛАН §3).
+   Только прайс и панель заявки. rosso.css/order.css не правим — только
+   надстраиваем через специфичность и класс html.pi-on (ставит price-
+   instrument.js, только когда GSAP реально загрузился). Строки 1 и 2 ниже —
+   чистый CSS, работают и без JS/GSAP. */
+
+/* ---------- 1. Кримзонная волосяная линия по строке (только hover:hover) ---------- */
+.prtab tr.pr{position:relative}
+@media (hover:hover){
+  .prtab tr.pr::after{
+    content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:var(--rosso);transform:scaleX(0);transform-origin:right;
+    transition:transform var(--t-240) var(--e-entry);pointer-events:none;
+  }
+  .prtab tr.pr:hover::after{transform:scaleX(1);transform-origin:left}
+}
+
+/* ---------- 2. Подсветка строки, уже добавленной в заявку ---------- */
+@supports selector(:has(*)){
+  .prtab tr.pr:has(.ord-ctl.is-in){background:rgba(218,41,28,.07)}
+}
+
+/* ---------- 4. Панель заявки как лист бумаги — только когда JS реально завёлся,
+   иначе остаётся штатная CSS-анимация order.css ---------- */
+html[data-order-theme="rosso"].pi-on .ord-panel{
+  transition:none; /* transform/opacity теперь ведёт GSAP */
+}
+html[data-order-theme="rosso"].pi-on .ord-panel.pi-closing{
+  pointer-events:none;
+}
+html[data-order-theme="rosso"].pi-on .ord-panel.pi-closing[hidden]{
+  /* order.js уже поставил [hidden] на своём таймере 280мс — держим панель
+     отрисованной, пока наш твин закрытия (420мс) не доиграет, дальше сам
+     снимает .pi-closing и [hidden] снова прячет её штатно */
+  display:flex;
+}
+[data-order-theme="rosso"] .ord-panel::before{
+  content:'';position:absolute;inset:-10px;border-radius:inherit;z-index:-1;
+  box-shadow:0 30px 70px -18px rgba(0,0,0,.5);pointer-events:none;
+  opacity:var(--pi-shadow,0);
+}
+
+@media (max-width:760px){
+  html[data-order-theme="rosso"].pi-on .ord-panel.pi-closing[hidden]{display:flex}
+}
+
+@media (prefers-reduced-motion:reduce){
+  [data-order-theme="rosso"] .ord-panel::before{display:none}
+  .prtab tr.pr::after{transition:none!important}
+}
+
+@media print{
+  .prtab tr.pr::after,[data-order-theme="rosso"] .ord-panel::before{display:none!important}
+}

@@ -1,0 +1,33 @@
+/* Россо · motion/tech-timecode.css — момент «технология как таймкод»
+   (ЗАМЫСЕЛ-ПЛАН §3.3, ЗАМЫСЕЛ-МАКСИМУМ §4). Дирижёр: tech-timecode.js.
+   Без JS/GSAP рельс просто не растёт (--tt-p:0 по умолчанию) — секция
+   не ломается, шаги остаются читаемы сами по себе (rosso.css .steps).
+   transform (scaleX/scaleY через CSS-переменную) — единственное
+   анимируемое свойство, перекомпоновку не вызывает. */
+
+.tt-rail{
+  --tt-p:0;
+  position:relative;display:flex;align-items:center;gap:16px;
+  margin-bottom:20px;
+}
+.tt-rail-track{
+  position:relative;flex:1 1 auto;height:1px;
+  background:var(--s4);overflow:hidden;
+}
+.tt-rail-fill{
+  position:absolute;inset:0;transform-origin:0% 50%;
+  transform:scaleX(var(--tt-p));background:var(--rosso);
+}
+.tt-code{
+  font-family:var(--fm);font-weight:400;font-size:11px;line-height:1;
+  letter-spacing:var(--tr-10);color:var(--rosso-txt);
+  font-variant-numeric:tabular-nums;white-space:nowrap;flex:0 0 auto;
+}
+
+/* 375: рельс вертикальный слева, короткий, таймкод рядом сверху секции —
+   вся .tt-rail стоит перед .steps в разметке, поэтому «над шагами»
+   выполняется самим порядком DOM. */
+@media(max-width:700px){
+  .tt-rail-track{flex:0 0 auto;width:1px;height:64px}
+  .tt-rail-fill{transform-origin:50% 0%;transform:scaleY(var(--tt-p))}
+}

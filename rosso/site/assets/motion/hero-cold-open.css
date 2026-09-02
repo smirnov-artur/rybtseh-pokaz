@@ -1,0 +1,52 @@
+/* Россо · motion/hero-cold-open.css — холодный старт главной (волна 2, момент 1).
+   Дирижёр: assets/motion/hero-cold-open.js. Базовые состояния здесь — только
+   safe-фолбэк без JS/GSAP: ничего не должно навсегда закрыть герой, если
+   скрипт не выполнился. transform/opacity/clip-path — единственные свойства. */
+
+/* ---- чёрный кадр поверх героя ----
+   По умолчанию opacity:1 (важно для нулевого мигания кадра: стили блокируют
+   первую отрисовку, тогда как <script defer> идёт уже после). Если GSAP не
+   загрузился, chisto-CSS keyframe снимает кадр сам — герой не залипает в
+   черноте. JS, когда стартует, гасит эту анимацию (animation:none) и берёт
+   слой под свою таймлайн. */
+.hero-black{
+  position:absolute;inset:0;z-index:5;background:#000;opacity:1;
+  pointer-events:none;
+  animation:hco-fallback-black 1.4s var(--e-entry,cubic-bezier(.36,0,.25,1)) .3s both;
+}
+@keyframes hco-fallback-black{to{opacity:0}}
+
+/* ---- сигнальная точка в углу героя (кримзонная лампа) ----
+   Без JS — не рендерим вовсе, точка не несёт смысла статично. */
+.hero-signal{
+  position:absolute;z-index:6;left:clamp(18px,3vw,28px);bottom:clamp(18px,3vw,28px);
+  width:6px;height:6px;border-radius:50%;background:var(--rosso,#da291c);
+  opacity:0;pointer-events:none;
+}
+
+/* ---- постер героя (под WebGL-reveal) ----
+   Живёт в hero-media рядом с video — уже покрыт общими .hero-media правилами
+   (position:absolute;inset:0;object-fit:cover;z-index:1) из rosso.css. */
+.hero-media{clip-path:inset(0 0 0 0)}
+.hero-poster{will-change:auto}
+
+/* ---- видео поверх постера: скрыто до canplay-кроссфейда ----
+   opacity:1 по умолчанию — если JS не стартовал, видео ведёт себя как раньше
+   (автоплей из rosso.js, без нашего слоя). JS сам уводит его в opacity:0
+   перед тем как навесить кроссфейд. */
+#hero-video{opacity:1}
+
+/* ---- надглазник: волосяная линия под текстом ---- */
+.hero-eyebrow{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:8px}
+.hero-eyebrow-line{
+  display:block;width:56px;height:1px;background:var(--rosso,#da291c);
+  transform:scaleX(1);transform-origin:50% 50%;
+}
+
+/* Буквы «Рыбцех»: SplitText(mask:'chars') сам оборачивает символы в
+   overflow:hidden; will-change ставит и снимает JS (только на время твина). */
+
+@media (prefers-reduced-motion: reduce){
+  .hero-black{animation:none;opacity:0}
+  .hero-signal{opacity:0}
+}

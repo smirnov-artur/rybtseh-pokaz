@@ -1,0 +1,428 @@
+/* ============================================================
+   РЫБЦЕХ — «ЗАЯВКА ИЗ ПРАЙСА» (order.css)
+   Самодостаточный компонент: строчные контролы + плавающая панель.
+   Две темы через переменные: [data-order-theme="rosso"|"artefakt"].
+   Ничего из rosso.css / artefakt.css не переопределяет: все селекторы
+   начинаются с .ord- и живут в собственном пространстве имён.
+   ============================================================ */
+
+/* ---------- 0. ТОКЕНЫ. Тема по умолчанию = Россо ---------- */
+:root,
+[data-order-theme="rosso"]{
+  --ord-font:'Inter Tight','Inter','Helvetica Neue',Arial,sans-serif;
+
+  --ord-bg:#ffffff;          /* поверхность панели            */
+  --ord-bg-2:#f7f7f7;        /* подложка строк, полей         */
+  --ord-fg:#000000;          /* основной текст                */
+  --ord-dim:#666666;         /* вторичный текст               */
+  --ord-line:#d2d2d2;        /* хайрлайн                      */
+  --ord-line-2:#000000;      /* сильная граница               */
+  --ord-accent:#da291c;      /* ТОЛЬКО интерактив             */
+  --ord-accent-fg:#ffffff;
+  --ord-solid:#000000;       /* заливка главной кнопки        */
+  --ord-solid-fg:#ffffff;
+
+  --ord-r:0px;               /* радиус карточек: у «Россо» их нет вовсе */
+  --ord-r-s:0px;             /* радиус мелких элементов       */
+  --ord-r-pill:9999px;       /* но чипы и .pill на сайте — таблетки */
+  --ord-sheet-r:0px;         /* радиус мобильного листа       */
+  --ord-border:1px solid var(--ord-line);
+  --ord-border-strong:1px solid var(--ord-line-2);
+  --ord-hair:1px solid var(--ord-line);
+  /* кольцо цветом полотна: на белом невидимо, на чёрной секции отделяет кнопку */
+  --ord-shadow:0 0 0 2px #ffffff;
+  --ord-panel-shadow:0 0 0 1px var(--ord-line-2);
+  --ord-backdrop:rgba(0,0,0,.62);
+
+  --ord-cap-size:9px;        /* микро-капс                    */
+  --ord-cap-tr:.091em;
+  --ord-cap-tt:uppercase;
+  --ord-t:.2s cubic-bezier(.2,.7,.3,1);
+}
+
+[data-order-theme="artefakt"]{
+  --ord-font:'Inter','Halyard Display',ui-sans-serif,system-ui,'Segoe UI',sans-serif;
+
+  /* панель на ступень светлее канваса — иначе на тёмном сливается с полосой */
+  --ord-bg:#1a0f07;
+  --ord-bg-2:#100904;
+  --ord-fg:#ffedd7;
+  --ord-dim:#6c5f51;
+  --ord-line:#40372e;
+  --ord-line-2:#40372e;
+  --ord-accent:#dc5000;
+  --ord-accent-fg:#100904;
+  --ord-solid:#dc5000;
+  --ord-solid-fg:#100904;
+
+  --ord-r:12px;
+  --ord-r-s:8px;
+  --ord-r-pill:22.5px;       /* как --r-ghost у чипов «Артефакта» */
+  --ord-sheet-r:16px;
+  --ord-border:1px solid var(--ord-line);
+  --ord-border-strong:1px solid var(--ord-line);
+  --ord-hair:1px solid rgba(64,55,46,.62);
+  --ord-shadow:0 0 0 2px #100904;
+  --ord-panel-shadow:0 -18px 60px rgba(0,0,0,.55);
+  --ord-backdrop:rgba(16,9,4,.78);
+
+  --ord-cap-size:10px;
+  --ord-cap-tr:.06em;
+  --ord-cap-tt:uppercase;
+  --ord-t:.28s cubic-bezier(.2,.8,.2,1);
+}
+
+/* ---------- 1. ОБЩИЕ ПРИМИТИВЫ ---------- */
+.ord-cap{
+  font-size:var(--ord-cap-size);line-height:1.6;letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);
+}
+.ord-sr{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+.ord-num{font-variant-numeric:tabular-nums}
+
+/* базовая кнопка компонента */
+.ord-b{
+  font-family:var(--ord-font);font-size:10px;line-height:1;letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);font-weight:500;position:relative;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 14px;min-height:32px;border:var(--ord-border);border-radius:var(--ord-r-pill);
+  background:transparent;color:var(--ord-fg);cursor:pointer;white-space:nowrap;
+  transition:color var(--ord-t),background var(--ord-t),border-color var(--ord-t);
+}
+/* аудит М5: 32px высотой — соседей у .ord-b минимум 8px gap (.ord-send,
+   .ord-ctl), безопасно расширяем на половину */
+.ord-b::before{content:"";position:absolute;inset:-4px}
+.ord-b:hover,.ord-b:focus-visible{color:var(--ord-accent);border-color:var(--ord-accent);outline:none}
+.ord-b:disabled{opacity:.4;cursor:not-allowed}
+.ord-b:disabled:hover{color:var(--ord-fg);border-color:var(--ord-line)}
+.ord-b--solid{background:var(--ord-solid);color:var(--ord-solid-fg);border-color:var(--ord-solid)}
+.ord-b--solid:hover,.ord-b--solid:focus-visible{
+  background:var(--ord-accent);border-color:var(--ord-accent);color:var(--ord-accent-fg);
+}
+
+/* видимый фокус — единый для всего компонента */
+.ord-ctl :focus-visible,
+.ord-panel :focus-visible,
+.ord-fab:focus-visible{outline:2px solid var(--ord-accent);outline-offset:2px}
+
+/* ---------- 2. КОНТРОЛ В СТРОКЕ ПРАЙСА ---------- */
+/* Вставляется внутрь ячейки имени (табличная вёрстка «Россо»)
+   либо прямо в строку-грид (вёрстка «Артефакт»).               */
+.ord-ctl{
+  grid-column:1 / -1;flex-basis:100%;width:100%;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-top:7px;font-family:var(--ord-font);color:var(--ord-fg);
+}
+.ord-ctl__note{
+  font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);
+}
+.ord-ctl.is-in .ord-ctl__note{color:var(--ord-accent)}
+
+/* степпер количества */
+.ord-q{
+  display:inline-flex;align-items:stretch;border:var(--ord-border);border-radius:var(--ord-r-s);
+  background:transparent;
+  /* без overflow:hidden — у кнопок .ord-q__b нет собственного фона (только
+     смена цвета текста), клипать было нечего; зато теперь их невидимая
+     область нажатия (ниже) не обрезается краем контейнера, аудит М5 */
+}
+.ord-q__b{
+  width:28px;min-height:30px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--ord-font);font-size:14px;line-height:1;color:var(--ord-dim);
+  background:transparent;border:0;cursor:pointer;position:relative;
+  transition:color var(--ord-t),background var(--ord-t);
+}
+.ord-q__b:hover,.ord-q__b:focus-visible{color:var(--ord-accent);outline:none}
+/* аудит М5: 28×30 → невидимо расширяем до 44 по высоте; по ширине —
+   только наружу (левый край минуса, правый край плюса), внутренний стык
+   с полем ввода не трогаем, чтобы не отбирать у него клики */
+.ord-q__b::before{content:"";position:absolute;top:-7px;bottom:-7px;left:0;right:0}
+.ord-q__b:first-child::before{left:-7px}
+.ord-q__b:last-child::before{right:-7px}
+.ord-q__i{
+  width:54px;min-height:30px;text-align:center;border:0;background:transparent;
+  font-family:var(--ord-font);font-size:12px;font-weight:500;color:var(--ord-fg);
+  font-variant-numeric:tabular-nums;padding:0 2px;
+  border-left:var(--ord-hair);border-right:var(--ord-hair);
+}
+.ord-q__i::-webkit-outer-spin-button,
+.ord-q__i::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ord-q__u{
+  display:flex;align-items:center;padding:0 9px;
+  font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);
+}
+.ord-ctl.is-in .ord-q{border-color:var(--ord-accent)}
+
+/* кнопка «в заявку» / «убрать» */
+.ord-ctl .ord-b{min-height:30px;padding:8px 13px}
+
+/* Бейдж позиции. «Россо» рисует «СПЕЦ» через .prtab tr.pr.spec td.nm::after —
+   блочный контрол выталкивал его на отдельную строку. Оригинал гасим,
+   такой же значок компонент ставит в свою полосу (см. data-row-tag). */
+.prtab tr.pr.spec td.nm:has(> .ord-ctl)::after{content:none}
+.ord-ctl__tag{
+  font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--ord-dim);
+  border:var(--ord-border);border-radius:var(--ord-r-pill);padding:3px 8px;line-height:1;
+}
+
+/* ---------- 3. ПУСКОВАЯ КНОПКА (FAB) ---------- */
+.ord-fab{
+  position:fixed;z-index:860;
+  right:clamp(14px,2.6vw,30px);bottom:clamp(14px,2.6vw,26px);
+  display:inline-flex;align-items:center;gap:12px;
+  padding:13px 18px;min-height:46px;
+  font-family:var(--ord-font);font-size:10px;line-height:1;letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);font-weight:500;
+  background:var(--ord-solid);color:var(--ord-solid-fg);
+  border:1px solid var(--ord-solid);border-radius:var(--ord-r-pill);
+  cursor:pointer;box-shadow:var(--ord-shadow);
+  transition:background var(--ord-t),border-color var(--ord-t),color var(--ord-t),transform var(--ord-t),opacity var(--ord-t);
+}
+.ord-fab:hover,.ord-fab:focus-visible{
+  background:var(--ord-accent);border-color:var(--ord-accent);color:var(--ord-accent-fg);
+}
+.ord-fab__n{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:20px;height:20px;padding:0 6px;border-radius:var(--ord-r-pill);
+  background:var(--ord-accent);color:var(--ord-accent-fg);
+  font-size:10px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:0;
+}
+.ord-fab:hover .ord-fab__n,.ord-fab:focus-visible .ord-fab__n{
+  background:var(--ord-accent-fg);color:var(--ord-accent);
+}
+.ord-fab__s{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.ord-fab.is-empty .ord-fab__n,.ord-fab.is-empty .ord-fab__s{display:none}
+.ord-fab[hidden]{display:none}
+
+/* ---------- 4. ПОДЛОЖКА (только мобильный лист) ---------- */
+.ord-backdrop{
+  position:fixed;inset:0;z-index:870;background:var(--ord-backdrop);
+  opacity:0;transition:opacity var(--ord-t);
+}
+.ord-backdrop[hidden]{display:none}
+.ord-backdrop.is-on{opacity:1}
+
+/* ---------- 5. ПАНЕЛЬ ЗАЯВКИ ---------- */
+.ord-panel{
+  position:fixed;z-index:875;
+  right:clamp(14px,2.6vw,30px);bottom:clamp(14px,2.6vw,26px);
+  width:min(408px,calc(100vw - 28px));
+  max-height:min(78vh,700px);
+  display:flex;flex-direction:column;
+  background:var(--ord-bg);color:var(--ord-fg);
+  border:var(--ord-border-strong);border-radius:var(--ord-r);
+  box-shadow:var(--ord-panel-shadow);
+  font-family:var(--ord-font);
+  transform:translateY(12px);opacity:0;
+  transition:opacity var(--ord-t),transform var(--ord-t);
+}
+.ord-panel[hidden]{display:none}
+.ord-panel.is-on{transform:none;opacity:1}
+
+/* шапка */
+.ord-head{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 16px 12px;border-bottom:var(--ord-hair);
+}
+.ord-head h2{
+  margin:0;font-size:13px;font-weight:600;line-height:1;
+  letter-spacing:var(--ord-cap-tr);text-transform:var(--ord-cap-tt);color:var(--ord-fg);
+}
+.ord-head .ord-cap{margin-left:auto}
+.ord-x{
+  width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+  border:0;background:transparent;color:var(--ord-dim);cursor:pointer;
+  font-size:17px;line-height:1;border-radius:var(--ord-r-s);
+  transition:color var(--ord-t);
+}
+.ord-x:hover,.ord-x:focus-visible{color:var(--ord-accent);outline:none}
+
+/* переключатель цен внутри панели */
+.ord-mode{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:11px 16px;border-bottom:var(--ord-hair);
+}
+.ord-seg{display:inline-flex;border:var(--ord-border);border-radius:var(--ord-r-pill)}
+/* было overflow:hidden на контейнере — скругляло фон .is-on по краям
+   таблетки, но заодно обрезало бы невидимую область нажатия ниже.
+   Тот же вид даёт скругление на самих крайних кнопках (аудит М5). */
+.ord-seg button:first-child{border-radius:var(--ord-r-pill) 0 0 var(--ord-r-pill)}
+.ord-seg button:last-child{border-radius:0 var(--ord-r-pill) var(--ord-r-pill) 0}
+.ord-seg button{
+  padding:7px 15px;min-height:30px;position:relative;
+  font-family:var(--ord-font);font-size:10px;line-height:1;letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);background:transparent;border:0;cursor:pointer;
+  transition:color var(--ord-t),background var(--ord-t);
+}
+.ord-seg button.is-on{background:var(--ord-solid);color:var(--ord-solid-fg)}
+.ord-seg button:not(.is-on):hover,
+.ord-seg button:not(.is-on):focus-visible{color:var(--ord-accent);outline:none}
+/* аудит М5: 30px высотой, кнопки впритык друг к другу — расширяем
+   вертикаль до 44 и только наружные боковые края, стык между
+   «Розница»/«Опт» не трогаем */
+.ord-seg button::before{content:"";position:absolute;top:-7px;bottom:-7px;left:0;right:0}
+.ord-seg button:first-child::before{left:-7px}
+.ord-seg button:last-child::before{right:-7px}
+
+/* список позиций */
+.ord-list{
+  margin:0;padding:0;list-style:none;overflow-y:auto;flex:1 1 auto;
+  -webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+}
+.ord-line{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  grid-template-areas:"n x" "q s";
+  gap:8px 10px;align-items:center;
+  padding:13px 16px;border-bottom:var(--ord-hair);
+}
+.ord-line__n{grid-area:n;min-width:0}
+.ord-line__n b{
+  display:block;font-size:12.5px;font-weight:500;line-height:1.35;letter-spacing:.01em;color:var(--ord-fg);
+}
+.ord-line__n span{
+  display:block;margin-top:3px;
+  font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);
+}
+.ord-line__q{grid-area:q;justify-self:start}
+.ord-line__s{grid-area:s;text-align:right;white-space:nowrap}
+.ord-line__s b{
+  display:block;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ord-fg);
+}
+.ord-line__s span{
+  display:block;margin-top:3px;font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  color:var(--ord-dim);font-variant-numeric:tabular-nums;
+}
+.ord-line__x{
+  grid-area:x;align-self:start;
+  width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  border:0;background:transparent;color:var(--ord-dim);cursor:pointer;font-size:15px;line-height:1;
+  border-radius:var(--ord-r-s);transition:color var(--ord-t);
+}
+.ord-line__x:hover,.ord-line__x:focus-visible{color:var(--ord-accent);outline:none}
+.ord-line.is-under .ord-line__q .ord-q{border-color:var(--ord-accent)}
+
+/* пусто */
+.ord-empty{padding:26px 16px 30px;text-align:left}
+.ord-empty p{margin:0 0 6px;font-size:12.5px;line-height:1.5;color:var(--ord-fg)}
+.ord-empty .ord-cap{display:block}
+
+/* итоги */
+.ord-sum{padding:13px 16px;border-top:var(--ord-border-strong);background:var(--ord-bg-2)}
+.ord-sum__r{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);margin-bottom:5px;
+}
+.ord-sum__r b{color:var(--ord-fg);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.ord-total{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  margin-top:9px;padding-top:9px;border-top:var(--ord-hair);
+}
+.ord-total span{
+  font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);
+}
+.ord-total b{font-size:22px;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:var(--ord-fg)}
+
+/* подсказка по опту */
+.ord-hint{
+  margin:9px 0 0;font-size:10.5px;line-height:1.55;letter-spacing:.01em;color:var(--ord-dim);
+}
+.ord-hint[hidden]{display:none}
+.ord-hint b{color:var(--ord-accent);font-weight:600}
+.ord-bar{
+  height:2px;margin:8px 0 0;background:var(--ord-line);position:relative;overflow:hidden;
+  border-radius:var(--ord-r-pill);
+}
+.ord-bar i{
+  position:absolute;left:0;top:0;bottom:0;width:0;background:var(--ord-accent);
+  transition:width var(--ord-t);
+}
+.ord-bar.is-done i{background:var(--ord-fg)}
+
+/* отправка */
+.ord-send{padding:13px 16px;border-top:var(--ord-hair);display:flex;flex-wrap:wrap;gap:8px}
+.ord-send .ord-b{flex:1 1 46%}
+.ord-send .ord-b--wide{flex-basis:100%}
+.ord-send .ord-b svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ord-foot{
+  padding:0 16px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+}
+.ord-foot .ord-link{
+  background:none;border:0;padding:0;cursor:pointer;
+  font-family:var(--ord-font);font-size:var(--ord-cap-size);letter-spacing:var(--ord-cap-tr);
+  text-transform:var(--ord-cap-tt);color:var(--ord-dim);
+  border-bottom:1px solid transparent;transition:color var(--ord-t),border-color var(--ord-t);
+}
+.ord-foot .ord-link:hover,.ord-foot .ord-link:focus-visible{
+  color:var(--ord-accent);border-color:var(--ord-accent);outline:none;
+}
+
+/* ---------- 6. ТОСТ ---------- */
+.ord-toast{
+  position:fixed;z-index:880;left:50%;bottom:calc(clamp(14px,2.6vw,26px) + 62px);
+  transform:translate(-50%,10px);
+  max-width:min(460px,calc(100vw - 28px));
+  padding:12px 16px;background:var(--ord-solid);color:var(--ord-solid-fg);
+  border:1px solid var(--ord-solid);border-radius:var(--ord-r);
+  font-family:var(--ord-font);font-size:11.5px;line-height:1.45;letter-spacing:.01em;
+  opacity:0;pointer-events:none;transition:opacity var(--ord-t),transform var(--ord-t);
+}
+.ord-toast.is-on{opacity:1;transform:translate(-50%,0)}
+.ord-toast[hidden]{display:none}
+
+/* ---------- 7. МОБИЛЬНЫЙ ЛИСТ ---------- */
+@media (max-width:760px){
+  .ord-fab{left:clamp(12px,4vw,20px);right:clamp(12px,4vw,20px);justify-content:center}
+  .ord-panel{
+    left:0;right:0;bottom:0;width:auto;max-width:none;
+    max-height:88vh;border-left:0;border-right:0;border-bottom:0;
+    border-radius:var(--ord-sheet-r) var(--ord-sheet-r) 0 0;
+    transform:translateY(100%);
+  }
+  .ord-panel.is-on{transform:none}
+  .ord-panel::before{
+    content:'';position:absolute;left:50%;top:7px;transform:translateX(-50%);
+    width:38px;height:3px;border-radius:9999px;background:var(--ord-line);
+  }
+  .ord-head{padding-top:20px}
+  .ord-list{max-height:none}
+  /* кнопки отправки в две колонки: четыре строки съедают весь список */
+  .ord-send{gap:8px 8px}
+  .ord-send .ord-b{flex:1 1 calc(50% - 4px);padding:11px 8px;min-height:38px}
+  @media (max-width:359px){.ord-send .ord-b{flex-basis:100%}}
+  .ord-toast{bottom:auto;top:16px;transform:translate(-50%,-10px)}
+  .ord-toast.is-on{transform:translate(-50%,0)}
+  .ord-line{grid-template-columns:minmax(0,1fr) auto}
+}
+html.ord-lock,html.ord-lock body{overflow:hidden}
+
+/* ---------- 8. ДОСТУПНОСТЬ / АНИМАЦИИ ---------- */
+@media (prefers-reduced-motion:reduce){
+  .ord-ctl *,.ord-panel,.ord-panel *,.ord-fab,.ord-backdrop,.ord-toast{
+    transition:none!important;animation:none!important;
+  }
+  .ord-panel{transform:none}
+}
+@media (forced-colors:active){
+  .ord-panel,.ord-fab,.ord-b,.ord-q{border:1px solid CanvasText}
+  .ord-fab{background:Canvas;color:CanvasText}
+  /* М6: «Розница/Опт» и is-on-состояния сегодня различаются только заливкой
+     фона — forced-colors её игнорирует. Highlight/HighlightText системные,
+     их режим не трогает. */
+  .ord-seg button.is-on{background:Highlight;color:HighlightText;outline:1px solid HighlightText}
+  [aria-pressed="true"].ord-b,.ord-b[aria-pressed="true"]{outline:2px solid Highlight;outline-offset:2px}
+}
+
+/* ---------- 9. ПЕЧАТЬ: компонента в прайсе быть не должно ---------- */
+@media print{
+  .ord-fab,.ord-panel,.ord-backdrop,.ord-toast,.ord-ctl{display:none!important}
+}
+

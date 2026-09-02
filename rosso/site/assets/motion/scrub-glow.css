@@ -1,0 +1,23 @@
+/* Россо · motion/scrub-glow.css — момент «ореол облёта» (ЗАМЫСЕЛ-ПЛАН §3.5,
+   ЗАМЫСЕЛ-МАКСИМУМ §4). Кримзонный контровой ореол на кромке кадра скраба;
+   сила — от JS (scrub-glow.js) через переменную --glow-o. Только
+   псевдоэлемент с radial-gradient, анимируется opacity — box-shadow и
+   outline не используются (требование задания). Не трогает разметку/canvas
+   скраба (assets/scrub/README.md) — только ::after поверх готового
+   .scrub__stage (сборку DOM делает сам scrub.js). */
+
+.scrub__stage{ --glow-o:0; }
+.scrub__stage::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse at center,
+    transparent 46%,
+    color-mix(in srgb, var(--scrub-accent,var(--rosso,#da291c)) 55%, transparent) 100%);
+  opacity:var(--glow-o);
+}
+
+@media(prefers-reduced-motion: reduce){
+  .scrub__stage::after{ display:none; }
+}
+@media print{
+  .scrub__stage::after{ display:none; }
+}

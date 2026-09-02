@@ -1,0 +1,36 @@
+/* Россо · motion/cut.css — момент «склейка страниц» (ЗАМЫСЕЛ-ПЛАН §3.4).
+   Дирижёр: cut.js. Работает НАД переходом из rosso.js (View Transitions +
+   фолбэк, секция G) — не отключает его: capture-слушатель cut.js ставит
+   e.preventDefault() раньше, а фолбэк rosso.js сам проверяет
+   defaultPrevented и молчит (rosso.js, секция G, первая строка условия).
+   z-index веила (860) ниже .topbar(900) и .fab(880) — общие элементы
+   кросс-документного перехода (view-transition-name) остаются поверх и
+   никогда не перекрыты. */
+
+.cut-veil{
+  position:fixed;inset:0;z-index:860;
+  background:#000;opacity:0;
+  pointer-events:none;
+}
+.cut-veil.is-on{ pointer-events:auto; }
+.cut-shutter{
+  position:absolute;top:0;left:0;right:0;height:1px;
+  background:var(--rosso,#da291c);
+  transform-origin:0% 50%;transform:scaleX(0);
+}
+
+/* До первого кадра: если страница открыта через шторку (флаг sessionStorage,
+   считанный cut.js синхронно первой же исполняемой строкой — раньше, чем
+   возможен рендер: JS не отдаёт управление рендерингу, пока не выполнится),
+   <html> уже несёт cut-arriving, и веил чёрный с самого начала. Прямой
+   заход класса не получает — веил остаётся invisible (opacity:0), и белой
+   вспышки не возникает, потому что тело сайта само чёрное
+   (rosso.css body{background:#000}). */
+html.cut-arriving .cut-veil{ opacity:1; }
+
+@media (prefers-reduced-motion: reduce){
+  .cut-veil{ display:none!important; }
+}
+@media print{
+  .cut-veil{ display:none!important; }
+}

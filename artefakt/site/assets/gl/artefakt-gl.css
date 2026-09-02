@@ -1,0 +1,31 @@
+/* ============================================================
+   artefakt-gl.css — WebGL-слой концепта «Артефакт»
+   Подключается ДО artefakt-gl.js. Ничего чужого не переопределяет:
+   работает только по атрибуту data-gl-state, который ставит скрипт.
+   ============================================================ */
+
+/* холст ложится ровно на место <img>, координаты ставит JS */
+.gl-canvas{
+  position:absolute; display:block; z-index:1;
+  pointer-events:none; will-change:opacity;
+  opacity:0; transition:opacity .28s linear;
+  contain:paint;
+}
+.gl-canvas.is-live{opacity:1}
+
+/* пока слой грузится и пока он живой — исходный кадр не мешает.
+   Он остаётся в потоке (размеры, alt, SEO), просто прозрачен. */
+[data-gl-state="boot"] > img,
+[data-gl-state="on"]   > img,
+img[data-gl-state="boot"],
+img[data-gl-state="on"]{opacity:0}
+
+/* деградация: WebGL2 нет, reduced-motion, ошибка, потеря контекста */
+[data-gl-state="off"] > img,
+img[data-gl-state="off"]{opacity:1}
+[data-gl-state="off"] .gl-canvas{display:none}
+
+@media (prefers-reduced-motion:reduce){
+  [data-gl-state] > img, img[data-gl-state]{opacity:1}
+  .gl-canvas{display:none}
+}

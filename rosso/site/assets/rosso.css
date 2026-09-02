@@ -1,0 +1,1181 @@
+/* ============================================================
+   «РОССО» — дизайн-система многостраничника РЫБЦЕХ.РФ
+   Чёрное кино · шесть ступеней чёрного · микро-UPPERCASE
+   #da291c ТОЛЬКО на интерактивных состояниях · radius 0 · без теней
+   Источник: одностраничник «Рыбцех — Россо» + refs/full/Россо/DESIGN.md
+
+   Шрифты — локальные файлы в assets/fonts/, без внешнего CDN
+   (см. РАЗВЕДКА-ТИПОГРАФИКА.md). Три роли:
+   --ff  IBM Plex Sans  — рабочая: текст, таблица прайса, интерфейс
+   --fd  Unbounded      — дисплей: кино-титры, крупные заголовки секций
+   --fm  IBM Plex Mono  — моно: индексы, метки, служебные подписи
+   Подключение — только через @font-face ниже, <link> на Google Fonts
+   в HTML больше не нужен и не должен возвращаться в <head>.
+   ============================================================ */
+
+/* ---------- 0а. ШРИФТЫ (локально, assets/fonts/) ---------- */
+@font-face{
+  font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;
+  src:url('fonts/Unbounded-cyr.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face{
+  font-family:'Unbounded';font-style:normal;font-weight:500 700;font-display:swap;
+  src:url('fonts/Unbounded-lat.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20BD,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('fonts/IBMPlexSans-cyr.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face{
+  font-family:'IBM Plex Sans';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('fonts/IBMPlexSans-lat.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20BD,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url('fonts/IBMPlexMono-400-cyr.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url('fonts/IBMPlexMono-400-lat.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20BD,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url('fonts/IBMPlexMono-500-cyr.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face{
+  font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url('fonts/IBMPlexMono-500-lat.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20BD,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* ---------- 0. ТОКЕНЫ ---------- */
+:root{
+  /* Стек поверхностей: шесть ступеней, глубина цветом, не тенью */
+  --s0:#000000;      /* Carbone Nero   — кино-секции            */
+  --s1:#000000;      /* базовый канвас — чистый чёрный          */
+  --s2:#181818;      /* Notte Profonda — панели, топбар, подвал */
+  --s3:#2e2e2e;      /* третья ступень — полосы-CTA             */
+  --s4:#303030;      /* Grafite        — границы, разделители   */
+  --s5:#ebebeb;      /* Cemento        — светлое досье (прайс)  */
+  --s5b:#f7f7f7;     /* Velo di Luce                            */
+  --s5c:#ffffff;     /* Canvas White                            */
+
+  /* было #666666: 3,66:1 на чёрном и 3,09:1 на --s2 — ниже 4,5:1 для мелкого текста.
+     #808080 держит 5,3:1 на чёрном и ровно 4,5:1 на --s2 (проверено по формуле WCAG). */
+  --piombo:#808080;
+  --fumo:#8f8f8f;
+  --argento:#d2d2d2;
+  --bianco:#ffffff;
+
+  --rosso:#da291c;       /* Rosso Corsa  — только интерактив/акцент */
+  --rosso-scuro:#9d2211; /* Rosso Scuro  — поддержка на светлом     */
+  /* Мелкий/некрупный красный текст на тёмном: da291c даёт лишь 3,65:1 на --s2
+     (ниже 4,5:1). Крупный жирный акцент (напр. .chron-year) им не пользуется —
+     там строгий da291c проходит норму 3:1 и остаётся нетронутым. */
+  --rosso-txt:#ef4433;   /* 4,7:1 на --s2, 5,5:1 на чёрном */
+
+  --ff:'IBM Plex Sans','Helvetica Neue',Arial,sans-serif;       /* рабочая: текст, таблица, интерфейс */
+  --fd:'Unbounded','Arial Narrow',Arial,sans-serif;             /* дисплей: кино-титры, крупные заголовки */
+  --fm:'IBM Plex Mono','Courier New',Courier,monospace;         /* моно: индексы, метки, служебные подписи */
+
+  /* Сигнатура: трекинг расширяется по мере уменьшения кегля */
+  --tr-40:.005em;   /* 24–44px дисплей                    */
+  --tr-18:.01em;    /* 15–20px подзаголовки, надглазники  */
+  --tr-13:.05em;    /* 12–13px нав, кнопки                */
+  --tr-10:.091em;   /* 9–11px микро                       */
+
+  --maxw:1440px;
+  --gut:clamp(16px,4.4vw,60px);
+
+  --t:var(--t-420) cubic-bezier(.2,.7,.3,1);
+  --tq:.2s cubic-bezier(.2,.7,.3,1);
+}
+
+/* ---------- 1. RESET ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body,h1,h2,h3,h4,p,ul,ol,li,figure,dl,dd{margin:0;padding:0}
+ul,ol{list-style:none}
+img,svg,video{display:block;max-width:100%}
+button,input{font:inherit;color:inherit;background:none;border:0}
+a{color:inherit;text-decoration:none}
+/* Телефонные ссылки на 375: дефис в номере — точка мягкого переноса,
+   без nowrap хвост («…70») падает на отдельную строку. */
+a[href^="tel:"]{white-space:nowrap}
+table{border-collapse:collapse;width:100%}
+
+html{scroll-behavior:auto}
+body{
+  background:#000;
+  color:var(--bianco);
+  font-family:var(--ff);
+  font-size:13px;
+  line-height:1.78;
+  letter-spacing:.015em;
+  font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--rosso);color:#fff}
+
+/* ---------- 2. ТИПОГРАФИКА ---------- */
+.u{text-transform:uppercase;letter-spacing:var(--tr-10)}
+.nano{font-size:9px;line-height:2;letter-spacing:var(--tr-10);text-transform:uppercase}
+.micro{font-size:10px;line-height:1.8;letter-spacing:var(--tr-10);text-transform:uppercase}
+.cap{font-size:11px;line-height:1.78;letter-spacing:var(--tr-10);text-transform:uppercase}
+a.cap{font-size:11px}
+.bsm{font-size:12px;line-height:1.78;letter-spacing:.022em}
+.hd{font-size:clamp(15px,1.3vw,18px);line-height:1.4;letter-spacing:var(--tr-18);text-transform:none;font-weight:600}
+.dim{color:var(--fumo)}
+.dim2{color:var(--piombo)}
+.num{font-family:var(--ff);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:var(--tr-40);line-height:.94}
+
+/* Кино-титры */
+.title-card{
+  font-family:var(--fd);font-weight:700;
+  text-transform:uppercase;letter-spacing:var(--tr-40);line-height:1.14;
+  font-size:clamp(24px,2.8vw,40px);overflow-wrap:break-word;
+}
+.title-card em{font-style:normal;color:inherit}
+
+/* ---------- 3. КАРКАС ---------- */
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gut)}
+section{position:relative}
+.pad{padding-block:clamp(48px,5.5vw,76px)}
+.hairline{height:1px;background:var(--s4);border:0}
+.light .hairline{background:var(--argento)}
+main{padding-top:40px} /* компенсация фиксированного топбара */
+
+/* Заголовок секции: тёмные секции — центрированная пара
+   «надглазник → крупный капслок»; линейка — только в светлом досье. */
+.sec-head{
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;
+  margin-bottom:clamp(30px,4vw,60px);
+}
+.sec-head .sec-idx{font-family:var(--fm);font-weight:400;font-size:11px;letter-spacing:var(--tr-10);color:var(--rosso-txt)}
+.sec-head h2,.sec-head h1{font-family:var(--fd);font-size:clamp(24px,2.7vw,38px);letter-spacing:var(--tr-40);text-transform:uppercase;font-weight:700;line-height:1.14}
+.sec-head .rule{display:none}
+.sec-head .sec-note{font-size:12px;letter-spacing:var(--tr-18);text-transform:none;color:var(--fumo)}
+.light .sec-head{flex-direction:row;align-items:center;text-align:left;gap:20px}
+.light .sec-head h2,.light .sec-head h1{font-family:var(--ff);font-size:clamp(12px,1vw,16px);font-weight:500;letter-spacing:var(--tr-13);white-space:nowrap}
+.light .sec-head .rule{display:block;flex:1;height:1px;background:var(--argento)}
+.light .sec-head .sec-idx{color:var(--rosso-scuro)}
+.light .sec-head .sec-note{font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--piombo);white-space:nowrap}
+@media(max-width:640px){
+  .light .sec-head{flex-wrap:wrap}
+  .light .sec-head .sec-note{display:none}
+}
+
+/* Протяг под текст: единственный допустимый градиент — там, где на кадре текст */
+.vig::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:linear-gradient(transparent 45%,rgba(0,0,0,.62));
+}
+
+/* ---------- 4. ТОПБАР (планка 40px, 6 страниц) ---------- */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  background:var(--s2);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:flex-start;gap:0;height:40px}
+.brand{display:flex;align-items:baseline;gap:10px;flex:0 0 auto}
+.brand b{font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.brand span{font-size:9px;letter-spacing:var(--tr-10);color:var(--fumo);text-transform:uppercase}
+@media(max-width:1240px){.brand span{display:none}}
+
+.nav{display:flex;gap:0;margin-left:clamp(24px,4vw,64px);margin-right:auto}
+.nav a{
+  position:relative;display:block;padding:6px 0;margin-right:clamp(20px,3.4vw,52px);
+  font-size:12px;font-weight:600;letter-spacing:var(--tr-13);text-transform:uppercase;color:var(--bianco);
+  transition:color var(--tq);
+}
+.nav a::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--rosso);
+  transform:scaleX(0);transform-origin:left;transition:transform var(--t);
+}
+.nav a:hover,.nav a:focus-visible,.nav a.on,.nav a[aria-current="page"]{color:var(--rosso-txt);outline:none}
+.nav a:hover::after,.nav a:focus-visible::after,.nav a.on::after,.nav a[aria-current="page"]::after{transform:scaleX(1)}
+.tel{
+  font-size:12px;font-weight:600;letter-spacing:var(--tr-13);text-transform:uppercase;padding:6px 0;
+  margin-left:auto;transition:color var(--tq);white-space:nowrap;
+}
+.tel:hover,.tel:focus-visible{color:var(--rosso-txt);outline:none}
+@media(max-width:1100px){.nav,.tel{display:none}}
+
+.burger{display:none;margin-left:auto;width:34px;height:34px;position:relative;cursor:pointer}
+.burger i{position:absolute;left:6px;right:6px;height:1px;background:var(--bianco);transition:transform var(--t),opacity var(--t),background var(--tq)}
+.burger i:nth-child(1){top:14px}
+.burger i:nth-child(2){top:20px}
+.burger:hover i{background:var(--rosso)}
+.burger[aria-expanded="true"] i:nth-child(1){transform:translateY(3.5px) rotate(45deg)}
+.burger[aria-expanded="true"] i:nth-child(2){transform:translateY(-3.5px) rotate(-45deg)}
+@media(max-width:1100px){.burger{display:block}}
+
+/* Мобильная шторка */
+.drawer{
+  position:fixed;inset:0;z-index:890;background:var(--s0);
+  display:flex;flex-direction:column;justify-content:center;padding:80px var(--gut) 40px;
+  opacity:0;visibility:hidden;transition:opacity var(--t),visibility var(--t);
+}
+.drawer.open{opacity:1;visibility:visible}
+.drawer a{
+  display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--s4);
+  font-size:13px;letter-spacing:.09em;text-transform:uppercase;transition:color var(--tq),padding-left var(--t);
+}
+.drawer a i{font-style:normal;font-family:var(--fm);font-weight:500;font-size:10px;color:var(--fumo);transition:color var(--tq)}
+.drawer a:hover,.drawer a:focus-visible,.drawer a[aria-current="page"]{color:var(--rosso-txt);padding-left:10px;outline:none}
+.drawer a:hover i,.drawer a[aria-current="page"] i{color:var(--rosso-txt)}
+.drawer .dr-foot{margin-top:28px;display:flex;flex-wrap:wrap;gap:8px 24px}
+
+/* ---------- 5. МЕДИА-СЛОТЫ ----------
+   Кадр край-в-край: без рамок, плашек, скруглений.
+   Файл кладётся <img class="ph-img"> или <video> внутрь .ph. */
+.ph{
+  position:relative;overflow:hidden;background:#141414;
+  display:grid;place-items:center;isolation:isolate;
+}
+.ph .ph-img,.ph video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+}
+.r169{aspect-ratio:16/9}
+.r219{aspect-ratio:21/9}
+.r1610{aspect-ratio:16/10}
+.r45{aspect-ratio:4/5}
+.r11{aspect-ratio:1/1}
+.ph-fill{position:absolute;inset:0;border:0;aspect-ratio:auto}
+
+/* ---------- 6. HERO ---------- */
+.hero{height:100svh;min-height:560px;position:relative;overflow:hidden;background:var(--s0)}
+.hero.short{height:min(62svh,640px);min-height:420px} /* внутренние страницы */
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img,.hero-media video,.bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.hero-inner{
+  position:relative;z-index:4;height:100%;
+  display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;
+  padding:0 var(--gut) 13vh;max-width:var(--maxw);width:100%;margin-inline:auto;
+}
+@media(max-width:560px){.hero-inner{padding-bottom:17vh}}
+.hero.short .hero-inner{padding-bottom:clamp(40px,7vh,80px)}
+.hero-eyebrow{font-size:clamp(15px,1.3vw,18px);font-weight:400;letter-spacing:var(--tr-18);color:#fff;margin-bottom:12px}
+.hero h1,.hero .title-card{font-weight:700;font-size:clamp(22px,2.6vw,38px);overflow-wrap:break-word}
+
+/* Оверлей «надглазник → капслок → ссылка ⟶» — на любом кино-кадре */
+.ov{
+  position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:12px;padding:var(--gut);
+}
+.ov .ov-eyebrow{font-size:clamp(15px,1.3vw,18px);font-weight:400;letter-spacing:var(--tr-18);color:#fff;text-transform:none}
+.ov .ov-title{
+  font-family:var(--fd);font-size:clamp(22px,2.7vw,38px);font-weight:700;letter-spacing:var(--tr-40);
+  line-height:1.14;text-transform:uppercase;
+}
+.ov-cta{
+  display:inline-flex;align-items:center;gap:14px;margin-top:8px;
+  font-size:12px;font-weight:500;letter-spacing:var(--tr-13);text-transform:uppercase;
+}
+.ov-cta i{
+  width:34px;height:34px;border:1px solid #fff;border-radius:9999px;flex:0 0 auto;
+  display:grid;place-items:center;transition:background var(--tq),border-color var(--tq);
+}
+.ov-cta i svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.4}
+.ov-cta:hover i,.ov-cta:focus-visible i{background:var(--rosso);border-color:var(--rosso-txt)}
+.ov-cta:focus-visible{outline:none}
+
+/* Кино-вставка (полноширинный кадр между секциями) */
+.interlude{background:var(--s0)}
+.interlude .il-stage{position:relative;height:min(86svh,760px);min-height:420px;overflow:hidden}
+.interlude .ov{justify-content:flex-end;padding-bottom:clamp(34px,5vw,64px)}
+
+/* ---------- 7. ПЛИТОЧНИК 2×2 ---------- */
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}
+@media(max-width:700px){.tiles{grid-template-columns:1fr}}
+.tile{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#141414}
+.tile .ph{position:absolute;inset:0;transition:transform var(--t-1200) cubic-bezier(.2,.7,.3,1)}
+.tile:hover .ph{transform:scale(1.03)}
+.tile::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(transparent 40%,rgba(0,0,0,.55));
+}
+
+/* ---------- 8. КАРТОЧКИ ---------- */
+/* Витрина: полнокадровая карточка с подписью на протяге */
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;width:100%}
+@media(max-width:640px){.fgrid{grid-template-columns:1fr}}
+.fcard{background:none;position:relative;display:block;overflow:hidden}
+.fcard .fc-media{border:0;position:relative;aspect-ratio:16/10;transition:transform var(--t-1200) cubic-bezier(.2,.7,.3,1)}
+.fcard:hover .fc-media{transform:scale(1.03)}
+.fcard .fc-body{
+  position:absolute;inset:auto 0 0 0;z-index:4;padding:0 clamp(18px,2.4vw,30px) clamp(26px,3.4vw,40px);
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;
+  background:linear-gradient(transparent,rgba(0,0,0,.55) 38%,rgba(0,0,0,.86));padding-top:96px;
+}
+.fcard h3{transition:color var(--t);font-size:clamp(20px,2vw,28px);font-weight:700;letter-spacing:var(--tr-40);text-transform:uppercase}
+.fcard:hover h3{color:var(--rosso-txt)}
+.fcard p{color:var(--argento);font-size:12px;line-height:1.78;max-width:38ch}
+.fcard .fc-foot{display:flex;align-items:baseline;justify-content:center;gap:20px;padding-top:6px;margin-top:2px}
+.fcard .fc-price{font-family:var(--ff);font-weight:600;font-size:15px;letter-spacing:var(--tr-18);font-variant-numeric:tabular-nums;transition:color var(--t)}
+.fcard:hover .fc-price{color:var(--rosso-txt)}
+.fcard .fc-tag{font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--fumo)}
+
+/* Текстовая карточка-колонка (Опт/Доставка/Магазин, контакты) */
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--s4);border:1px solid var(--s4)}
+@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.col{background:var(--s2);padding:clamp(22px,2.6vw,34px);position:relative}
+.col::after{content:'';position:absolute;left:0;top:0;width:100%;height:1px;background:var(--rosso);transform:scaleX(0);transform-origin:left;transition:transform var(--t-420) cubic-bezier(.2,.7,.3,1)}
+.col:hover::after{transform:scaleX(1)}
+.col h3{margin-bottom:14px}
+.col .col-n{font-family:var(--fm);font-weight:500;font-size:10px;letter-spacing:.14em;color:var(--fumo);display:block;margin-bottom:16px}
+.col:hover .col-n{color:var(--rosso-txt)}
+.col ul{display:flex;flex-direction:column}
+.col ul li{border-top:1px solid var(--s4);padding:11px 0;display:flex;gap:14px;align-items:baseline;font-size:12.5px;color:var(--argento)}
+.col ul li:first-child{border-top:0;padding-top:0}
+.col ul li s{flex:0 0 auto;width:5px;height:5px;background:var(--s4);text-decoration:none;transform:translateY(-2px)}
+.col .big{font-family:var(--ff);font-weight:700;font-size:clamp(26px,2.6vw,36px);line-height:1.1;letter-spacing:var(--tr-40);margin-bottom:6px}
+
+/* Контактная карточка */
+.cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--s4);border:1px solid var(--s4)}
+@media(max-width:820px){.cgrid{grid-template-columns:1fr}}
+.ccard{background:var(--s2);padding:clamp(22px,2.6vw,32px);position:relative;display:block}
+.ccard::after{content:'';position:absolute;left:0;top:0;width:100%;height:1px;background:var(--rosso);transform:scaleX(0);transform-origin:left;transition:transform var(--t-420) cubic-bezier(.2,.7,.3,1)}
+.ccard:hover::after{transform:scaleX(1)}
+.ccard .cc-role{font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo);margin-bottom:14px;display:block}
+.ccard .cc-name{font-size:12px;letter-spacing:.088em;text-transform:uppercase;color:var(--fumo);margin-bottom:9px}
+.ccard .cc-tel{font-family:var(--ff);font-weight:600;font-size:clamp(18px,1.8vw,24px);line-height:1.2;letter-spacing:var(--tr-18);transition:color var(--t)}
+.ccard:hover .cc-tel{color:var(--rosso-txt)}
+.clinks{margin-top:1px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--s4);border:1px solid var(--s4);border-top:0}
+@media(max-width:820px){.clinks{grid-template-columns:1fr}}
+.clink{background:var(--s2);padding:20px clamp(22px,2.6vw,32px);display:flex;align-items:center;justify-content:space-between;gap:16px;transition:color var(--t)}
+.clink:hover{color:var(--rosso-txt)}
+.clink span{font-size:11px;letter-spacing:.088em;text-transform:uppercase}
+.clink svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.2;flex:0 0 auto;transition:transform var(--t)}
+.clink:hover svg{transform:translate(3px,-3px)}
+
+/* Чип */
+.chip{
+  display:inline-block;border:1px solid var(--s4);border-radius:9999px;padding:4px 12px;
+  font-size:10px;letter-spacing:.091em;text-transform:uppercase;color:var(--fumo);
+  transition:border-color var(--tq),color var(--tq);
+}
+.light .chip{border-color:var(--argento);color:var(--piombo)}
+
+/* ---------- 9. ХРОНИКА (лента, стр. «Наша история») ---------- */
+.chron{background:var(--s2);overflow:hidden}
+.chron-view{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--s4) transparent}
+.chron-view::-webkit-scrollbar{height:3px}
+.chron-view::-webkit-scrollbar-track{background:var(--s2)}
+.chron-view::-webkit-scrollbar-thumb{background:var(--s4)}
+.chron-view:hover::-webkit-scrollbar-thumb{background:var(--rosso)}
+.chron-track{display:flex;gap:0;padding-inline:var(--gut);width:max-content;border-top:1px solid var(--s4)}
+.chron-item{flex:0 0 auto;width:clamp(260px,26vw,380px);padding:26px 26px 34px;position:relative}
+.chron-item::before{content:'';position:absolute;top:-1px;left:0;width:100%;height:1px;background:var(--rosso);transform:scaleX(0);transform-origin:left;transition:transform var(--t-420) cubic-bezier(.2,.7,.3,1)}
+.chron-item:hover::before{transform:scaleX(1)}
+.chron-year{font-family:var(--fd);font-weight:700;font-size:clamp(30px,3vw,42px);line-height:1.05;letter-spacing:var(--tr-40);margin-bottom:16px;transition:color var(--t)}
+.chron-item:hover .chron-year{color:var(--rosso)}
+.chron-item h3{margin-bottom:9px}
+.chron-item p:not(.chron-year){color:var(--fumo);font-size:12.5px}
+.chron-mark{position:absolute;top:26px;right:26px;font-size:9px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--piombo)}
+
+/* ---------- 10. СВЕТЛОЕ ДОСЬЕ + ТАБЛИЦА ПРАЙСА ---------- */
+.light{background:var(--s5c);color:var(--s0);
+  /* На белом (--s5c) #808080 даёт лишь 3,3:1 — светлым секциям свой, более
+     тёмный оттенок того же токена: 6,7:1 на белом. */
+  --piombo:#5c5c5c;
+}
+.light .dim,.light .dim2{color:var(--piombo)}
+.price-top{display:flex;flex-wrap:wrap;gap:18px 28px;align-items:flex-end;justify-content:space-between;margin-bottom:24px}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.pill{
+  border:1px solid var(--argento);border-radius:9999px;padding:5px 14px;cursor:pointer;
+  font-size:10px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo);
+  transition:border-color var(--tq),color var(--tq);white-space:nowrap;
+}
+.pill:hover,.pill:focus-visible{color:var(--rosso-txt);border-color:var(--rosso-txt);outline:none}
+.pill.on{color:var(--rosso-txt);border-color:var(--rosso-txt)}
+.search{position:relative;min-width:min(260px,100%)}
+.search input{
+  width:100%;border-bottom:1px solid var(--s0);padding:8px 26px 8px 0;
+  font-size:11px;letter-spacing:.088em;text-transform:uppercase;transition:border-color var(--tq);
+}
+.search input::placeholder{color:var(--piombo);text-transform:uppercase}
+.search input:focus{outline:none;border-bottom-color:var(--rosso-txt)}
+.search svg{position:absolute;right:2px;top:8px;width:13px;height:13px;stroke:var(--piombo);fill:none;stroke-width:1.2}
+.search input:focus+svg{stroke:var(--rosso)}
+
+.tblwrap{overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--argento) transparent}
+.tblwrap::-webkit-scrollbar{height:3px}
+.tblwrap::-webkit-scrollbar-track{background:var(--s5)}
+.tblwrap::-webkit-scrollbar-thumb{background:var(--argento)}
+.tblwrap:hover::-webkit-scrollbar-thumb{background:var(--rosso)}
+.prtab{min-width:640px;font-variant-numeric:tabular-nums}
+.prtab thead th{
+  text-align:left;font-weight:400;font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo);
+  padding:0 14px 10px 0;border-bottom:1px solid var(--s0);white-space:nowrap;
+}
+.prtab thead th.n{text-align:right;padding-right:0}
+.prtab tbody.grp>tr.gt td{
+  padding:30px 0 9px;font-size:10px;letter-spacing:.091em;text-transform:uppercase;color:var(--s0);
+  border-bottom:1px solid var(--s0);
+}
+.prtab tr.pr td{padding:11px 14px 11px 0;border-bottom:1px solid var(--s5);font-size:12.5px;letter-spacing:.01em;vertical-align:baseline}
+.prtab tr.pr td.p{text-align:right;padding-right:0;font-family:var(--ff);font-weight:500;font-size:15px;white-space:nowrap}
+.prtab tr.pr td.p.o{color:var(--piombo);padding-right:14px}
+.prtab tr.pr td.u{text-align:right;padding-right:0;font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo);width:1%;white-space:nowrap}
+.prtab tr.pr{transition:background var(--tq)}
+.prtab tr.pr:hover{background:var(--s5b)}
+.prtab tr.pr:hover td.nm,.prtab tr.pr:hover td.p{color:var(--rosso-txt)}
+.prtab td .sz{color:var(--piombo)}
+.prtab tr.pr:hover td .sz{color:var(--rosso-txt)}
+.prtab tr.pr.spec td.nm::after{
+  content:'СПЕЦ';margin-left:9px;font-size:8px;letter-spacing:.12em;color:var(--piombo);
+  border:1px solid var(--argento);border-radius:9999px;padding:2px 7px;vertical-align:1px;
+}
+/* !important обязателен: ниже, в @media(max-width:760px), строка прайса получает
+   display:grid селектором .prtab tr.pr той же специфичности (0,2,1), который идёт
+   позже по каскаду и без !important перебивал скрытие — на мобильном поиск и
+   фильтры переставали прятать строки (счётчик «12 позиций», на экране 41). */
+.prtab tr.hide,.prtab tbody.hide{display:none!important}
+.pr-empty{padding:34px 0;font-size:11px;letter-spacing:.088em;text-transform:uppercase;color:var(--piombo)}
+.pr-count{font-size:10px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo)}
+
+/* мобильная перекладка прайса в карточки */
+@media(max-width:760px){
+  .tblwrap{overflow:visible}
+  .prtab{min-width:0}
+  .prtab thead{display:none}
+  .prtab tbody,.prtab tr,.prtab td{display:block;width:auto}
+  .prtab tbody.grp>tr.gt td{padding:24px 0 8px}
+  .prtab tr.pr{
+    display:grid;grid-template-columns:auto auto 1fr;grid-template-areas:"nm nm nm" "o r u";
+    gap:8px 30px;padding:13px 0;border-bottom:1px solid var(--s5);align-items:baseline;
+  }
+  .prtab tr.pr td{border:0;padding:0}
+  .prtab tr.pr td.nm{grid-area:nm;font-size:13px}
+  .prtab tr.pr td.p.o{grid-area:o;text-align:left;padding:0}
+  .prtab tr.pr td.p.r{grid-area:r;text-align:left}
+  .prtab tr.pr td.u{grid-area:u;width:auto;justify-self:end;text-align:right;align-self:center}
+  .prtab tr.pr td.p::before{
+    content:attr(data-l);display:block;font-family:var(--ff);font-size:8px;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--piombo);margin-bottom:2px;
+  }
+}
+.price-cond{margin-top:34px;border-top:1px solid var(--s0);padding-top:20px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px 24px}
+@media(max-width:900px){.price-cond{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.price-cond{grid-template-columns:1fr}}
+.price-cond dt{font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo);margin-bottom:6px}
+.price-cond dd{font-size:12px;line-height:1.5}
+.price-legal{margin-top:22px;font-size:10px;letter-spacing:.06em;color:var(--piombo);max-width:70ch}
+
+/* ---------- 11. КНОПКИ ---------- */
+/* Кнопка = текст + круглая стрелка. Прямоугольных рамок нет. */
+.btn{
+  display:inline-flex;align-items:center;gap:14px;border:0;padding:0;
+  font-size:12px;font-weight:500;letter-spacing:var(--tr-13);text-transform:uppercase;
+  transition:color var(--tq);cursor:pointer;
+}
+.btn svg{
+  width:34px;height:34px;flex:0 0 auto;border:1px solid currentColor;border-radius:9999px;
+  padding:10px;stroke:currentColor;fill:none;stroke-width:1.6;
+  transition:background var(--tq),border-color var(--tq),color var(--tq);
+}
+.btn:hover,.btn:focus-visible{color:var(--rosso-txt);outline:none}
+.btn:hover svg,.btn:focus-visible svg{background:var(--rosso);border-color:var(--rosso-txt);color:#fff}
+.light .btn{color:var(--s0)}
+.btns{display:flex;flex-wrap:wrap;gap:16px 34px;margin-top:30px}
+
+/* Единственная красная масса — залитая CTA-кнопка на полосе s3 */
+.news{background:var(--s3);padding-block:clamp(48px,6vw,80px);text-align:center}
+.news h3{font-size:clamp(18px,1.6vw,22px);font-weight:500;letter-spacing:var(--tr-18);margin-bottom:10px}
+.news p{font-size:14px;line-height:1.78;color:var(--argento);margin-bottom:28px;max-width:60ch;margin-inline:auto}
+.btn-red{
+  display:inline-block;background:var(--rosso);color:#fff;border:0;border-radius:0;
+  min-width:225px;padding:17px 32px;cursor:pointer;
+  font-size:13px;letter-spacing:.09em;text-transform:uppercase;
+  transition:background var(--tq);
+}
+.btn-red:hover,.btn-red:focus-visible{background:#f0392b;outline:none}
+
+/* ---------- 12. ФУТЕР ---------- */
+footer{background:var(--s2);padding-block:clamp(40px,5vw,70px);text-align:center}
+.fgrid2{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:34px 24px;text-align:center}
+@media(max-width:900px){.fgrid2{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.fgrid2{grid-template-columns:1fr}}
+footer h4{font-size:12px;letter-spacing:var(--tr-13);text-transform:uppercase;font-weight:500;margin-bottom:16px}
+footer li a,footer p{font-size:11px;line-height:1.78;letter-spacing:.02em;color:var(--fumo)}
+footer li{margin-bottom:8px}
+footer li a{transition:color var(--tq)}
+footer li a:hover{color:var(--rosso-txt);outline:none}
+/* Подвал (Разделы + три телефона): фокус гасился outline:none и держался
+   только цветом — возвращаем видимую рамку в духе сайта (19.10). */
+footer li a:focus-visible{color:var(--rosso-txt);outline:2px solid var(--ink);outline-offset:3px}
+.f-lead{margin-bottom:clamp(30px,4vw,50px);text-align:center}
+.f-lead p{margin-inline:auto;max-width:60ch}
+.f-mark{font-family:var(--fd);font-weight:700;font-size:clamp(24px,2.4vw,34px);line-height:1.14;letter-spacing:var(--tr-40);text-transform:uppercase;margin-bottom:12px}
+.f-social{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 30px;margin-top:clamp(28px,3.4vw,42px)}
+.f-social a{display:inline-flex;align-items:center;gap:12px;font-size:11px;letter-spacing:var(--tr-10);text-transform:uppercase;transition:color var(--tq)}
+.f-social a i{width:30px;height:30px;border:1px solid currentColor;border-radius:9999px;display:grid;place-items:center;flex:0 0 auto}
+.f-social a i svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.3}
+.f-social a:hover,.f-social a:focus-visible{color:var(--rosso-txt);outline:none}
+.f-strip{background:var(--s3);padding-block:16px}
+.f-strip .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px}
+.f-strip span,.f-strip a{font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--argento)}
+.f-strip a{transition:color var(--tq)}
+.f-strip a:hover,.f-strip a:focus-visible{color:var(--rosso-txt);outline:none}
+
+/* ---------- 13. ПОЯВЛЕНИЯ (IntersectionObserver) ---------- */
+.rev{opacity:0;transform:translateY(18px);transition:opacity var(--t-700) cubic-bezier(.2,.7,.3,1),transform var(--t-700) cubic-bezier(.2,.7,.3,1)}
+.rev.in{opacity:1;transform:none}
+.rev[data-delay="1"]{transition-delay:.08s}
+.rev[data-delay="2"]{transition-delay:.16s}
+.rev[data-delay="3"]{transition-delay:var(--t-240)}
+
+/* ---------- 14. A11Y / MOTION ---------- */
+:focus-visible{outline:1px solid var(--rosso);outline-offset:3px}
+.skip{position:absolute;left:-9999px;top:0;z-index:9999;background:#000;padding:12px 18px;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+.skip:focus{left:12px;top:12px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rev{opacity:1;transform:none}
+  .tile:hover .ph,.fcard:hover .fc-media{transform:none}
+  /* Плавающая связь: без выезда панели и без сдвига кнопки */
+  .fab,.fab-panel{transform:none!important;transition:none!important}
+}
+
+/* ---------- 15. СВЯЗЬ · МЕССЕНДЖЕРЫ ----------
+   Иконки — инлайн-спрайт <symbol> в начале <body> каждой страницы:
+   #i-wa (WhatsApp) · #i-tg (Telegram) · #i-vb (Viber).
+   Только контур currentColor: фирменные заливки брендов сломали бы ч/б + кримзон. */
+.msgs{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:9px}
+.msg{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:9px;line-height:1.8;letter-spacing:var(--tr-10);text-transform:uppercase;
+  color:var(--fumo);transition:color var(--tq);
+}
+.msg svg{
+  width:13px;height:13px;flex:0 0 auto;
+  stroke:currentColor;fill:none;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;
+}
+.msg:hover,.msg:focus-visible{color:var(--rosso-txt);outline:none}
+.light .msg:hover,.light .msg:focus-visible{color:var(--rosso-scuro)}
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+
+/* MAX (max.ru) — слот готов, кнопка выключена.
+   У MAX нет ссылок по номеру телефона: нужна персональная https://max.ru/u/<хеш>,
+   которую генерирует владелец аккаунта. Иконка — #i-max в спрайте, стиль — тот же .msg
+   (плюс чуть плотнее оптический вес буквы M). Раскомментировать разметку — и всё. */
+.msg svg use[href="#i-max"]{stroke-width:1.3}
+
+/* Телефон/почта внутри текста — видимая ссылка, а не просто текст */
+.col ul li a,.pr-meta a,.news p a,.find p a{
+  border-bottom:1px solid var(--s4);transition:color var(--tq),border-color var(--tq);
+}
+.col ul li a:hover,.col ul li a:focus-visible,
+.pr-meta a:hover,.pr-meta a:focus-visible,
+.news p a:hover,.news p a:focus-visible,
+.find p a:hover,.find p a:focus-visible{color:var(--rosso-txt);border-color:var(--rosso-txt);outline:none}
+
+.col .msgs{margin-bottom:14px}
+
+/* Мессенджеры в CTA-полосе */
+.news .msgs{justify-content:center;margin-top:20px}
+.news .msg{color:var(--argento)}
+
+/* Блок контактов в футере */
+footer .msgs{justify-content:center;margin-bottom:8px}
+.f-place{
+  margin-top:clamp(26px,3vw,38px);padding-top:22px;border-top:1px solid var(--s4);
+  display:flex;flex-direction:column;gap:4px;text-align:center;
+}
+.f-place p,.f-place a{font-size:11px;line-height:1.78;letter-spacing:.02em;color:var(--fumo)}
+.f-place b{color:var(--argento);font-weight:500}
+.f-place a{transition:color var(--tq)}
+.f-place a:hover,.f-place a:focus-visible{color:var(--rosso-txt);outline:none}
+
+/* ---------- 16. ПЛАВАЮЩАЯ КНОПКА СВЯЗИ ----------
+   Разметку строит assets/rosso.js — одна и та же на всех страницах. */
+.fab{
+  position:fixed;z-index:880;
+  right:max(16px,env(safe-area-inset-right));
+  bottom:max(16px,env(safe-area-inset-bottom));
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+  transition:opacity var(--t),transform var(--t),visibility var(--t);
+}
+.fab.away{opacity:0;visibility:hidden;transform:translateY(12px);pointer-events:none}
+.fab-btn{
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;
+  background:var(--s2);border:1px solid var(--s4);color:var(--bianco);
+  padding:11px 15px;
+  font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;
+  transition:border-color var(--tq),color var(--tq);
+}
+.fab-btn::before{content:'';width:6px;height:6px;background:var(--rosso);flex:0 0 auto}
+.fab-btn svg{width:15px;height:15px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.fab-btn:hover,.fab-btn:focus-visible,.fab-btn[aria-expanded="true"]{border-color:var(--rosso-txt);color:var(--rosso-txt);outline:none}
+.fab-panel{
+  width:min(320px,calc(100vw - 32px));
+  max-height:min(72svh,560px);overflow-y:auto;
+  background:var(--s2);border:1px solid var(--s4);
+  padding:16px 18px 18px;
+  opacity:0;visibility:hidden;transform:translateY(8px);
+  transition:opacity var(--t),transform var(--t),visibility var(--t);
+}
+.fab.open .fab-panel{opacity:1;visibility:visible;transform:none}
+.fab-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-bottom:12px;border-bottom:1px solid var(--s4)}
+.fab-head span{font-size:10px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--fumo)}
+.fab-x{width:24px;height:24px;display:grid;place-items:center;cursor:pointer;color:var(--fumo);transition:color var(--tq)}
+.fab-x svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round}
+.fab-x:hover,.fab-x:focus-visible{color:var(--rosso-txt);outline:none}
+.fab-role{padding-top:14px}
+.fab-role+.fab-role{margin-top:14px;border-top:1px solid var(--s4)}
+.fab-role .r-tag{display:block;font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--rosso-txt);margin-bottom:7px}
+.fab-role .r-name{font-size:11px;letter-spacing:.088em;text-transform:uppercase;color:var(--fumo);margin-bottom:3px}
+.fab-role .r-tel{display:block;font-family:var(--ff);font-weight:600;font-size:17px;line-height:1.3;letter-spacing:var(--tr-18);transition:color var(--t)}
+.fab-role .r-tel:hover,.fab-role .r-tel:focus-visible{color:var(--rosso-txt);outline:none}
+.fab-role .msgs{margin-top:8px;gap:6px 14px}
+.fab-foot{margin-top:14px;padding-top:12px;border-top:1px solid var(--s4);display:flex;flex-wrap:wrap;gap:6px 16px}
+.fab-foot a{font-size:9px;letter-spacing:var(--tr-10);text-transform:uppercase;color:var(--piombo);transition:color var(--tq)}
+.fab-foot a:hover,.fab-foot a:focus-visible{color:var(--rosso-txt);outline:none}
+@media(max-width:480px){
+  .fab-btn{padding:10px 13px}
+  .fab-btn b{font-weight:400}
+}
+
+/* ---------- 17. ОПТ · УСИЛЕННЫЙ БЛОК СВЯЗИ (opt.html) ---------- */
+.opt-contact{
+  background:var(--s2);border:1px solid var(--s4);position:relative;
+  padding:clamp(24px,3.2vw,44px);
+  display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(22px,3vw,44px);align-items:start;
+}
+.opt-contact::after{content:'';position:absolute;left:0;top:0;width:100%;height:1px;background:var(--rosso);transform:scaleX(0);transform-origin:left;transition:transform var(--t-420) cubic-bezier(.2,.7,.3,1)}
+.opt-contact:hover::after{transform:scaleX(1)}
+@media(max-width:820px){.opt-contact{grid-template-columns:1fr}}
+.oc-tag{display:block;font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--rosso-txt);margin-bottom:14px}
+.oc-name{font-size:13px;letter-spacing:.088em;text-transform:uppercase;color:var(--fumo);margin-bottom:8px}
+.oc-tel{display:inline-block;font-family:var(--ff);font-weight:700;font-size:clamp(26px,3.4vw,44px);line-height:1.08;letter-spacing:var(--tr-40);transition:color var(--t)}
+.oc-tel:hover,.oc-tel:focus-visible{color:var(--rosso-txt);outline:none}
+.opt-contact .msgs{margin-top:20px;gap:10px 22px}
+.opt-contact .msg{font-size:10px;color:var(--argento)}
+.opt-contact .msg svg{width:16px;height:16px}
+.oc-hours{margin-top:20px;font-size:12px;line-height:1.6;color:var(--fumo)}
+.oc-hours b{color:var(--argento);font-weight:500}
+.oc-side{border-left:1px solid var(--s4);padding-left:clamp(18px,2.4vw,34px)}
+@media(max-width:820px){.oc-side{border-left:0;border-top:1px solid var(--s4);padding-left:0;padding-top:22px}}
+.oc-side dt{font-size:9px;letter-spacing:.091em;text-transform:uppercase;color:var(--piombo);margin-bottom:5px}
+.oc-side dd{font-size:12.5px;line-height:1.6;color:var(--argento);margin-bottom:16px}
+.oc-side dd:last-child{margin-bottom:0}
+.oc-side dd a{transition:color var(--tq)}
+.oc-side dd a:hover,.oc-side dd a:focus-visible{color:var(--rosso-txt);outline:none}
+
+/* ============================================================
+   18. СЛОЙ АНИМАЦИЙ «РОССО»  ·  ТОКЕНЫ
+   Кривые перенесены из РАЗВЕДКА-IGLOO.md (igloo.inc, CustomEase).
+   Одно- и двухсегментные пути переведены в cubic-bezier;
+   исходные строки CustomEase оставлены рядом — если когда-нибудь
+   подключим GSAP, кривые берутся оттуда без пересчёта.
+   ============================================================ */
+:root{
+  /* --- кривые --- */
+  /* entry_ease  "M0,0 C0.358,0 0.336,0.209 0.442,0.519 0.59,0.952 0.768,0.918 1,1" (3 сегмента → аппроксимация) */
+  --e-entry:cubic-bezier(.36,0,.25,1);
+  /* entry_ease_2 "M0,0 C0.388,0.082 0.924,0.862 1,1" — один сегмент, перенесён точно */
+  --e-entry2:cubic-bezier(.388,.082,.924,.862);
+  /* entry_ease_3 "M0,0 C0.272,0 0.472,0.454 0.496,0.496 0.66,0.79 0.685,1 1,1" (2 сегмента, симметричная) */
+  --e-entry3:cubic-bezier(.272,0,.685,1);
+  /* igloo_ease_1 "M0,0 C0.662,0.073 0.047,1 1,1" — точно. Долгая пауза, резкий финал: маски, clip-path */
+  --e-igloo:cubic-bezier(.662,.073,.047,1);
+  /* inOut3 "M0,0 C0.6,0 0,1 1,1" — точно. Рабочая лошадь для заливок и сдвигов */
+  --e-inout3:cubic-bezier(.6,0,0,1);
+  /* inOut4 "M0,0 C0.4,0 -0.06,1 1,1" — x=-0.06 (предвосхищение) CSS не принимает, зажато в 0 */
+  --e-inout4:cubic-bezier(.4,0,0,1);
+  /* служебные */
+  --e-out:cubic-bezier(.2,.7,.3,1);   /* совместимость со старыми переходами */
+  --e-lin:linear;
+
+  /* --- длительности --- */
+  --d1:200ms;   /* цвет, границы, иконки  */
+  --d2:300ms;   /* заливка кримзоном      */
+  --d3:450ms;   /* появления, сдвиги      */
+  --d4:600ms;   /* маски, крупные планы   */
+  --d5:900ms;   /* clip-path у медиа      */
+
+  /* --- стаггер --- */
+  --st1:40ms;   /* плотные ряды: чипы, строки таблицы */
+  --st2:60ms;   /* карточки, колонки                 */
+  --st3:80ms;   /* крупные блоки, слова заголовка    */
+
+  /* --- геометрия слоя --- */
+  --ink:var(--rosso);
+  --rise:cubic-bezier(.6,0,0,1);  /* алиас: подъём заливки снизу */
+  --plx:8%;                        /* глубина параллакса фонов    */
+}
+
+/* Глушилка: один блок гасит весь слой целиком. */
+@media (prefers-reduced-motion: reduce){
+  :root{
+    --d1:1ms;--d2:1ms;--d3:1ms;--d4:1ms;--d5:1ms;
+    --st1:0ms;--st2:0ms;--st3:0ms;--plx:0%;
+  }
+}
+
+/* ============================================================
+   19. МИКРОИНТЕРАКЦИЯ КОНЦЕПТА: КРИМЗОН ПОДНИМАЕТСЯ ОТ НИЖНЕЙ КРОМКИ
+   Одна механика на весь сайт, три громкости:
+     .ink-fill — заливка на всю высоту, текст белеет  (кнопки, чипы, пилюли)
+     .ink-wash — полупрозрачная волна                 (строки таблицы, карточки)
+     .ink-line — поднимается до плинтуса 2px          (ссылки, пункты нав.)
+   Реализовано фоновым градиентом (background-size 100% 0 → 100% N),
+   а не ::before: у половины компонентов псевдоэлементы уже заняты
+   красной нитью сверху — эту нить не трогаем.
+   ============================================================ */
+
+/* ---- 19.1 База: три класса для новой разметки ---- */
+.ink-fill,.ink-wash,.ink-line{
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;
+  background-position:0 100%;
+  background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),
+             color var(--d1) linear,
+             border-color var(--d1) linear;
+}
+.ink-wash{background-image:linear-gradient(rgba(218,41,28,.09),rgba(218,41,28,.09))}
+.ink-fill:hover,.ink-fill:focus-visible{background-size:100% 100%;color:#fff;border-color:var(--ink)}
+.ink-wash:hover,.ink-wash:focus-visible{background-size:100% 100%;color:var(--ink)}
+.ink-line:hover,.ink-line:focus-visible{background-size:100% 2px;color:var(--ink)}
+
+/* ---- 19.2 Пилюли фильтров и чипы прайса ---- */
+.pill,.chip{
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),
+             color var(--d1) linear,border-color var(--d1) linear;
+}
+.pill:hover,.pill:focus-visible,
+a.chip:hover,a.chip:focus-visible,button.chip:hover,button.chip:focus-visible{
+  background-size:100% 100%;color:#fff;border-color:var(--ink);outline:none;
+}
+/* Активный фильтр остаётся контурным: заливка — событие ховера, не состояние. */
+.pill.on{background-size:100% 0;color:var(--ink);border-color:var(--ink)}
+.pill.on:hover,.pill.on:focus-visible{background-size:100% 100%;color:#fff}
+
+/* ---- 19.3 Ghost-кнопка (новый компонент слоя) ---- */
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;
+  border:1px solid currentColor;border-radius:0;padding:13px 26px;
+  font-size:11px;font-weight:500;letter-spacing:var(--tr-13);text-transform:uppercase;
+  color:var(--argento);
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),color var(--d1) linear;
+}
+.light .btn-ghost{color:var(--s0)}
+.btn-ghost:hover,.btn-ghost:focus-visible{background-size:100% 100%;color:#fff;outline:none}
+.btn-ghost svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.5}
+
+/* ---- 19.4 Круглая стрелка .btn: кружок наливается снизу ---- */
+.btn svg{
+  background-color:transparent;
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),
+             border-color var(--d1) linear,color var(--d1) linear;
+}
+.btn:hover svg,.btn:focus-visible svg{
+  background-color:transparent;background-size:100% 100%;border-color:var(--ink);color:#fff;
+}
+
+/* ---- 19.5 Пункты навигации и шторки: плинтус 2px ---- */
+.nav a::after{
+  height:2px;transform:scaleY(0);transform-origin:50% 100%;
+  transition:transform var(--d2) var(--e-inout3);
+}
+.nav a:hover::after,.nav a:focus-visible::after,
+.nav a.on::after,.nav a[aria-current="page"]::after{transform:scaleY(1)}
+.drawer a{
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),
+             color var(--d1) linear,padding-left var(--d2) var(--e-inout3);
+}
+.drawer a:hover,.drawer a:focus-visible,.drawer a[aria-current="page"]{background-size:100% 2px}
+
+/* ---- 19.6 Ссылки в тексте ---- */
+.col ul li a,.pr-meta a,.news p a,.find p a,.oc-side dd a,.f-place a,.f-strip a,a.ink-line{
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),
+             color var(--d1) linear,border-color var(--d1) linear;
+}
+.col ul li a:hover,.col ul li a:focus-visible,
+.pr-meta a:hover,.pr-meta a:focus-visible,
+.news p a:hover,.news p a:focus-visible,
+.find p a:hover,.find p a:focus-visible,
+.oc-side dd a:hover,.oc-side dd a:focus-visible,
+.f-place a:hover,.f-place a:focus-visible,
+.f-strip a:hover,.f-strip a:focus-visible{background-size:100% 2px;color:var(--ink);border-color:var(--ink)}
+
+/* ---- 19.7 Строки таблицы прайса: волна на 9% ---- */
+.prtab tr.pr td{
+  background-image:linear-gradient(rgba(218,41,28,.09),rgba(218,41,28,.09));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),color var(--d1) linear;
+}
+.prtab tr.pr:hover td{background-size:100% 100%}
+
+/* ---- 19.8 Карточки-мостики: кримзон встаёт плинтусом под кадром ---- */
+.fcard,.tile,.ccard,.clink{
+  background-image:linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;background-position:0 100%;background-size:100% 0;
+  transition:background-size var(--d2) var(--e-inout3),color var(--d1) linear;
+}
+.fcard:hover,.fcard:focus-visible,
+.tile:hover,.tile:focus-visible{background-size:100% 4px}
+.ccard:hover,.clink:hover,.clink:focus-visible{background-size:100% 2px}
+.fcard .fc-media,.tile .ph{transition:transform var(--d5) var(--e-igloo)}
+
+/* ---- 19.9 Красная нить сверху — на новых токенах ---- */
+.col::after,.ccard::after,.chron-item::before,.opt-contact::after{
+  transition:transform var(--d3) var(--e-inout3);
+}
+
+/* ---- 19.10 :focus-visible всегда кримзоном ----
+   Компоненты, гасившие outline, получают его обратно: доступность важнее чистоты кадра. */
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.nav a:focus-visible,.tel:focus-visible,.drawer a:focus-visible,
+.pill:focus-visible,.chip:focus-visible,.btn:focus-visible,.btn-red:focus-visible,
+.btn-ghost:focus-visible,.msg:focus-visible,.clink:focus-visible,
+.f-social a:focus-visible,.f-strip a:focus-visible,.f-place a:focus-visible,
+.fab-btn:focus-visible,.fab-x:focus-visible,.fab-role .r-tel:focus-visible,.fab-foot a:focus-visible,
+.oc-tel:focus-visible,.oc-side dd a:focus-visible,.ov-cta:focus-visible,
+.col ul li a:focus-visible,.pr-meta a:focus-visible,.news p a:focus-visible,.find p a:focus-visible{
+  outline:2px solid var(--ink);outline-offset:3px;
+}
+.light :focus-visible{outline-color:var(--rosso-scuro)}
+.search input:focus-visible{outline-offset:0}
+
+/* ============================================================
+   20. ПОЯВЛЕНИЯ [data-rv] · МАСКИ · ПАРАЛЛАКС
+   Старый .rev остаётся рабочим (обратная совместимость).
+   Новое: [data-rv] с вариантами, стаггер внутри [data-rv-group],
+   раскрытие изображений маской clip-path (не fade), параллакс фонов.
+   ============================================================ */
+[data-rv]{
+  opacity:0;
+  transform:translate3d(var(--rv-x,0),var(--rv-y,18px),0);
+  transition:opacity var(--d4) var(--e-entry),transform var(--d4) var(--e-entry);
+  transition-delay:calc(var(--i,0) * var(--stg,var(--st2)));
+}
+[data-rv].in{opacity:1;transform:none}
+[data-rv][data-st="1"]{--stg:var(--st1)}
+[data-rv][data-st="3"]{--stg:var(--st3)}
+
+[data-rv="fade"]{--rv-y:0}
+[data-rv="up"]{--rv-y:26px}
+[data-rv="left"]{--rv-x:-24px;--rv-y:0}
+[data-rv="right"]{--rv-x:24px;--rv-y:0}
+
+/* Линейка/разделитель: выезжает слева, а не проявляется */
+[data-rv="line"]{opacity:1;transform:none;transform-origin:0 50%;scale:0 1;
+  transition:scale var(--d4) var(--e-inout3);transition-delay:calc(var(--i,0) * var(--stg,var(--st2)))}
+[data-rv="line"].in{scale:1 1}
+
+/* Материализация кадра из тьмы: штора идёт сверху вниз (приём igloo:
+   объект не «фейдится», а выступает), кадр внутри отпускает зум.
+   ВАЖНО: clip-path висит на ДЕТЯХ, а не на самом [data-rv]. Если зажать
+   clip-path'ом наблюдаемый элемент, его область пересечения обнуляется —
+   IntersectionObserver не сработает НИКОГДА и штора не откроется.
+   Грабли поймали на полигоне; контейнер обязан остаться незажатым. */
+[data-rv="mask"],[data-rv="mask-up"]{opacity:1;transform:none}
+[data-rv="mask"]>*,[data-rv="mask"]>.pic>*{
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path var(--d5) var(--e-igloo),scale var(--t-1200) var(--e-igloo);
+  transition-delay:calc(var(--i,0) * var(--stg,var(--st2)));
+}
+[data-rv="mask"].in>*,[data-rv="mask"].in>.pic>*{clip-path:inset(0 0 0 0)}
+/* Зум отпускается через отдельное свойство scale, а не transform: transform занят
+   параллаксом, и на одном кадре они бы затёрли друг друга. scale/translate
+   композируются, transform остаётся только под --py. */
+[data-rv="mask"] img,[data-rv="mask"] video,[data-rv="mask"] .ph-img{scale:1.06}
+[data-rv="mask"].in img,[data-rv="mask"].in video,[data-rv="mask"].in .ph-img{scale:1}
+
+/* Штора снизу вверх — для светлого досье и таблиц */
+[data-rv="mask-up"]>*,[data-rv="mask-up"]>.pic>*{
+  clip-path:inset(100% 0 0 0);
+  transition:clip-path var(--d5) var(--e-igloo);
+  transition-delay:calc(var(--i,0) * var(--stg,var(--st2)));
+}
+[data-rv="mask-up"].in>*,[data-rv="mask-up"].in>.pic>*{clip-path:inset(0 0 0 0)}
+
+/* Параллакс: 6–10% высоты кадра, сдвиг задаёт JS через --py.
+   Контейнеру нужен overflow:hidden — у .ph и .hero-media он уже есть. */
+[data-plx]{transform:translate3d(0,var(--py,0px),0);will-change:transform}
+[data-plx]:not(.ph-fill){height:calc(100% + var(--plx));top:calc(var(--plx) / -2)}
+
+@media (prefers-reduced-motion: reduce){
+  [data-rv]{opacity:1!important;transform:none!important;scale:1 1!important}
+  [data-rv]>*{clip-path:none!important}
+  [data-rv] img,[data-rv] video,[data-rv] .ph-img{transform:none!important;scale:1!important}
+  [data-plx]{transform:none!important;height:100%!important;top:0!important}
+}
+
+/* ============================================================
+   21. SPLIT-TEXT [data-split] · СЧЁТЧИКИ [data-count]
+   Разбивка по СЛОВАМ (не по буквам): в капслоке с трекингом .005em
+   побуквенная волна разваливает слово. Слова встают из-под кромки —
+   та же логика, что у заливки: движение снизу вверх.
+   ============================================================ */
+[data-split]{--stg:var(--st3)}
+[data-split] .sw{
+  display:inline-block;overflow:hidden;vertical-align:bottom;
+  padding-bottom:.16em;margin-bottom:-.16em;   /* чтобы не срезало «у», «р», «ц» */
+}
+[data-split] .sw>i{
+  display:inline-block;font-style:inherit;
+  transform:translate3d(0,112%,0);opacity:0;
+  transition:transform var(--d4) var(--e-entry2),opacity var(--d2) linear;
+  transition-delay:calc(var(--i,0) * var(--stg));
+}
+[data-split].in .sw>i{transform:none;opacity:1}
+[data-count]{font-variant-numeric:tabular-nums}
+
+@media (prefers-reduced-motion: reduce){
+  [data-split] .sw>i{transform:none!important;opacity:1!important}
+}
+
+/* ============================================================
+   22. АНТИБАНДИНГ: СИНИЙ ШУМ + ДИАГОНАЛЬНОЕ УМНОЖЕНИЕ
+   Приём из РАЗВЕДКА-IGLOO.md, п.4 и п.5.
+   Тайл 64×64 — настоящий синий шум (void-and-cluster, Ulichney),
+   сгенерирован на месте headless-хромом; амплитуда запечена в альфу
+   (0…10 из 255, ≤4%), поэтому слой кладётся с opacity:1 и не «зернит»,
+   а дизерит: почти-чёрный градиент перестаёт полосить.
+   Плёночного зерна поверх страницы НЕТ — igloo пробовали и выкинули,
+   фактуру даёт дизеринг внутри самих градиентов.
+   Виньетки тоже нет: вместо неё диагональное умножение —
+   mix(0.8,1.0,(uv.x+uv.y)*0.5). Чёрный слой с альфой 0.2→0 по диагонали
+   математически ровно то же умножение, без mix-blend-mode.
+   ============================================================ */
+:root{
+  --noise:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAQAElEQVR4AVTbi3YcOQ4D0Or4nf//1onfPbhIw1OzZ7mSSBAEJVV12/H+ul6vT7GH2GPsOXaJWRv5jPd8R/6TkQ+O3WUt/yUjv/F35ny4+czhcIrxmTP+8ZvLeU6ZIxw/68z58cCai1kb8dzfcvjE+dTaXN7vE0Ye3/OvON9jD7Gv2GfsMfYdI4TP2ojsJX5zJg/uGt9HjO8tI+N/vFwuMGpc4sfND/crMTm4xdRnd8F9p2F1+DUGT4t8a3xPwYmb832dcvj51DbiVOfthsHHr94nAgkfESTASdj8YmwCYDQhzoecIeQ34iD2MwXhCIEh2hzfe2KalCOG18bJ42N8YpF2+ScN42b8cPDmsGriNsf/esPrhfE7KDnisLQ9+B8Op2uXkncAOiFFxYEVrD8AopDyEfcnPhgN4uInCN/sGiBRcsWYHDx8BMLaFBz8+Ah2unxMjlxzeXJsgpo2Rx1zfpxwepDDB8P4ym3CgdhcstHzwU+IxCMNIBRjNoMAz5KRjxBzMTxymblrDUMIHn5zG21j5IibE8343DJ+WD6Gj0+z8PTx89ksz/q00KOP9+iHhVtt/ntJHIA2AYDx85kzN8Sa+K5z6oTIQQQf1/EnhRR3enzwcHIJhbeWg8fGECxOoJy7G4dct0vMXNym4MFh89WhH5+4EZZpWsw8T9xVnvrWn6kh9qEgEkWe4gRQRGEjPyA/AomujpgG+HDAKO4N79RsAjPnH4bPaWqAEDG5uJh6xNIkbq22UR6NGsXDJ2bO1ODDTZ8NUh/G4fBZ417sWxIBQF5MGlIIkCAiiOQrcdSJMTGbIR/WCINL7Gxf2VwilzehcvCLqS0HpzWMuj5N5nPFcdANY9QQDnibQwsua3rMYaxpU9Nm4LxDAIBAsQUk7pMBRpKCcEZxWGKM/Eyh81pRa4+QOvLwaRT2Phuz28bH1oBT09BHNp02+eKawAnHTyccPD0wYho0wjeeWrSLL/8XMQRwAmoCqTXRRGoeMSzTBB+suVGj8rf2grImgnAjTgIUZ9auovwZ32qqYS6mEWv8+Pjx4/PCpquYW5P1Z0fk0mZ0e5ZrDX+VqGEBc0IF+Bih/IqZM36kXlZEiRHmjW6uCZuniDkx8PIY7GLw44edn0+OuFEdubTJZ+nvkCPugPi8VM1h+Z08TnmweP43KqSp7+wcAsmKulZuBp81QomMz6jYNk4xL0BrWBtptCZAHW9lfqfHRwxhcpk6bg6MGvLnh1NTLr3WtC5O62rZcGsjH14ml47lWz9xIHY9OIgizndpyQowOGvJcNZEyIVXgPFpQA4BGrHGO044fie4XHzlz/Puy5B8myFPzcaS4FMI7+qoDyuOEx4XjTByxW2WujYV7iEH7nb0Y5CTAQAjlYyMQLbTE2NEMHN5CioWjYdcfG4VDHE4xK3lTKS5tzwOc3k2DNZ3d7yweOnJ/vTzXBMw8F6ky7F5Yvg0aVQTdqMex/2FXAABshZJNSPh/OK77nxINcRP4OYagVdAM94DBJkTwG8cTm3ricEjn585NTXoUtMaFxyu+WmD59d85B/ifqKkT0w/NgS/mvow9lNAADEgElZArgk/GxEC8RZIJSRMAY+R2NZ88Hj5PJd44PCLaVAclpmvMXG3SR5ecTFrjcLSxuDU8GIepyvOp1akHj4tXjKB58f3iMRPbYhHKiDZztp1zUoiCB7W2tWDI46f8YvLWWGCYPjMmTmfDZG3HI2MQ765UQ68NU1y3Ao3DJc8Tb3mGYGz5pdnw+D59Jg9OIx43wUsmASkCAQlaNpa3AjDZ5N8QeHDwQhg8hix/JqzJsbolIjCwcd8hNpMOWybK9caLy46aDRn1j6xjDA2B14dJv85N1kteXww6umjj4BmOe3MOZkwMYmIFJnPydkMfsLF5PIhlmPuTe7HajHFic4h9UVmLV/MZqqFlw7vBVi8NtljigdeoxoQYz5+6TdXF4YGa4175MoRYvpt/t5P/SLkbc0pSJTCI0KQDbxoUhFifa+37jykCspRxGiNh/mmZ2Q25MwLh0OeGMF4x2FkfJqwQdbM4ym/82ig3eaxcZqry+SutlrwNqk/C+z3fYCS9llrp60VQ2ANs5eJuQ1K/f4S5chOKYJcU2Lm5QiIDweBxGuYCJiEDzU0xPjh+dWBh2NwuOXz4+TnU5/fWp6Rn9FhxI9bXn8lRhCgRPNtCDCTCEyU4jDmSLyErO2qq21UgE9cnrXRdwl+wtTi08CZfzGj2jhwymPyGE55GobBBYevlsNwq8Ws3XI3iX7YzS+IFGOuuKJMErCiMwU0DouEEbDNI4wPji8aLnLNmW+CeM3V8n1AvnqE0mLErznPueeefzn85l6kmhCjiVb1ccn3o70a9MA4VNxyGR6x/j6AA4hYIAR2j08zXmQwYmvAW1phGGT8M7nmPl4Jk4tzZg3jxSeX/zW7xU+URjTn0dOETeIXN1fTS8xIn9Gjslry5cGL4TLqTy3WdWp2A+wawV5uCqxRfiQa2VW3JtrLjc+auGEVmSgxhpsRojgrR1QTC++EiJZvhIdj5gQ7dXH18BrFHZDDMKed35WfJn54ddLzxbz4PLP9YYiYioujoAhbEjF84oglmxOiwHwEennyEWx0IuOGx6NhfmubrQ4xYnLwuR38eMTmj7yrBvnpwCO+2zA+cYcmbk6bPDV9vNIkhqM/CygASASwBgm1lkQUP5Oc/elbH4H1/D6P8chhOJhmcCnqudYgTjeIMPlwfE7ZKF9D+MTlWuOhjw9GHIc4nzgcPx5G53p0oNbqVTtBHEtEJpnx2WFxBYwIJdqE+nKnYBRlmp0QozUsAYr6PJePRyNy8cCp6TRtjLUG4fjl42HitLnm8tU1qmcuZk2vmpo24uCHs8b9qSABHAJA5pLNJfN7zvj5FDFnnl2bBo/HqLGJ1oS3PT9hsPKNMDbDxyMfbjaR8G4EvtZK93jcIHg3Ts24Dxtm9I1xWNrVwGlUE967TvOsX4UVAkJuvu/OkvgAnZzf34+EcBtDHByD4yNmc2ubLI8wfISpZ3OYL1byiYOXbxNo8UkhJkcunpna8OKw5sPjgMeTS/rzb5Q00KMXmH4PsJsaUoQgLwpzBIj5gBU0R2pEprh8u2+0JkRcQxp1YvLn53NSxnFsw/jkaXK15YnzqWEcn3y6aDXKEefHZe6W8tPExODF+01QAQHkK2TNkBIEI4bI3GjTPIfIYG2azXFtcSnwg7NDMRhYp4DXhqlBqFwjvpmaFZxjFFfbGr9c670Tqic18Nkg62vW8mDV5aMJL+vHIBKF95xbE49kgq1hmhwxTpUIv3UhQEyh1OsvHuQqaoRTGIfGcPBZq7W1L1d8hNocWPVx7mNtfiOsJuDk4MSlJj18Yp1HMzyN1jhpeiMASEP7qoqUeABJCPkkwrlSBDB+hUaMz1qMIPnmRp84fETK47c24vYuUFNteLqYtbi84Td6oakNIxevTZPnpjgcetw4+XDwfDj6BxJEzzSrOCJfT5GISeQnBAaBNfHmMGw4AqyJwcH27RGe4YGxqdYEwTkd69WCwcdHF5w65hqjQVP02BA/P+A554nD4bApHlOcfQcAIwRCYl5fvnpJ4pPAJ4lwIzKjosZzHAcfDCE2As8wTmM8sJptQ+lenhgMbg1Za5xvJ43PWq44c4s1iHN8MDTgZXh8WtDUnwUWlMRJJDJ+JJrwDIorjkBRczGPhKJ8Ysuzeb4e8+G0JkCex8HJ4yRQMzjM1cw+9L9OmE8ufvXyOF/gacRtLr41nzmsFyK+1gyjejTg4u8vRTkEJBKqAQQAbGs4pATxm8uTI9d6xOZulJekz1wchMqD9Tjw4ZSvKSctzgiWj2f14M394tNBWRthcOC3pl3MptDXnBSwGbAwxuzH0V+KSkAAKOC6E0aIEREMUienAY0qaK4IrHw8xFvL41thOIZLHXP8Xedxkyefj6kH4xaNQ03cRvFtEpx6+wUpnsVgfWukWV2N4zfvDRDgMLJ9EQLQwIhgxBTTOAG+0IjDEWYkFg8MjjVGlM0lqPMowcFgYDUhl4/x7Rbhh3OC6oxDDm020jdWa3H5tOKTy6yLzY2go78UFfAZTLi5REGEyJaEyJzxK+LdQJAcG5GeDnFF+OB8WcIrn0B+3GrAakRtfpvW3JtAcxww5kaYhC/my7dR6uOlAaZ5AZrTSsMw3lsezX4KEOZXSASYI0UowUehJGRIkDExAhTUCJPHNHzGaFquHE3AMPm41cUjrq5a9Bj5FoNjMH5b5KVp43DhhWerNZx8+sQcVv3ZJbn/3YA4EBEE7KoRuGdHAX4YoggxIvN3O0Y+jWuYOEL4FrM2xyOXID4Gt1FMPaMDIdSaJs0wWDziYmtMfX46+cXl4fIu8clDgzjrx6BGkXrBSUIOZJwwGAlIYKzl8GlYIf7sYx8BIvhsKAwBOPlwmjN+5t1AnBheDZ1r8KttM8xh1DsbDmu86pjjhuXzkWrTzfmrFRkn8F5wxGseSFFNwCHy8eXZsWYw8OYE2204fE7DWtwm4FGcOFijNfPFBK85g6VBrpHPV2Xzcy1rmwXnfaSefqzhHKqNpUk9PqP6PjH6MUgsgERBpHaaaKdrnA+OGATyzPnEjfONx9omGQl1SrjNbZBTkEcYPz5cMw2phQMGFjc+P7zhMIeTy2CMcmwa/eY2wghv9IfV/VNZBYDs+nbOZljzS1hxxPxEMA2J44BxYyaq8XTIv7wJghG3EcQQrSZzMnTgtCl5kV9gGJxGjK60jcINrw5OOUZGmzwbZA1jrY5YPwWQaEqzggwhv0JGYCTmDBGfq6uJ+bw0rcVxOiU4xWE0biSaHwbWWq3G86XIS5S/QrNWWyz7eZjjo5FWc5z4vgKQ52cIeD4xOPxy9Lm6f/9tMEm+0EiQzDQhCZEkRD7eJPJvl5HLg2FOTVwRPD7O9mzj4GPEGOW/5YjFmDUec1xwDKfGbdR0LJ8WcxthhPVDkR7kuFEweMXwubl8P38rvJNEoknXDJlrZkS094HmdkIEIRR3WkQz5PxMYY3hwb9bsbX/k4V8efDmYgz/eHGq7TsAHE4G52WnDg4Yoz749IBTbWPxuVVy+wgACxidJgJFFbdjEhU3wvBbe95bIDcIzqkRJpe1UGLwi5vbSDh49Zi4HJtj89XhE3OC8sTlGHHDiNPlByS6NUXT5jDm6uGzKbTD4OkXIQDXChixYhKMChph+MSN6etwzbZxyOGIwePRUYggvxY3lweHY2YtjyDmHYITj1zX2Alaw9LD6JEHay2Gn5lrVI3hbJT1cvCZ94uQhH2GLgGp4t4NGmKaQKKIEYbfThqR8pvnhl09Jpo6P16wxBjxyNGEWhomXJwmAlcDThy/uAMTg+NbXD1z/PwwfHD8TF3cfC9AiCUAun7mAMS4rsTBaUiyq69JZPzybBRh5nA2UnHcchQTm88cvxg+ddWUx2cuRw1zNwqGjx4HBmuNC8Z8ZoMcE2m9XAAAAxZJREFUmF5oxKM280jRb/4qSAgSoAk2KsCvMTiE1rv61svxtneScMhxKmCOxyiuWRxwGi0m10VTfNZweK01TYvHwBqXPKNmccmFV9MchxclvLpizLx5t3o2px+DJsgkILd7mkbkNAkwJwzGXFyeTZCrAB+sQoTwlS8vDH5xX4RwihFjxMnkqa1pJ8p3xuDgX1wuH16arI1yaKKhnKkPIxcnE7d5/ddhIjVjByWcr5ekfEz3Z+8zucJiyBRGqDH5+GCZTXPqBJiLydMErKsNx3C6XfiIY/iNtC2XT+4RYWJ49zEohgsHjJ9U1ZZrY3znkGNdnESnCGwTNAGIQFPMe4BfIrLFkMiRy/DI1aCPMz7mByg4XGJ44FhuY1+WYrA4bQRbTU2JG+Wo73S9XM014tD46MNhw/DBLIe/3/9zI2jA/+3ZApgwBOaSgzusxa2JMs/G968sxJyuGL84MU5E0/sGqBhbE0ZY+WoQqzkC4fg1ZkP5zPH7V2Q3Rw05/PLg1TRaw9pwPhj98ONm5urj7zdBIIUkImdA/HZJg+KIiN+PzS2QI5QHL64AvJFYHGJOh19h4sTFrHHCWKtjjsuv6eSYM4/HasmDWy4+MYejrh7k2hR+zcqZ31xuvwgJIlP8JQxA5kgVNkemYT6E8Mit4eGYDRv5cBqDUdDJiafMRT4eOHMY39GNuNyiYnNNrGmAlWPuRqjPZ1PLkQOx2fD8zIvVGpe1PuRb//3/C0SNZGSedyAARD4z+SUhiZb+obG4xpBojBUfALxvfzjhrBks7m5ChFqby9W0JuK+enSsmZpGLzOj08WpFqwNh3GI9JQjGnDDyvGRCGfuMPcihOm/Do+IEIaQNSFBpJrhMw//sQZLEgesXEZI0voHTcTaPMZPANO4Nb8XsTybZCTcKc9smpdcsamlJqx8mljcB14boSYeeBj56sHpw6OEG6Y3QMCCmWuSIbQeiSYV53NTxAlpwdwixc8+heHFFXabCOGHY/JtllMfdvXUMbchtLHpSrk+Qu/pnI/Buxl4aPVJpJ4a4vxMXSPu738BAAD///mMw1cAAAAGSURBVAMAA4fgq1/XQAkAAAAASUVORK5CYII=");
+  --diag:.2;    /* глубина диагонального умножения: 0.2 = ×0.8 в левом низу */
+  --grain:1;    /* множитель силы дизеринга для .grain */
+}
+
+/* Один псевдоэлемент несёт оба слоя: шум сверху, умножение под ним. */
+.hero::before,
+.interlude .il-stage::before,
+.tile::before,
+.grain::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:3;
+  background-image:var(--noise),
+                   linear-gradient(to top right,rgba(0,0,0,var(--diag)),rgba(0,0,0,0) 62%);
+  background-size:64px 64px,100% 100%;
+  background-repeat:repeat,no-repeat;
+  background-position:0 0,0 0;
+}
+.grain{position:relative}
+/* .grain — чистый дизеринг (утилита на любой блок с градиентом).
+   .grain.diag — плюс диагональное умножение, как в героях и плитках. */
+.grain::after{opacity:var(--grain);background-image:var(--noise);background-size:64px 64px}
+.grain.diag::after{
+  background-image:var(--noise),
+                   linear-gradient(to top right,rgba(0,0,0,var(--diag)),rgba(0,0,0,0) 62%);
+  background-size:64px 64px,100% 100%;
+}
+
+/* Тёмные полосы с градиентами тоже дизерим: там банды заметнее всего. */
+.news,.f-strip,.opt-contact,.col,.ccard{position:relative}
+.news::before,.f-strip::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:var(--noise);background-size:64px 64px;
+}
+.news>*,.f-strip>*{position:relative;z-index:1}
+
+@media (prefers-reduced-motion: reduce){
+  /* шум статичен и к движению отношения не имеет — не выключаем */
+  :root{--diag:.2}
+}
+
+/* ============================================================
+   23. ЖИВЫЕ СОСТОЯНИЯ: @keyframes, ШАПКА НА СКРОЛЛЕ, ПЕРЕХОДЫ
+   Диагноз разведки «ЭТАЛОНЫ»: в продакшн-CSS было РОВНО НОЛЬ
+   @keyframes — отсюда ощущение статики. Здесь их пять,
+   все медленные и бесшумные: сайт дышит, а не мигает.
+   ============================================================ */
+
+/* ---- 23.1 Кольцо у логотипа: вернули naspin из одностраничника ---- */
+@keyframes rosso-spin{to{transform:rotate(360deg)}}
+.brand b::before{
+  content:'';display:inline-block;width:8px;height:8px;margin-right:9px;
+  border:1px solid var(--s4);border-top-color:var(--fumo);border-radius:9999px;
+  animation:rosso-spin 9s linear infinite;
+  transition:border-top-color var(--d1) linear;
+}
+.brand:hover b::before,.topbar:hover .brand b::before{border-top-color:var(--ink)}
+
+/* ---- 23.2 Кадр героя дышит (медленный наезд, 28 с) ----
+   Через scale, не transform: transform занят параллаксом (--py). */
+@keyframes rosso-drift{from{scale:1}to{scale:1.055}}
+.hero-media img,.il-stage>.ph>.ph-img,.il-stage>.ph>.pic>.ph-img{
+  animation:rosso-drift 28s var(--e-entry3) infinite alternate;
+}
+/* Внутри шторы наездом заведует ревил (scale 1.06→1) — дыхание там выключено,
+   иначе анимация перебила бы переход и кадр дёрнулся бы в момент раскрытия. */
+[data-rv="mask"] img,[data-rv="mask"] video,[data-rv="mask"] .ph-img{animation:none}
+
+/* ---- 23.3 Красная точка на кнопке связи пульсирует ---- */
+@keyframes rosso-pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.fab-btn::before{animation:rosso-pulse 2.6s var(--e-entry3) infinite}
+
+/* ---- 23.4 Волосяная линия прогресса страницы под шапкой ----
+   Чистый CSS на scroll()-таймлайне, без единой строки JS. */
+@keyframes rosso-prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@supports (animation-timeline:scroll()){
+  .topbar::after{
+    content:'';position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:var(--ink);transform-origin:0 50%;transform:scaleX(0);
+    animation:rosso-prog linear both;animation-timeline:scroll(root block);
+  }
+}
+
+/* ---- 23.5 Шапка уезжает при скролле вниз (приём Ferrari, Р1) ---- */
+.topbar{
+  transition:transform var(--d3) var(--e-inout3),background-color var(--d2) linear;
+  will-change:transform;
+}
+.topbar.is-hidden{transform:translateY(-100%)}
+.topbar.is-stuck{background-color:rgba(24,24,24,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+
+/* ---- 23.6 Внутренний каскад блока (приём Ferrari, Р6) ----
+   .rev.stagger > * или [data-rv-group] — дети въезжают по очереди. */
+.rev.stagger>*,[data-rv-group]>[data-rv]{--stg:var(--st2)}
+.rev.stagger>*{
+  opacity:0;transform:translate3d(0,14px,0);
+  transition:opacity var(--d3) var(--e-entry),transform var(--d3) var(--e-entry);
+}
+.rev.stagger>*:nth-child(1){transition-delay:0ms}
+.rev.stagger>*:nth-child(2){transition-delay:var(--t-120)}
+.rev.stagger>*:nth-child(3){transition-delay:var(--t-120)}
+.rev.stagger>*:nth-child(4){transition-delay:var(--t-240)}
+.rev.stagger>*:nth-child(n+5){transition-delay:var(--t-240)}
+.rev.stagger.in>*{opacity:1;transform:none}
+
+/* ---- 23.7 Магнитная CTA: ровно одна на страницу (.btn-red) ---- */
+@media (any-hover:hover) and (pointer:fine){
+  .btn-red{
+    transform:translate3d(var(--mx,0px),var(--my,0px),0);
+    transition:background var(--d1) linear,transform var(--d3) var(--e-entry);
+    will-change:transform;
+  }
+  .btn-red.is-pulling{transition:background var(--d1) linear,transform var(--t-120) linear}
+}
+
+/* ---- 23.8 Переходы между страницами (View Transitions, MPA) ----
+   Шапка, нижняя полоса и кнопка связи держатся; контент кроссфейдится.
+   Firefox не умеет — там обычный переход, ничего не ломается. */
+@view-transition{navigation:auto}
+.topbar{view-transition-name:rosso-bar}
+.f-strip{view-transition-name:rosso-strip}
+.fab{view-transition-name:rosso-fab}
+::view-transition-old(root){animation-duration:var(--d2);animation-timing-function:var(--e-entry)}
+::view-transition-new(root){animation-duration:var(--d3);animation-timing-function:var(--e-entry)}
+
+/* Фолбэк для браузеров без View Transitions: JS вешает .is-leaving на <html> */
+html.is-leaving main,html.is-leaving .hero{opacity:0;transition:opacity var(--d2) var(--e-entry)}
+
+@media (prefers-reduced-motion: reduce){
+  .brand b::before,.hero-media img,.il-stage>.ph>.ph-img,.il-stage>.ph>.pic>.ph-img,.fab-btn::before,.topbar::after{animation:none!important}
+  .hero-media img,.il-stage>.ph>.ph-img,.il-stage>.ph>.pic>.ph-img{transform:none!important}
+  .rev.stagger>*{opacity:1!important;transform:none!important}
+  ::view-transition-group(*){animation-duration:.01ms!important}
+  html.is-leaving main,html.is-leaving .hero{opacity:1}
+}
+
+
+/* <picture> не должен создавать коробку: абсолютные слои
+   (канвас WebGL, шторы, градиенты) обязаны считать отступы
+   от прежнего родителя кадра, а не от обёртки. */
+.pic{display:contents}
+
+/* ---- 24. ДОСТУПНОСТЬ: цели нажатия мельче 44px (АУДИТ М5) ----
+   Только невидимый нахлёст через псевдоэлемент: у него нет ни фона, ни
+   содержимого, кликабельная/тач-область растёт, визуальный размер и
+   вёрстка — нет. Лёгкое пересечение зон соседних мелких целей (бургер,
+   пилюли фильтров, ссылки подвала) — ожидаемый компромисс этой же техники,
+   её и предлагает аудит («псевдоэлемент-нахлёст»). */
+.f-social a,.msg,footer li a,.drawer a,.pill{position:relative}
+.burger::before{content:'';position:absolute;inset:-6px}
+.f-social a::before{content:'';position:absolute;inset:-7px -4px}
+.msg::before{content:'';position:absolute;inset:-14px -6px}
+footer li a::before{content:'';position:absolute;inset:-15px -6px}
+.drawer a::before{content:'';position:absolute;inset:-4px 0}
+.pill::before{content:'';position:absolute;inset:-10px -4px}
+
+/* Добор после замера на настоящих 375px: почтовые ссылки шли высотой 15px,
+   служебная сноска 18px, марка в шапке 21px. Ссылки внутри связного текста
+   (34px) намеренно НЕ трогаем: раздувать их до 44px значит наложить зоны
+   нажатия соседних строк друг на друга — станет хуже, а не лучше. */
+a[href^="mailto:"],.stampnote a,.brand{position:relative}
+a[href^="mailto:"]::before{content:'';position:absolute;inset:-15px -6px}
+.stampnote a::before{content:'';position:absolute;inset:-13px -6px}
+.brand::before{content:'';position:absolute;inset:-10px -6px}
+
+/* ---- 24.1 ДОСТУПНОСТЬ: forced-colors, Windows «Высокая контрастность» (АУДИТ М6) ----
+   .pill.on сегодня отличается от обычного .pill только цветом текста/рамки
+   (--ink вместо --piombo/--argento) — в forced-colors браузер красит все
+   авторские цвета в один системный, и состояния визуально сливаются.
+   Добавляем геометрический маркер системным цветом Highlight, которого
+   forced-colors не трогает — так «активно» остаётся отличимо от «обычно». */
+@media (forced-colors:active){
+  .pill.on{outline:2px solid Highlight;outline-offset:2px}
+}
+
+
+/* ---- 24.2 ДОСТУПНОСТЬ: цели нажатия, добор (проход по «Россо») ----
+   Тот же приём — невидимый псевдоэлемент-нахлёст, без изменения вёрстки. */
+.fab-btn,.fab-x{position:relative}
+/* .fab-btn::before занят декоративной точкой-пульсом — берём ::after */
+.fab-btn::after{content:'';position:absolute;inset:-3px}
+.fab-x::before{content:'';position:absolute;inset:-10px}
+
+.btn{position:relative}
+.btn::before{content:'';position:absolute;inset:-5px}
+
+/* Компонент заказа (order.js/order.css) чужой — добираем целями снаружи,
+   скоуп на тему «Россо», чтобы не задеть другие сайты на этом компоненте. */
+[data-order-theme="rosso"] .ord-b{position:relative}
+[data-order-theme="rosso"] .ord-b::after{content:'';position:absolute;inset:-7px -3px}
+[data-order-theme="rosso"] .ord-x{position:relative}
+[data-order-theme="rosso"] .ord-x::after{content:'';position:absolute;inset:-7px}
+
+/* Опт: инлайн-телефон в блоке «сроки и оплата» — обычная строка текста,
+   соседей по горизонтали нет, нахлёст безопасен. */
+.col li a[href^="tel:"]{position:relative}
+.col li a[href^="tel:"]::before{content:'';position:absolute;inset:-13px -4px}
+
+/* Печать: плавающая кнопка связи — интерфейс экрана, на бумаге не нужна. */
+@media print{
+  .fab{display:none!important}
+}
+
+/* ---- Обёртка плавающей кнопки не должна ловить нажатия.
+   Панель внутри скрыта (visibility:hidden), но сам контейнер занимает
+   ~320×390px над углом экрана и на телефоне перехватывал тапы по главным
+   кнопкам героя. Прозрачной коробке — pointer-events:none, детям — обратно. */
+.fab{pointer-events:none}
+.fab>*{pointer-events:auto}
+
+
+/* ---- Герой R-1: кадрирование под object-fit:cover.
+   Кадр 2.36:1; на 1440×900 видно ~67% ширины. Лампа стоит на 12% ширины,
+   рыба — на 53%: окно с 30% держит обеих. На телефоне — только рыба. */
+.hero-media img.hero-still{object-position:30% 50%}
+@media (max-width:700px){ .hero-media img.hero-still{object-position:64% 50%} }

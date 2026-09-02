@@ -1,0 +1,10 @@
+/* assets/motion/hero-warmup.css — холодный старт героя «Артефакт» (волна 2, момент 1 плана).
+   Один слой держит тёплую тьму (--walnut) поверх кадра героя; JS (hero-warmup.js)
+   ставит стартовую opacity ≈ .92 и гасит её за 700 мс. Без JS/GSAP или при
+   prefers-reduced-motion слой остаётся невидимым (opacity:0) — герой выглядит
+   так же, как без этого файла (тот же приём guard, что у body.rv-armed). */
+.hw-veil{position:absolute;inset:0;z-index:2;pointer-events:none;background:var(--walnut);opacity:0}
+
+@media (prefers-reduced-motion:reduce){
+  .hw-veil{display:none}
+}

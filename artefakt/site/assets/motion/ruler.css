@@ -1,0 +1,50 @@
+/* assets/motion/ruler.css — весовая линейка как прибор (волна 4, момент 2:
+   ЗАМЫСЕЛ-ПЛАН.md §3 «Артефакт», ЗАМЫСЕЛ-МАКСИМУМ.md §5).
+   Всё здесь работает ТОЛЬКО поверх состояния, которое проставляет ruler.js
+   (класс .ruler--rigged на корне .ruler, элементы .ruler__track/.ruler__marker
+   создаются им же). Без JS/без GSAP этот файл ничего не меняет — линейка
+   остаётся такой, как в artefakt.css (нативный overflow-x:auto, клик). */
+
+.ruler--rigged .ruler__row{
+  overflow:hidden;
+  position:relative;
+  touch-action:pan-y;      /* вертикальная прокрутка страницы не блокируется */
+  cursor:grab;
+}
+.ruler--rigged .ruler__row.is-dragging{cursor:grabbing}
+.ruler--rigged .ruler__row::-webkit-scrollbar{display:none}
+
+.ruler--rigged .ruler__track{
+  display:flex;
+  align-items:stretch;
+  will-change:transform;
+}
+
+/* физический шаг насечек — фиксированный, как у настоящей рулетки, а не
+   растянутый по ширине контейнера (иначе тянуть нечего: на 1440 семь
+   насечек и так помещаются целиком). Нижняя граница шага держит цель
+   нажатия ≥44px даже на самом узком мобильном шаге. */
+.ruler--rigged .notch{
+  flex:0 0 auto;
+  width:clamp(160px,15vw,220px);
+}
+@media (max-width:520px){
+  .ruler--rigged .notch{width:clamp(84px,24vw,112px);min-width:44px}
+}
+
+/* тонкая риска-указатель по центру видимой линейки — под ней всегда то
+   деление, что сейчас выбрано физикой перетаскивания */
+.ruler--rigged .ruler__marker{
+  position:absolute;
+  top:0;bottom:0;left:50%;
+  width:1px;
+  transform:translateX(-50%);
+  background:var(--ember);
+  opacity:.5;
+  pointer-events:none;
+  z-index:2;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ruler--rigged .ruler__row{cursor:default}
+}

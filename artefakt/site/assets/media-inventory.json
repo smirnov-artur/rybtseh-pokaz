@@ -1,0 +1,405 @@
+{
+ "site": "artefakt-site",
+ "generated": "2026-09-01",
+ "images": [
+  {
+   "src": "assets/img/vitrina-plotva.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 482725,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/vesovoy-ryad-16x9.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 406358,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/posol.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 390651,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/podacha-file.jpg",
+   "w": 1210,
+   "h": 1780,
+   "bytes": 388235,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/golova-macro.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 379347,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/upakovka.jpg",
+   "w": 2400,
+   "h": 1492,
+   "bytes": 324391,
+   "usedIn": [
+    "index.html",
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/vesovoy-ryad.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 310007,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/instrumenty.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 307866,
+   "usedIn": [
+    "dostavka.html",
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/hvost-macro.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 306303,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/podacha-plast.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 304352,
+   "usedIn": [
+    "price.html"
+   ]
+  },
+  {
+   "src": "assets/img/podacha-lomti.jpg",
+   "w": 1358,
+   "h": 1330,
+   "bytes": 300578,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/koridor.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 271554,
+   "usedIn": [
+    "404.html",
+    "index.html",
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/lesch-top.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 266313,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/podacha-lesch.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 229270,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/magazin.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 227918,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/vyalenie.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 211592,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/sol.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 211110,
+   "usedIn": [
+    "index.html",
+    "magazin.html",
+    "price.html"
+   ]
+  },
+  {
+   "src": "assets/img/dostavka.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 203775,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-kaplya.jpg",
+   "w": 1280,
+   "h": 720,
+   "bytes": 158850,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/priyomka.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 157869,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-price.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 149815,
+   "usedIn": [
+    "price.html"
+   ]
+  },
+  {
+   "src": "assets/img/exponat-2.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 139563,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/exponat.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 116614,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/exponat-a6.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 106402,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/og/og-opt.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 105907,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/hero.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 101531,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-film-amber.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 99465,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/cimla.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 96507,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/sklad.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 80451,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-magazin.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 73749,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-dostavka.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 69663,
+   "usedIn": [
+    "dostavka.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-oblet.jpg",
+   "w": 1600,
+   "h": 900,
+   "bytes": 61199,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-posol.jpg",
+   "w": 1600,
+   "h": 900,
+   "bytes": 52255,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-lovlya.jpg",
+   "w": 1280,
+   "h": 720,
+   "bytes": 42144,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-index.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 38587,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-film-amber-lite.jpg",
+   "w": 1280,
+   "h": 720,
+   "bytes": 38464,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/og/og-istoria.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 35510,
+   "usedIn": [
+    "istoria.html"
+   ]
+  }
+ ],
+ "videos": [
+  {
+   "src": "assets/video/film-amber-lite.mp4",
+   "w": 1280,
+   "h": 720,
+   "bytes": 1533942,
+   "duration": "00:00:35.79",
+   "hasAudio": false,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/video/film-amber.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 5913113,
+   "duration": "00:00:35.79",
+   "hasAudio": false,
+   "usedIn": []
+  },
+  {
+   "src": "assets/video/kaplya.mp4",
+   "w": 1280,
+   "h": 720,
+   "bytes": 1621001,
+   "duration": "00:00:10.00",
+   "hasAudio": false,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/video/lovlya.mp4",
+   "w": 1280,
+   "h": 720,
+   "bytes": 3106422,
+   "duration": "00:00:10.00",
+   "hasAudio": false,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/video/oblet.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 3987293,
+   "duration": "00:00:10.00",
+   "hasAudio": false,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/video/posol.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 1303570,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "opt.html"
+   ]
+  }
+ ],
+ "totals": {
+  "imageCount": 37,
+  "imageBytes": 7246890,
+  "videoCount": 6,
+  "videoBytes": 17465341
+ }
+}

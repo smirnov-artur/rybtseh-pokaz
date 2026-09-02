@@ -1,0 +1,52 @@
+/* ============================================================
+   «РОССО» · WebGL-слой (rosso-gl)
+   Подключение — два тега, ничего больше:
+     <link rel="stylesheet" href="assets/gl/rosso-gl.css">
+     <script defer src="assets/gl/rosso-gl.js"></script>
+   Слой самодостаточен: не зависит от rosso.css / rosso.js
+   и не трогает их классы. Всё своё — с префиксом .rgl-
+   ============================================================ */
+
+/* Канвас кладётся В РОДИТЕЛЯ картинки поверх неё.
+   z-index:1 — как у .ph-img; порядок в DOM ставит канвас выше,
+   а градиентные ::after (z-index:2) остаются сверху. */
+.rgl-canvas{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  z-index:1;
+  pointer-events:none;
+  /* канвас прозрачный: «материализация» проявляется по чёрному фону страницы */
+  background:transparent;
+}
+
+/* Режим ripple слушает указатель — ему нужны события.
+   На тач-устройствах прокрутка не должна залипать. */
+.rgl-canvas.rgl-interactive{
+  pointer-events:auto;
+  touch-action:pan-y;
+  cursor:crosshair;
+}
+
+/* Исходная <img> прячется ТОЛЬКО когда слой реально запустился
+   и текстура уже залита. Класс снимается при потере контекста,
+   при ошибке и при prefers-reduced-motion — картинка возвращается. */
+.rgl-on{
+  opacity:0;
+  transition:opacity .2s linear;
+}
+
+/* Жёсткая страховка: при уважении к «меньше движения» слой
+   выключен целиком, даже если скрипт по какой-то причине стартовал. */
+@media (prefers-reduced-motion: reduce){
+  .rgl-canvas{display:none!important}
+  .rgl-on{opacity:1!important}
+}
+
+/* Печать — только картинки. */
+@media print{
+  .rgl-canvas{display:none!important}
+  .rgl-on{opacity:1!important}
+}

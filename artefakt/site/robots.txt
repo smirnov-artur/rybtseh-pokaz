@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Служебные каталоги и обёртки сборки — не индексировать
+Disallow: /_check/
+Disallow: /_backup-final/
+Disallow: /_backup-fix/
+Disallow: /_probe
+Disallow: /_smoke.html
+Disallow: /_measure.html
+Disallow: /_shot.html
+
+Sitemap: https://xn--90ai5awd2a.xn--p1ai/sitemap.xml

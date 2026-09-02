@@ -1,0 +1,3384 @@
+{
+ "site": "artefakt-site",
+ "generated": "2026-09-01T20:00:24Z",
+ "encoder": "ffmpeg 9.0.1 gyan.dev",
+ "recipes": {
+  "avif": "libaom-av1 -still-picture 1 -cpu-used 4 -row-mt 1 -pix_fmt yuv420p, crf 28 (<=640px) / 31 (<=1280px) / 33 (>1280px)",
+  "webp": "libwebp -preset photo -compression_level 6, quality 80 (<=640px) / 76 (<=1280px) / 74 (>1280px)",
+  "lqip": "ширина 28px, libwebp quality 48, area-resample; выдан также как base64 data-URI",
+  "video": "libaom-av1 -crf 33 -b:v 0 -cpu-used 6 -row-mt 1 -tiles 2x2 -g 120 -an (звук → libopus 96k только там, где он есть в источнике), WebM, cues_to_front=1"
+ },
+ "ladder": [
+  320,
+  640,
+  1280,
+  1920,
+  2560
+ ],
+ "ladderNote": "ступени обрезаны по ширине оригинала; верхняя ступень — родная ширина исходника",
+ "images": [
+  {
+   "src": "assets/img/vitrina-plotva.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 482725,
+   "usedIn": [
+    "magazin.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/vitrina-plotva-320.avif",
+     "bytes": 12606
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/vitrina-plotva-640.avif",
+     "bytes": 45876
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/vitrina-plotva-1280.avif",
+     "bytes": 153131
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/vitrina-plotva-1600.avif",
+     "bytes": 210748
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/vitrina-plotva-320.webp",
+     "bytes": 17642
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/vitrina-plotva-640.webp",
+     "bytes": 66704
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/vitrina-plotva-1280.webp",
+     "bytes": 218434
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/vitrina-plotva-1600.webp",
+     "bytes": 325286
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 35,
+    "bytes": 228,
+    "src": "assets/img/rsp/lqip/vitrina-plotva.webp",
+    "dataURI": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAAAQBgCdASocACMAPvFeokakoqGaqgQASw8E4AnTK5BZ6y+BeX3nHeLUOO1TQ+mkOcfhHbJAmu81wBwA/vaIZ88SRxsN10G1JeGPgEH7MIOafI/b2uhsEn7/Hj/wdDLpmAoOFh3sDFKIC1YzKnQCCNCUSlOEVUrxNL2WB7M/ahPs4O+W6IQI5gPk9Xw/h6fPAFlP6V70qFAciUnAj4+ogL8PiXf96LdI7faY4aGcFmujAoTc1AdevbuINildxu9SHWfce8tCCxq+sBvAE2S4HIAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 210748,
+    "webpTopBytes": 325286
+   }
+  },
+  {
+   "src": "assets/img/vesovoy-ryad-16x9.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 406358,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-320.avif",
+     "bytes": 5612
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-640.avif",
+     "bytes": 19505
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-1280.avif",
+     "bytes": 56890
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-1920.avif",
+     "bytes": 101262
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-2400.avif",
+     "bytes": 154895
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-320.webp",
+     "bytes": 8714
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-640.webp",
+     "bytes": 30584
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-1280.webp",
+     "bytes": 87706
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-1920.webp",
+     "bytes": 169816
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/vesovoy-ryad-16x9-2400.webp",
+     "bytes": 258920
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 200,
+    "src": "assets/img/rsp/lqip/vesovoy-ryad-16x9.webp",
+    "dataURI": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAABQBACdASocABAAPvFcokakoqGYBABLDwTxAE6ZQjuAE/2FruA9KD9e64QAAP04ku57+C+TJxihbt4ZnDAj0Ez9zzT2gpoCNL83a63c4OgB7YotKH7+Eg/f/TomMuZ9kKgA28xcGLdduQ/yo/gMcl2/+LZmeMBeZDMP9sYREam/NeRvYlG5qNDyLQ0HucnkUOl8CHxBX5ruzo2dTNA54Chz0AIohQ4hOa/L/zXOPXw7G1ssaAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 154895,
+    "webpTopBytes": 258920
+   }
+  },
+  {
+   "src": "assets/img/posol.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 390651,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/posol-320.avif",
+     "bytes": 24125
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/posol-640.avif",
+     "bytes": 63810
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/posol-1280.avif",
+     "bytes": 133089
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/posol-1600.avif",
+     "bytes": 159873
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/posol-320.webp",
+     "bytes": 32470
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/posol-640.webp",
+     "bytes": 90464
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/posol-1280.webp",
+     "bytes": 199354
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/posol-1600.webp",
+     "bytes": 259312
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 286,
+    "src": "assets/img/rsp/lqip/posol.webp",
+    "dataURI": "data:image/webp;base64,UklGRhYBAABXRUJQVlA4IAoBAADwBgCdASocACUAPulan0akoqEarAQASw6E4AqSeYpyoReoKWa0GkjC5oWw01BaZ2geICtePvRk7yZqSOgMOKzAAP70VH1IXUV1PPhv38BYUJNVv3dPJH1g4NhQOTX/Vpnqvl3Q2uQvC0NboW4JIiYDorr+HgjcaFRx22lhZ454v6tD8A8Z16IE/b/CnKAItIoEEqSJUpBMJ0ZdM6GxnR6kQNsS394uXe9LqfRS8tXqudvEqCVQAYZlKAfochOmb+mckNNNE4NFVnWurOU9FkwPGguCDwZ3wddHIF/TN1lQyFSmQigGPGASA7i9ZJQ/g5eTKc3HTrbqZlTBfBJA2hBABbz8anhWknAAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 159873,
+    "webpTopBytes": 259312
+   }
+  },
+  {
+   "src": "assets/img/podacha-file.jpg",
+   "w": 1210,
+   "h": 1780,
+   "bytes": 388235,
+   "usedIn": [
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1210
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 470,
+     "src": "assets/img/rsp/podacha-file-320.avif",
+     "bytes": 18454
+    },
+    {
+     "w": 640,
+     "h": 942,
+     "src": "assets/img/rsp/podacha-file-640.avif",
+     "bytes": 55279
+    },
+    {
+     "w": 1210,
+     "h": 1780,
+     "src": "assets/img/rsp/podacha-file-1210.avif",
+     "bytes": 141872
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 470,
+     "src": "assets/img/rsp/podacha-file-320.webp",
+     "bytes": 26384
+    },
+    {
+     "w": 640,
+     "h": 942,
+     "src": "assets/img/rsp/podacha-file-640.webp",
+     "bytes": 82048
+    },
+    {
+     "w": 1210,
+     "h": 1780,
+     "src": "assets/img/rsp/podacha-file-1210.webp",
+     "bytes": 208766
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 41,
+    "bytes": 350,
+    "src": "assets/img/rsp/lqip/podacha-file.webp",
+    "dataURI": "data:image/webp;base64,UklGRlYBAABXRUJQVlA4IEoBAABwBwCdASocACkAPvFep0qkoiGVXAYASw8E8QBOmZy+2oWprbUQb8dsLAyl65d6LxFGypuKgIyq1Cumgi6ujcQDqad3ZAD++FibsuHRJmDwknND+1k02+2gLexlM0gns64PO/N6+XB0Zr5PLFerSxF5P4MZ4HTnHgmvZI6wGZ27qpF4w5Tlu9irw6WQA3f77EW5opKqwuG1AsFd6UkGq1eMeWwggRsOE3bousq/eR9v647dAXIDUeaa8BGdhu1RZOK4B3ul+ilHYH0EKOnmx6PEGIi+VYyDWcC03CTanGnMhKvOA9nP/LxhEEPRltReO+z/UheUKTlZFN6TeWxDMYZ4JqYDDO3nZc83H+TnSVyxylDfQ8wgdVhQrlueiDo6D8Aguuxm9jHeJfXXJ26paVr7RycA+6fIVcaZPiVAfFGxYW5ZRBTa8+IAAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 141872,
+    "webpTopBytes": 208766
+   }
+  },
+  {
+   "src": "assets/img/golova-macro.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 379347,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/golova-macro-320.avif",
+     "bytes": 17529
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/golova-macro-640.avif",
+     "bytes": 50478
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/golova-macro-1280.avif",
+     "bytes": 123041
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/golova-macro-1600.avif",
+     "bytes": 155584
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/golova-macro-320.webp",
+     "bytes": 20846
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/golova-macro-640.webp",
+     "bytes": 65124
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/golova-macro-1280.webp",
+     "bytes": 169882
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/golova-macro-1600.webp",
+     "bytes": 232316
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 35,
+    "bytes": 318,
+    "src": "assets/img/rsp/lqip/golova-macro.webp",
+    "dataURI": "data:image/webp;base64,UklGRjYBAABXRUJQVlA4ICoBAAAQBwCdASocACMAPvFmoEekoqGYDVQASw8E8QBWGZiAAB6WCuIGxMe4l+dyzgajfKhJmxc5n1mWXwq2+9dfyLUigAD+8pjuiRhH1tbUsMluV9D2PmqfG6xdtF0lj7TviLlmHexm2VrstRRa/zLZbV+M8UdAuh+PSn7kdkj7drfTqvDfrFrP8NsXmJO1l4Zv9bq6/VrSvwClg9kG4YrvfgUX3QKq6Ga1gu09+O+6BUjefVyAIsLGEf2xrOyViVQFuIH1/pYy3KM8OyxnLgF5Ro+BZDrEfyZOZXW5oEwRHi0Spk7vlX1gdG0e9oWKqrQhmexSOg2z4Vo6Jh8RRdwCoaXow9fkPMnNsr7rmWz7bXklIVAyMQ6ninLhxvV8zGq1DucaFwxHJ2HFcAAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 155584,
+    "webpTopBytes": 232316
+   }
+  },
+  {
+   "src": "assets/img/upakovka.jpg",
+   "w": 2400,
+   "h": 1492,
+   "bytes": 324391,
+   "usedIn": [
+    "index.html",
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 198,
+     "src": "assets/img/rsp/upakovka-320.avif",
+     "bytes": 3973
+    },
+    {
+     "w": 640,
+     "h": 398,
+     "src": "assets/img/rsp/upakovka-640.avif",
+     "bytes": 11065
+    },
+    {
+     "w": 1280,
+     "h": 796,
+     "src": "assets/img/rsp/upakovka-1280.avif",
+     "bytes": 31224
+    },
+    {
+     "w": 1920,
+     "h": 1194,
+     "src": "assets/img/rsp/upakovka-1920.avif",
+     "bytes": 54335
+    },
+    {
+     "w": 2400,
+     "h": 1492,
+     "src": "assets/img/rsp/upakovka-2400.avif",
+     "bytes": 78675
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 198,
+     "src": "assets/img/rsp/upakovka-320.webp",
+     "bytes": 5960
+    },
+    {
+     "w": 640,
+     "h": 398,
+     "src": "assets/img/rsp/upakovka-640.webp",
+     "bytes": 18274
+    },
+    {
+     "w": 1280,
+     "h": 796,
+     "src": "assets/img/rsp/upakovka-1280.webp",
+     "bytes": 49858
+    },
+    {
+     "w": 1920,
+     "h": 1194,
+     "src": "assets/img/rsp/upakovka-1920.webp",
+     "bytes": 94154
+    },
+    {
+     "w": 2400,
+     "h": 1492,
+     "src": "assets/img/rsp/upakovka-2400.webp",
+     "bytes": 140476
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 17,
+    "bytes": 120,
+    "src": "assets/img/rsp/lqip/upakovka.webp",
+    "dataURI": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAwCdASocABEAPvFeo0akoqGYBABLDwTgC3uCHgUCPPeEhRC/aTAA/vQp6+NRh5yRU99k/VyuIOOvQfKh77Il6n+6LbTBfQy+9BpVvAjNHKRI2X9kfrfEdLZTDs687CLZl9AA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 78675,
+    "webpTopBytes": 140476
+   }
+  },
+  {
+   "src": "assets/img/vesovoy-ryad.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 310007,
+   "usedIn": [
+    "magazin.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/vesovoy-ryad-320.avif",
+     "bytes": 7113
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/vesovoy-ryad-640.avif",
+     "bytes": 25433
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/vesovoy-ryad-1280.avif",
+     "bytes": 69544
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/vesovoy-ryad-1600.avif",
+     "bytes": 88030
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/vesovoy-ryad-320.webp",
+     "bytes": 11818
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/vesovoy-ryad-640.webp",
+     "bytes": 44054
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/vesovoy-ryad-1280.webp",
+     "bytes": 122592
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/vesovoy-ryad-1600.webp",
+     "bytes": 174370
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 180,
+    "src": "assets/img/rsp/lqip/vesovoy-ryad.webp",
+    "dataURI": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAADQBACdASocACUAPtlOmUakIiEapABDDYTygFiPtsKusAUeLTpDy24aju+Vo1ip8AD+8Ak4+YvhGU6iw8mL7wbq1GSmQZnsedqqa7a/TuQ+7Qos8klguPXnPG+NN1/zCUZuD7Flda1i8sFStHHz7TVEp5xIB/zz/pv8MfsoyTBZY5BTPto6cP/o7PyZp3XlCEVuq7DE0eymYBDMyrkUmAAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 88030,
+    "webpTopBytes": 174370
+   }
+  },
+  {
+   "src": "assets/img/instrumenty.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 307866,
+   "usedIn": [
+    "dostavka.html",
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/instrumenty-320.avif",
+     "bytes": 5188
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/instrumenty-640.avif",
+     "bytes": 14957
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/instrumenty-1280.avif",
+     "bytes": 37341
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/instrumenty-1920.avif",
+     "bytes": 59207
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/instrumenty-2400.avif",
+     "bytes": 85483
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/instrumenty-320.webp",
+     "bytes": 8372
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/instrumenty-640.webp",
+     "bytes": 26258
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/instrumenty-1280.webp",
+     "bytes": 67400
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/instrumenty-1920.webp",
+     "bytes": 121224
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/instrumenty-2400.webp",
+     "bytes": 174244
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 240,
+    "src": "assets/img/rsp/lqip/instrumenty.webp",
+    "dataURI": "data:image/webp;base64,UklGRugAAABXRUJQVlA4INwAAAAQBQCdASocABAAPvFcokakoqGYBABLDwTxAE6ZQKsA3kkDGcAiqfaObSsKw4Jn3RCgAP7vKNlrahWpgfmM3BTaVOziCoIwj105kS/bSmBIib9p0TA2Y6W2Iyvsy7Ubetc3+DXW4p7/2Qadwj0z2LPsYrPCYL0BVak8vf+kvf9P5jXDtDPoz5i/9S/Qe2Pzetld/D1TxVAknDpIcEJcOwofGoykzD//E3quKqIikC3+Zk9/9HsOvjof+Xui3J21TjTGZMBHXCVYy+1icWPtPYpSV4cbZl+kmfGIAAAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 85483,
+    "webpTopBytes": 174244
+   }
+  },
+  {
+   "src": "assets/img/hvost-macro.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 306303,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/hvost-macro-320.avif",
+     "bytes": 13851
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/hvost-macro-640.avif",
+     "bytes": 40823
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/hvost-macro-1280.avif",
+     "bytes": 88841
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/hvost-macro-1600.avif",
+     "bytes": 106046
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/hvost-macro-320.webp",
+     "bytes": 17478
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/hvost-macro-640.webp",
+     "bytes": 54466
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/hvost-macro-1280.webp",
+     "bytes": 127208
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/hvost-macro-1600.webp",
+     "bytes": 166900
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 28,
+    "bytes": 260,
+    "src": "assets/img/rsp/lqip/hvost-macro.webp",
+    "dataURI": "data:image/webp;base64,UklGRvwAAABXRUJQVlA4IPAAAACwBgCdASocABwAPvFsqk2koqGhKAgAlh4J7ACdMoR5mIK4sHS3EL2dL6ibVpgKHELd5DW5sKfxnjT3jSGxAAD+9DKpyGDGgFQXxK3GX0BVDcm37pMPTb9nqagdjTQf273hOWGdFN88BGDqqSaQ52ICvK+TTYj9EvBIKwmg5Bx23kw/gE2fObQvWMxVZ4xcmVJIThGtFQFnoWms5MXVCfAsOC/TPtfLSILJRIhS94rHsU9JILZZ4M6te6AXYxS5G8uMLvToexEA42RvbF2AwjlZoK03QXbLjHDq9OAeaWlmV+dZ6YicoB29r9C4bWlYAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 106046,
+    "webpTopBytes": 166900
+   }
+  },
+  {
+   "src": "assets/img/podacha-plast.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 304352,
+   "usedIn": [
+    "price.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/podacha-plast-320.avif",
+     "bytes": 9094
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/podacha-plast-640.avif",
+     "bytes": 26732
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/podacha-plast-1280.avif",
+     "bytes": 68878
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/podacha-plast-1600.avif",
+     "bytes": 89051
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/podacha-plast-320.webp",
+     "bytes": 12348
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/podacha-plast-640.webp",
+     "bytes": 37450
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/podacha-plast-1280.webp",
+     "bytes": 97468
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/podacha-plast-1600.webp",
+     "bytes": 136382
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 28,
+    "bytes": 224,
+    "src": "assets/img/rsp/lqip/podacha-plast.webp",
+    "dataURI": "data:image/webp;base64,UklGRtgAAABXRUJQVlA4IMwAAABwBQCdASocABwAPvFgpkekoqGUBqhLDwTgCw7Yy9ygI4UIWAxZ8EgExx15fT2GwPvOWF4gAP77ZkaTRJA48x1wkTWG67xjTqKUjaKwig24jIOXtlElX+N5gPshTZwi8hxtHFsktJ1/MhH/jk7yGEkihCJj3pMXhra7PJD/BTgMgB1vqDbCQkAqSMKqpBkc/Szm1zsv87o1DPO8Ip4U0aOxG7GySIzVXD6JcWEbfy98UEsoitHFlo7XDMMTTV1V+Vvf5iGvkPoXAyrUAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 89051,
+    "webpTopBytes": 136382
+   }
+  },
+  {
+   "src": "assets/img/podacha-lomti.jpg",
+   "w": 1358,
+   "h": 1330,
+   "bytes": 300578,
+   "usedIn": [
+    "magazin.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1358
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 314,
+     "src": "assets/img/rsp/podacha-lomti-320.avif",
+     "bytes": 12864
+    },
+    {
+     "w": 640,
+     "h": 626,
+     "src": "assets/img/rsp/podacha-lomti-640.avif",
+     "bytes": 35580
+    },
+    {
+     "w": 1280,
+     "h": 1254,
+     "src": "assets/img/rsp/podacha-lomti-1280.avif",
+     "bytes": 84670
+    },
+    {
+     "w": 1358,
+     "h": 1330,
+     "src": "assets/img/rsp/podacha-lomti-1358.avif",
+     "bytes": 85812
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 314,
+     "src": "assets/img/rsp/podacha-lomti-320.webp",
+     "bytes": 18880
+    },
+    {
+     "w": 640,
+     "h": 626,
+     "src": "assets/img/rsp/podacha-lomti-640.webp",
+     "bytes": 53926
+    },
+    {
+     "w": 1280,
+     "h": 1254,
+     "src": "assets/img/rsp/podacha-lomti-1280.webp",
+     "bytes": 135748
+    },
+    {
+     "w": 1358,
+     "h": 1330,
+     "src": "assets/img/rsp/podacha-lomti-1358.webp",
+     "bytes": 145428
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 27,
+    "bytes": 316,
+    "src": "assets/img/rsp/lqip/podacha-lomti.webp",
+    "dataURI": "data:image/webp;base64,UklGRjQBAABXRUJQVlA4ICgBAACwBgCdASocABsAPvFiqEokoqGYDAQASw8E4AnTMxFmbWm/DXLqZd+2z6pHi8Q9c3sIkzpGISzp4FDjslSn6AD+93JHTk1vrahHfKZJ7DTz/AA2sHLG1Iq0RhyaYluKO0onDnGSlvR1RDJQ9CLc+pmf/kySP+9l8q8e85PTIstfs3skeRGTqPi11fli6aNKOiBTzhu6sulthRpKKjKEPTsXec5hViIBZ+Dq8E1XsSph8em1k4ljFnDS6b5cBf1vMUIbd4GgtT7dAHYs7pijlY5TwLcSOBE7BwNLAs5E/1r3GDKJkbcrigeHlBoViC/NWU/JqBL7vLihdoSNNDPP/hux8b21YdCB8dewLRF1ROs4+74ATSRHpZVGN/F9P7q+uxoftC0y0rwAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 85812,
+    "webpTopBytes": 145428
+   }
+  },
+  {
+   "src": "assets/img/koridor.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 271554,
+   "usedIn": [
+    "404.html",
+    "index.html",
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/koridor-320.avif",
+     "bytes": 5958
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/koridor-640.avif",
+     "bytes": 15943
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/koridor-1280.avif",
+     "bytes": 34404
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/koridor-1920.avif",
+     "bytes": 50360
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/koridor-2400.avif",
+     "bytes": 67601
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/koridor-320.webp",
+     "bytes": 8744
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/koridor-640.webp",
+     "bytes": 25040
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/koridor-1280.webp",
+     "bytes": 56630
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/koridor-1920.webp",
+     "bytes": 94090
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/koridor-2400.webp",
+     "bytes": 136268
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 178,
+    "src": "assets/img/rsp/lqip/koridor.webp",
+    "dataURI": "data:image/webp;base64,UklGRqoAAABXRUJQVlA4IJ4AAAAwBACdASocABAAPvFaokakoqGYBABLDwT0AE6ZQAGnUfGvwAXPChdJ0BAA/vKxsCZ/nGYmKEkYaxJEVv5Px29Goq0wfvm+LnshQ/l3H9Yr+Z+HTC0VtqzXp5XumogBOKDGxrV9l/AT6zXV6xEYTl6wRkBoSt4r7AfjQ1Gjloj1lfWfg+gx+dyRs9sPWdikDckdZE3rZP+BCJXfyKOAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 67601,
+    "webpTopBytes": 136268
+   }
+  },
+  {
+   "src": "assets/img/lesch-top.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 266313,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/lesch-top-320.avif",
+     "bytes": 6497
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/lesch-top-640.avif",
+     "bytes": 23905
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/lesch-top-1280.avif",
+     "bytes": 65627
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/lesch-top-1600.avif",
+     "bytes": 82635
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/lesch-top-320.webp",
+     "bytes": 10302
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/lesch-top-640.webp",
+     "bytes": 38728
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/lesch-top-1280.webp",
+     "bytes": 106370
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/lesch-top-1600.webp",
+     "bytes": 149326
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 164,
+    "src": "assets/img/rsp/lqip/lesch-top.webp",
+    "dataURI": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAACQBgCdASocACUAPvFYpUakoqGYDVVUSw8E8oBftYix+BCurFl/2KDcbiXIuJ8gwr7zmd1jUTR5dpJH5c4AAP75D/yxyDwjvBnWxaX+KQ2Pgwc5WTiTJj4J9ALlCI5otJw+1OKBCdSfuGPJrcpiyEdBfOfqoS9NgnhSV3q1TowTmwJcPh4A0VVbh/1769FagAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 82635,
+    "webpTopBytes": 149326
+   }
+  },
+  {
+   "src": "assets/img/podacha-lesch.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 229270,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/podacha-lesch-320.avif",
+     "bytes": 6367
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/podacha-lesch-640.avif",
+     "bytes": 19631
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/podacha-lesch-1280.avif",
+     "bytes": 47136
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/podacha-lesch-1600.avif",
+     "bytes": 56656
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/podacha-lesch-320.webp",
+     "bytes": 8642
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/podacha-lesch-640.webp",
+     "bytes": 28152
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/podacha-lesch-1280.webp",
+     "bytes": 72774
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/podacha-lesch-1600.webp",
+     "bytes": 96222
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 28,
+    "bytes": 192,
+    "src": "assets/img/rsp/lqip/podacha-lesch.webp",
+    "dataURI": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAADwBACdASocABwAPvFoqUskoqGUBVRLDwTgDE7QABYrY4HJzFMvjmFXz2E2jDlGkWAA/v7hxpV8fXnfY29qoAWeITj3IADalcnmCyyM1CwljCYgMNf/NTJBf7PY2Mt4zTE1fZ1eLVt+VItMgPXix7YEJe9f2BevtA6TW3xOmS8sMiM4lpokpbB85vFx+v8LECfNAzREFvp9mCbHkgvsY3pAS2eM+CQWy1o26gAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 56656,
+    "webpTopBytes": 96222
+   }
+  },
+  {
+   "src": "assets/img/magazin.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 227918,
+   "usedIn": [
+    "magazin.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/magazin-320.avif",
+     "bytes": 8653
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/magazin-640.avif",
+     "bytes": 24244
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/magazin-1280.avif",
+     "bytes": 53133
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/magazin-1600.avif",
+     "bytes": 63669
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/magazin-320.webp",
+     "bytes": 13706
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/magazin-640.webp",
+     "bytes": 40138
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/magazin-1280.webp",
+     "bytes": 93438
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/magazin-1600.webp",
+     "bytes": 121852
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 242,
+    "src": "assets/img/rsp/lqip/magazin.webp",
+    "dataURI": "data:image/webp;base64,UklGRuoAAABXRUJQVlA4IN4AAABQBgCdASocACUAPvFkpEakoyGVXAb8Sw8E9gBOmZ4+ulfTOVh2/W7Mwic11ROiRCSWm8ijXy0FhQ8vwAD++JCDLVHNXBW+qnKLW3vTMrfc1oZpXQ0aeSD4GeFZgLo1n8hlrGu4ip5VGuwcqMhpXlp3U3D9FT3YQtn8V0A5Uaun0smbgw+5g4igchFGd8Vd1JgNIjk8tu7LBkcDFhBhG6a8el5ejwhkhhAZn3C4P4ftlcVk/yvxiwzGTmKMTFajTel8IxGHcF8gm3sioXdr9+p1WLYrVzbq//tEYEEroAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 63669,
+    "webpTopBytes": 121852
+   }
+  },
+  {
+   "src": "assets/img/vyalenie.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 211592,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/vyalenie-320.avif",
+     "bytes": 12202
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/vyalenie-640.avif",
+     "bytes": 28050
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/vyalenie-1280.avif",
+     "bytes": 48764
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/vyalenie-1600.avif",
+     "bytes": 54986
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/vyalenie-320.webp",
+     "bytes": 19912
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/vyalenie-640.webp",
+     "bytes": 49648
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/vyalenie-1280.webp",
+     "bytes": 95476
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/vyalenie-1600.webp",
+     "bytes": 120978
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 312,
+    "src": "assets/img/rsp/lqip/vyalenie.webp",
+    "dataURI": "data:image/webp;base64,UklGRjABAABXRUJQVlA4ICQBAABwBwCdASocACUAPt1YmUakIqEarAYAQw3E4AnTLFvwEmD78dVPLQoriFmuC3vvkgj1UXhRwzAkf/77j9qM9jwtZLceAAD++RRLvDEIwH+F3bI68eL5gcoda6/RMWbu3KDX4RC5SPDlTjaeArUjEYbpI5tH/60mJXNz8Rh88TwVlqo2eKsL4TCHo2fdygyhr7Ldm4MZQe1wN6jFm8tLbgJVjP3+n6v1P23UTdTXAYAN/BoHcYZB3gNIbZdXMIXgp0nKxwlhXtftd/A+CLCIsxBVfHBAzfhutcWURnz46rdMciVAK7NgEJ7hfOlsCBIa4tcwYGF+xSLMYRg3C8dKr9bKqZn5OctthH+Vlgor5B06yNSH6fuaQL3EuQMJZhPScPL6AAAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 54986,
+    "webpTopBytes": 120978
+   }
+  },
+  {
+   "src": "assets/img/sol.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 211110,
+   "usedIn": [
+    "index.html",
+    "magazin.html",
+    "price.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/sol-320.avif",
+     "bytes": 14585
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/sol-640.avif",
+     "bytes": 32184
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/sol-1280.avif",
+     "bytes": 58893
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/sol-1600.avif",
+     "bytes": 67807
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 320,
+     "src": "assets/img/rsp/sol-320.webp",
+     "bytes": 21376
+    },
+    {
+     "w": 640,
+     "h": 640,
+     "src": "assets/img/rsp/sol-640.webp",
+     "bytes": 50754
+    },
+    {
+     "w": 1280,
+     "h": 1280,
+     "src": "assets/img/rsp/sol-1280.webp",
+     "bytes": 101570
+    },
+    {
+     "w": 1600,
+     "h": 1600,
+     "src": "assets/img/rsp/sol-1600.webp",
+     "bytes": 130160
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 28,
+    "bytes": 344,
+    "src": "assets/img/rsp/lqip/sol.webp",
+    "dataURI": "data:image/webp;base64,UklGRlABAABXRUJQVlA4IEQBAABwBgCdASocABwAPvFop0ukoqGUBVRLDwTgCdMoA6lKmjzAA1VSCXzAOzPYYpTsGTiILy5Gu/eUgxr6YQAA/uxXjjyyG/BWR5kiBJ2juFzxavkx1y+7jkYzmVgHo3QgI4K+hSYCobiIE/fyR5ZQ5duC1yGMf8qnjH/VSm7UtGnzhzJ2aQa7z4yOo+raZ0eozoLbhLXDPnJ6yU1qO0AVrYe5/gYnlP1qv2ffHPZpA6+YsojSv2o+wy2tE321A1Z5bbIsnKKlnO71o9tO65OAlpBN8fGtp+gN/Uta2iinlk34uvF7Y9qkh/rMvfTJtNsU6uSx4WBvtGxF4Xmyl7XuetA6VWCRXdtttpLtCoKXvgVEHeLF/6I8sGNrGkp5wldo91pkQZUAoRoyWg83RcBtVdurT8ESZB9BhFBjuX5fBmyLaUAAAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 67807,
+    "webpTopBytes": 130160
+   }
+  },
+  {
+   "src": "assets/img/dostavka.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 203775,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/dostavka-320.avif",
+     "bytes": 3453
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/dostavka-640.avif",
+     "bytes": 9694
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/dostavka-1280.avif",
+     "bytes": 25534
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/dostavka-1920.avif",
+     "bytes": 41486
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/dostavka-2400.avif",
+     "bytes": 59368
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/dostavka-320.webp",
+     "bytes": 5688
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/dostavka-640.webp",
+     "bytes": 17084
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/dostavka-1280.webp",
+     "bytes": 44166
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/dostavka-1920.webp",
+     "bytes": 76666
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/dostavka-2400.webp",
+     "bytes": 109666
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 182,
+    "src": "assets/img/rsp/lqip/dostavka.webp",
+    "dataURI": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAACQBACdASocABAAPvFeo0ckoqGYBABLDwTzAE6ZQAUjXPcTUeAD/YgPsVRhgAAA/v9j+u+2br7sys4ZkyPI6bA/nQ7ql67zh72yE18Lkjlw1tP96wgETFYjmPCkGLVUjZ1pAz4DX45WVChPINOT/qDWJlAfldBMVqS2YKSpIJG6+9zjQg9TvcdAgU9JlGs0fXUE1ZFwPuj6F6zEPgJMe0vnwAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 59368,
+    "webpTopBytes": 109666
+   }
+  },
+  {
+   "src": "assets/img/poster-kaplya.jpg",
+   "w": 1280,
+   "h": 720,
+   "bytes": 158850,
+   "usedIn": [
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-kaplya-320.avif",
+     "bytes": 14227
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-kaplya-640.avif",
+     "bytes": 41653
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-kaplya-1280.avif",
+     "bytes": 94645
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-kaplya-320.webp",
+     "bytes": 18490
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-kaplya-640.webp",
+     "bytes": 57384
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-kaplya-1280.webp",
+     "bytes": 130252
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 202,
+    "src": "assets/img/rsp/lqip/poster-kaplya.webp",
+    "dataURI": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAABwBACdASocABAAPvFcokakoqGYBABLDwT2AE6ZQjuX4ABRzSvDfIjQs6YHqAD+vIZ2wGBVOlEX3rezoTm6eLRieHo6izGAJ2lGPMRHpCqP9bv/NcOqfQ+E8x9XaXqhPDVCPPf7tAOwitAr+nYh4Dytpxm3v8B2I4OPvwhfc4HoVsTS2K2kelTZlyK7NSQYvZXyb431yATPzzRncP02+GktP958KHaFHd2T8Cdf7SotDZLNZMaQAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 94645,
+    "webpTopBytes": 130252
+   }
+  },
+  {
+   "src": "assets/img/priyomka.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 157869,
+   "usedIn": [
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/priyomka-320.avif",
+     "bytes": 2818
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/priyomka-640.avif",
+     "bytes": 8073
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/priyomka-1280.avif",
+     "bytes": 21161
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/priyomka-1920.avif",
+     "bytes": 35447
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/priyomka-2400.avif",
+     "bytes": 51285
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/priyomka-320.webp",
+     "bytes": 4138
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/priyomka-640.webp",
+     "bytes": 12830
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/priyomka-1280.webp",
+     "bytes": 32710
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/priyomka-1920.webp",
+     "bytes": 59524
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/priyomka-2400.webp",
+     "bytes": 85272
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 136,
+    "src": "assets/img/rsp/lqip/priyomka.webp",
+    "dataURI": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAwCdASocABAAPvFcokakoqGYBABLDwTygE6ZQAUjU6cATn5SlQgAAP7/uZxzxLbgYjt427TdupTKsXRjyT9Wg/upjoKVP2HepUpTJTfjIkxvmyo/WieKTXGCeHj18e+SZG1F7Cxy/cmCW2IP02YJtIkAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 51285,
+    "webpTopBytes": 85272
+   }
+  },
+  {
+   "src": "assets/img/og/og-price.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 149815,
+   "usedIn": [
+    "price.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1200
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-price-320.avif",
+     "bytes": 11310
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-price-640.avif",
+     "bytes": 25938
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-price-1200.avif",
+     "bytes": 44315
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-price-320.webp",
+     "bytes": 16192
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-price-640.webp",
+     "bytes": 37992
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-price-1200.webp",
+     "bytes": 71908
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 15,
+    "bytes": 250,
+    "src": "assets/img/rsp/lqip/og/og-price.webp",
+    "dataURI": "data:image/webp;base64,UklGRvIAAABXRUJQVlA4IOYAAACwBACdASocAA8APvFcokakoqGYBABLDwTgCdMoR3A8AVtoyji7nbbTCjbJ7iBIAP2ZryP/s2u2QmdE9/hiLuyWjfSjerX+5fvax1FI0JTdYxrf7/dH4i0JZmvyrRbuvrNYRBGI6PLzdz0A293RAxV6RkqKs2fsLqYnTBoN3hQ+f/rqkmvM47oF+5aznxrLha/QESUUpDo7WJysrfwX4+3TKcPkSKFYFRclP8FV7NZvut6F6a11G/ROvKQeF0YxI/OrvcmQWhp2gLIV9tJv0ZLEGIILYZUX3gjyBjqCya7S2PBYzk9QAA=="
+   },
+   "socialCard": true,
+   "note": "og:image — оставить JPEG в метатегах: часть соцсетей не читает AVIF/WebP",
+   "savings": {
+    "avifTopBytes": 44315,
+    "webpTopBytes": 71908
+   }
+  },
+  {
+   "src": "assets/img/exponat-2.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 139563,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/exponat-2-320.avif",
+     "bytes": 4701
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/exponat-2-640.avif",
+     "bytes": 13012
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/exponat-2-1280.avif",
+     "bytes": 33435
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/exponat-2-1600.avif",
+     "bytes": 43034
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/exponat-2-320.webp",
+     "bytes": 6142
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/exponat-2-640.webp",
+     "bytes": 18764
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/exponat-2-1280.webp",
+     "bytes": 51042
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/exponat-2-1600.webp",
+     "bytes": 71402
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 35,
+    "bytes": 140,
+    "src": "assets/img/rsp/lqip/exponat-2.webp",
+    "dataURI": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADwBACdASocACMAPt1WnEakIqEYBqhDDcTgC84CHfvL8+WYs01BpoT/0qZ2ZwYYDHgA/vVrv5XSZYA2yavcw/EYLKHTz/ZzmT5RFugo4BGhfw+kVXlYreF38QPCJZh+hlpRLlMjwv26qMbPdVzca0pZwCHO98oAAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 43034,
+    "webpTopBytes": 71402
+   }
+  },
+  {
+   "src": "assets/img/exponat.jpg",
+   "w": 1600,
+   "h": 1986,
+   "bytes": 116614,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/exponat-320.avif",
+     "bytes": 3943
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/exponat-640.avif",
+     "bytes": 10577
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/exponat-1280.avif",
+     "bytes": 24784
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/exponat-1600.avif",
+     "bytes": 30670
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 398,
+     "src": "assets/img/rsp/exponat-320.webp",
+     "bytes": 6138
+    },
+    {
+     "w": 640,
+     "h": 794,
+     "src": "assets/img/rsp/exponat-640.webp",
+     "bytes": 18066
+    },
+    {
+     "w": 1280,
+     "h": 1588,
+     "src": "assets/img/rsp/exponat-1280.webp",
+     "bytes": 44794
+    },
+    {
+     "w": 1600,
+     "h": 1986,
+     "src": "assets/img/rsp/exponat-1600.webp",
+     "bytes": 60236
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 35,
+    "bytes": 174,
+    "src": "assets/img/rsp/lqip/exponat.webp",
+    "dataURI": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAAAwBgCdASocACMAPt1Qm0akIiEdWzQAQw3E8gBhz8nCLNdC32zVE9vrOj2jc3GXB2nZu6bqFctsFhUAAP7650OZd3wz3KNfNetmg0IRZakEhPUfzfgIswfc0qfCOCJYCIy+tEcnTo+W5BK0J4chuAU6gCyqE4nhOmI+nSb8KfddKtuG51vodQ3NfrWAOCZT3OUZDnHo5RMGRAAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 30670,
+    "webpTopBytes": 60236
+   }
+  },
+  {
+   "src": "assets/img/exponat-a6.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 106402,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/exponat-a6-320.avif",
+     "bytes": 4247
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/exponat-a6-640.avif",
+     "bytes": 10647
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/exponat-a6-1280.avif",
+     "bytes": 23221
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/exponat-a6-1600.avif",
+     "bytes": 27894
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/exponat-a6-320.webp",
+     "bytes": 6000
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/exponat-a6-640.webp",
+     "bytes": 17112
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/exponat-a6-1280.webp",
+     "bytes": 41170
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/exponat-a6-1600.webp",
+     "bytes": 55560
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 176,
+    "src": "assets/img/rsp/lqip/exponat-a6.webp",
+    "dataURI": "data:image/webp;base64,UklGRqgAAABXRUJQVlA4IJwAAABwBQCdASocACUAPvFooUekoyGVXAb8Sw8E4AvntfR+6cqnWnBMvkUf+oTflbzlpY8zirIwAP79AbqlsEpZpbB4KVopuwbBOMAb82TnYFGTlTVuN8DFSddl1pDgZkDGeHIgIgFkglRnFxJ1dh0yCiTnR3ucbqlpcvFX0D7AftMzlHBn17Mq5WQI5X20N+GTeJliYHQoH68gG2OYAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 27894,
+    "webpTopBytes": 55560
+   }
+  },
+  {
+   "src": "assets/img/og/og-opt.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 105907,
+   "usedIn": [
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1200
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-opt-320.avif",
+     "bytes": 4921
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-opt-640.avif",
+     "bytes": 14101
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-opt-1200.avif",
+     "bytes": 33121
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-opt-320.webp",
+     "bytes": 8010
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-opt-640.webp",
+     "bytes": 23480
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-opt-1200.webp",
+     "bytes": 54076
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 15,
+    "bytes": 198,
+    "src": "assets/img/rsp/lqip/og/og-opt.webp",
+    "dataURI": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAADQAwCdASocAA8APvFcokakoqGYBABLDwT2AE6ZQAFaBzA1mNrtOVQA/u9IYgQBtQ7PioJH7DQKPWjwP4fSyHUatTvuHD/vwN0a1cpCXP8BpNKpD17S3b7buwPFPzObfah+XfBVdttBUKn4P/C+7ygSq/lsS5A0tZbE3V0E+iNA5QoYKSuGknfzCr+ICbnVAA56mDyDkYxBQs1zPekiKVe4Odm6RPCut8cboxpgwMG30AAA"
+   },
+   "socialCard": true,
+   "note": "og:image — оставить JPEG в метатегах: часть соцсетей не читает AVIF/WebP",
+   "savings": {
+    "avifTopBytes": 33121,
+    "webpTopBytes": 54076
+   }
+  },
+  {
+   "src": "assets/img/hero.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 101531,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/hero-320.avif",
+     "bytes": 2191
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/hero-640.avif",
+     "bytes": 5030
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/hero-1280.avif",
+     "bytes": 11520
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/hero-1920.avif",
+     "bytes": 17842
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/hero-2400.avif",
+     "bytes": 24197
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/hero-320.webp",
+     "bytes": 3092
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/hero-640.webp",
+     "bytes": 8060
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/hero-1280.webp",
+     "bytes": 19712
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/hero-1920.webp",
+     "bytes": 34240
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/hero-2400.webp",
+     "bytes": 49548
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 146,
+    "src": "assets/img/rsp/lqip/hero.webp",
+    "dataURI": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADwAwCdASocABAAPvFoqEikoyIYBABLDwTgCo9Glw0i815EjW+XwxsAAP7/MRtnm1XLDduDTj7ShiRdU3pT0Pvn8NQ8oWLCf7YPZTZfBDIKBWA78e5YBb/c6ukJt7Cu0x9YDOiWq98koRAO/y3tS5qdnYz6USYilj39ZEbYkgA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 24197,
+    "webpTopBytes": 49548
+   }
+  },
+  {
+   "src": "assets/img/poster-film-amber.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 99465,
+   "usedIn": [
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-film-amber-320.avif",
+     "bytes": 2602
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-film-amber-640.avif",
+     "bytes": 6572
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-film-amber-1280.avif",
+     "bytes": 12046
+    },
+    {
+     "w": 1920,
+     "h": 1080,
+     "src": "assets/img/rsp/poster-film-amber-1920.avif",
+     "bytes": 15887
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-film-amber-320.webp",
+     "bytes": 3774
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-film-amber-640.webp",
+     "bytes": 10512
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-film-amber-1280.webp",
+     "bytes": 20662
+    },
+    {
+     "w": 1920,
+     "h": 1080,
+     "src": "assets/img/rsp/poster-film-amber-1920.webp",
+     "bytes": 32408
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 118,
+    "src": "assets/img/rsp/lqip/poster-film-amber.webp",
+    "dataURI": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASocABAAPvFaokakoqGYBABLDwTxgE6AEO9+Fx4ocaLa5vIA/vKfFhmrohHpe4EtHfatMbhrgnTX0moa6dZERSGHLpeBc/udMZZbp6lwF4oan96UXdsmAgDXsQAAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 15887,
+    "webpTopBytes": 32408
+   }
+  },
+  {
+   "src": "assets/img/cimla.jpg",
+   "w": 2400,
+   "h": 1340,
+   "bytes": 96507,
+   "usedIn": [
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1920,
+    2400
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/cimla-320.avif",
+     "bytes": 1436
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/cimla-640.avif",
+     "bytes": 4155
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/cimla-1280.avif",
+     "bytes": 10745
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/cimla-1920.avif",
+     "bytes": 17043
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/cimla-2400.avif",
+     "bytes": 23525
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 178,
+     "src": "assets/img/rsp/cimla-320.webp",
+     "bytes": 2246
+    },
+    {
+     "w": 640,
+     "h": 358,
+     "src": "assets/img/rsp/cimla-640.webp",
+     "bytes": 7066
+    },
+    {
+     "w": 1280,
+     "h": 714,
+     "src": "assets/img/rsp/cimla-1280.webp",
+     "bytes": 19016
+    },
+    {
+     "w": 1920,
+     "h": 1072,
+     "src": "assets/img/rsp/cimla-1920.webp",
+     "bytes": 32954
+    },
+    {
+     "w": 2400,
+     "h": 1340,
+     "src": "assets/img/rsp/cimla-2400.webp",
+     "bytes": 47828
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 122,
+    "src": "assets/img/rsp/lqip/cimla.webp",
+    "dataURI": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADQAwCdASocABAAPvFoqEikoyIYBABLDwT0AE6AEPDuaR4yGQvj34AA/ujZ90lOnoIzJ0tjozZnsZp23smegdL38/MOatf9zZwp0RjU5Z5FUb8521gPMLyh03+NnacSSW2nOeHYgAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 23525,
+    "webpTopBytes": 47828
+   }
+  },
+  {
+   "src": "assets/img/sklad.jpg",
+   "w": 1600,
+   "h": 2142,
+   "bytes": 80451,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/sklad-320.avif",
+     "bytes": 2451
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/sklad-640.avif",
+     "bytes": 5350
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/sklad-1280.avif",
+     "bytes": 10389
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/sklad-1600.avif",
+     "bytes": 12270
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 428,
+     "src": "assets/img/rsp/sklad-320.webp",
+     "bytes": 4500
+    },
+    {
+     "w": 640,
+     "h": 856,
+     "src": "assets/img/rsp/sklad-640.webp",
+     "bytes": 12048
+    },
+    {
+     "w": 1280,
+     "h": 1714,
+     "src": "assets/img/rsp/sklad-1280.webp",
+     "bytes": 26488
+    },
+    {
+     "w": 1600,
+     "h": 2142,
+     "src": "assets/img/rsp/sklad-1600.webp",
+     "bytes": 35808
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 37,
+    "bytes": 196,
+    "src": "assets/img/rsp/lqip/sklad.webp",
+    "dataURI": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAACQBQCdASocACUAPvFcokckoqGaqgQASw8E8YBOmcBDI1X5oNVVjjwg7QvRJjuwraE/F2A7gAD+8jvwsP8Xan9lTC+XPuu2jyqYhy4TPA9gMGMU5fWn0akJUVNIgtEnIdbpWbjcqRwCgRmmokvPfFpknspj7DrNZTEd9JadcqT2E9fcLfWArt3iiMUchf9u8JVoIHf8CgCcxIAKLqAPc149RruEApNjK2n06UsOyAAAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 12270,
+    "webpTopBytes": 35808
+   }
+  },
+  {
+   "src": "assets/img/og/og-magazin.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 73749,
+   "usedIn": [
+    "magazin.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1200
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-magazin-320.avif",
+     "bytes": 4045
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-magazin-640.avif",
+     "bytes": 11081
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-magazin-1200.avif",
+     "bytes": 21523
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-magazin-320.webp",
+     "bytes": 6192
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-magazin-640.webp",
+     "bytes": 17266
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-magazin-1200.webp",
+     "bytes": 35804
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 15,
+    "bytes": 186,
+    "src": "assets/img/rsp/lqip/og/og-magazin.webp",
+    "dataURI": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAABwBACdASocAA8APvFeo0ckoqGYBABLDwT2AFYGCXkRalEJHpVcE5ZhAqkigAD+/3B37X//xzwDEdv4KhGVDSf+GKDJ8sPvaw7MHosbN0zei2wvft/he+Q+cImlAhCNrwkkJBCqteY6XIWtpdXWU66uiUXnUfw3kEdCNVABSFDfebd903/JyPOD/DG7Whuczh787ZubmruglbWHju1/itHD0gNKAAAA"
+   },
+   "socialCard": true,
+   "note": "og:image — оставить JPEG в метатегах: часть соцсетей не читает AVIF/WebP",
+   "savings": {
+    "avifTopBytes": 21523,
+    "webpTopBytes": 35804
+   }
+  },
+  {
+   "src": "assets/img/og/og-dostavka.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 69663,
+   "usedIn": [
+    "dostavka.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1200
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-dostavka-320.avif",
+     "bytes": 3227
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-dostavka-640.avif",
+     "bytes": 8417
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-dostavka-1200.avif",
+     "bytes": 18882
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-dostavka-320.webp",
+     "bytes": 5308
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-dostavka-640.webp",
+     "bytes": 14954
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-dostavka-1200.webp",
+     "bytes": 34130
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 15,
+    "bytes": 182,
+    "src": "assets/img/rsp/lqip/og/og-dostavka.webp",
+    "dataURI": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAADwAwCdASocAA8APvFeokakoqGYBABLDwTzAE6ZQAUjTkhBfwB07CAAAP7/kymQjo22JG7lmgeA+Hj3h9QbpXdMhkQ/mTJVix+u3voYv6pXrRXN/5PEvWc0lHivPzizQhMEP342zqdQxmzqsZ0BfToX4N/sqAQ7pB9Ja8H2WYiqkbNOmLEUDMLpJx92nQ5Bf0g95q3ed2bIQnbbFHwqx+K2AAA="
+   },
+   "socialCard": true,
+   "note": "og:image — оставить JPEG в метатегах: часть соцсетей не читает AVIF/WebP",
+   "savings": {
+    "avifTopBytes": 18882,
+    "webpTopBytes": 34130
+   }
+  },
+  {
+   "src": "assets/img/poster-oblet.jpg",
+   "w": 1600,
+   "h": 900,
+   "bytes": 61199,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-oblet-320.avif",
+     "bytes": 3812
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-oblet-640.avif",
+     "bytes": 9904
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-oblet-1280.avif",
+     "bytes": 17415
+    },
+    {
+     "w": 1600,
+     "h": 900,
+     "src": "assets/img/rsp/poster-oblet-1600.avif",
+     "bytes": 19573
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-oblet-320.webp",
+     "bytes": 5346
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-oblet-640.webp",
+     "bytes": 14692
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-oblet-1280.webp",
+     "bytes": 29786
+    },
+    {
+     "w": 1600,
+     "h": 900,
+     "src": "assets/img/rsp/poster-oblet-1600.webp",
+     "bytes": 36992
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 154,
+    "src": "assets/img/rsp/lqip/poster-oblet.webp",
+    "dataURI": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACwBACdASocABAAPvFgpUckoqGYBABLDwTzAE6ZQjuAFOGTQX3xo/b+c6OXgLVgAP70I4Yi7Ng206yIVFZqS4QRqLo1k8JH4mvY3a+RTxyK7zHd8Gw3+LI3sPJvIomBpWUvTi2KXdAsq5WXCbEg2jc/zfVHonfuIdjViAJKaPOUVKzXjWAAAA=="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 19573,
+    "webpTopBytes": 36992
+   }
+  },
+  {
+   "src": "assets/img/poster-posol.jpg",
+   "w": 1600,
+   "h": 900,
+   "bytes": 52255,
+   "usedIn": [
+    "opt.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280,
+    1600
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-posol-320.avif",
+     "bytes": 3600
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-posol-640.avif",
+     "bytes": 7326
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-posol-1280.avif",
+     "bytes": 11834
+    },
+    {
+     "w": 1600,
+     "h": 900,
+     "src": "assets/img/rsp/poster-posol-1600.avif",
+     "bytes": 13334
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-posol-320.webp",
+     "bytes": 5742
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-posol-640.webp",
+     "bytes": 13054
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-posol-1280.webp",
+     "bytes": 23942
+    },
+    {
+     "w": 1600,
+     "h": 900,
+     "src": "assets/img/rsp/poster-posol-1600.webp",
+     "bytes": 30210
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 198,
+    "src": "assets/img/rsp/lqip/poster-posol.webp",
+    "dataURI": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAACQBACdASocABAAPvFepEckoqGYBABLDwT2AE6ZQAGxE+6iXmgdp64PB1d1BQAA/uMt17vcSg/9elUTVhkwSX70bWkYd8O4CKlY0q5iUpGwy9ncItXk7wwDePi158Mwt++/LpRfeDlbd/eFwXW//Oq0quA9gbsRs3mjf8iWwBze5/69QFxBJ/bpSrJnvMXRHJwTILknQd7x/k1EumePFys1tlLvPa/dQH2X5vBu/cZMPAAA"
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 13334,
+    "webpTopBytes": 30210
+   }
+  },
+  {
+   "src": "assets/img/poster-lovlya.jpg",
+   "w": 1280,
+   "h": 720,
+   "bytes": 42144,
+   "usedIn": [
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1280
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-lovlya-320.avif",
+     "bytes": 4008
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-lovlya-640.avif",
+     "bytes": 9356
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-lovlya-1280.avif",
+     "bytes": 17068
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-lovlya-320.webp",
+     "bytes": 5658
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-lovlya-640.webp",
+     "bytes": 14216
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-lovlya-1280.webp",
+     "bytes": 26544
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 194,
+    "src": "assets/img/rsp/lqip/poster-lovlya.webp",
+    "dataURI": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAADQAwCdASocABAAPvFgpUckoqGYBABLDwTgCdAGlrIL8f+e88vni9AA/vs/9YmvS63mzeT6/vIUbQQrwhxGlS/112BtYH0l06/5ubenuexXPn/x/H6qziy2jFSHE3YuUubYk3i7dz7QhXF88WL3uAkRxjNOBkT/kwj5y4s/W+Bfhe3rH2bJmLmJZHRa3TFMVULid/cYWtVv/NQh2yt1weUUgU/+diNugQxNgP6wAAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 17068,
+    "webpTopBytes": 26544
+   }
+  },
+  {
+   "src": "assets/img/og/og-index.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 38587,
+   "usedIn": [
+    "index.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1200
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-index-320.avif",
+     "bytes": 2146
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-index-640.avif",
+     "bytes": 4937
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-index-1200.avif",
+     "bytes": 10000
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-index-320.webp",
+     "bytes": 3050
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-index-640.webp",
+     "bytes": 7874
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-index-1200.webp",
+     "bytes": 16832
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 15,
+    "bytes": 114,
+    "src": "assets/img/rsp/lqip/og/og-index.webp",
+    "dataURI": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACQAgCdASocAA8AAZhQJwBadCFr2tJtn4MVE90kAAD++mGw6fmGD/EzbbkfiZswlVwdpjYlLcrJ595TU1Ll6PNiN76wvqnRSle5QiCix/13PJdXYzrh+6rpx2zK2LQA"
+   },
+   "socialCard": true,
+   "note": "og:image — оставить JPEG в метатегах: часть соцсетей не читает AVIF/WebP",
+   "savings": {
+    "avifTopBytes": 10000,
+    "webpTopBytes": 16832
+   }
+  },
+  {
+   "src": "assets/img/poster-film-amber-lite.jpg",
+   "w": 1280,
+   "h": 720,
+   "bytes": 38464,
+   "usedIn": [],
+   "widths": [
+    320,
+    640,
+    1280
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-film-amber-lite-320.avif",
+     "bytes": 2511
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-film-amber-lite-640.avif",
+     "bytes": 6008
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-film-amber-lite-1280.avif",
+     "bytes": 10613
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 180,
+     "src": "assets/img/rsp/poster-film-amber-lite-320.webp",
+     "bytes": 3548
+    },
+    {
+     "w": 640,
+     "h": 360,
+     "src": "assets/img/rsp/poster-film-amber-lite-640.webp",
+     "bytes": 9192
+    },
+    {
+     "w": 1280,
+     "h": 720,
+     "src": "assets/img/rsp/poster-film-amber-lite-1280.webp",
+     "bytes": 17874
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 16,
+    "bytes": 104,
+    "src": "assets/img/rsp/lqip/poster-film-amber-lite.webp",
+    "dataURI": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAABwAwCdASocABAALqF4vF4hpKSkhLCgTgCdMoAF9AWJKTDg8CAA/vnZIo22wOam/4KtEILNFty+uZVfPkkFsDz45eh30QI6V5nB5DjgQhuKFCl7sAA="
+   },
+   "socialCard": false,
+   "savings": {
+    "avifTopBytes": 10613,
+    "webpTopBytes": 17874
+   }
+  },
+  {
+   "src": "assets/img/og/og-istoria.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 35510,
+   "usedIn": [
+    "istoria.html"
+   ],
+   "widths": [
+    320,
+    640,
+    1200
+   ],
+   "avif": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-istoria-320.avif",
+     "bytes": 1412
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-istoria-640.avif",
+     "bytes": 4011
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-istoria-1200.avif",
+     "bytes": 8864
+    }
+   ],
+   "webp": [
+    {
+     "w": 320,
+     "h": 168,
+     "src": "assets/img/rsp/og/og-istoria-320.webp",
+     "bytes": 2162
+    },
+    {
+     "w": 640,
+     "h": 336,
+     "src": "assets/img/rsp/og/og-istoria-640.webp",
+     "bytes": 6814
+    },
+    {
+     "w": 1200,
+     "h": 630,
+     "src": "assets/img/rsp/og/og-istoria-1200.webp",
+     "bytes": 16010
+    }
+   ],
+   "lqip": {
+    "w": 28,
+    "h": 15,
+    "bytes": 104,
+    "src": "assets/img/rsp/lqip/og/og-istoria.webp",
+    "dataURI": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASocAA8ALqF4vF4hpKSkhLCgT1AE6P4AMDS6LhtJqXaJSQAA/vRTeEmP07XNumxBACc/0dfStyIzIjunS/shIJZ7nRLKonPgw657pjYYAAA="
+   },
+   "socialCard": true,
+   "note": "og:image — оставить JPEG в метатегах: часть соцсетей не читает AVIF/WebP",
+   "savings": {
+    "avifTopBytes": 8864,
+    "webpTopBytes": 16010
+   }
+  }
+ ],
+ "videos": [
+  {
+   "src": "assets/video/kaplya.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": "00:00:10.00",
+   "usedIn": [
+    "opt.html"
+   ],
+   "hasAudio": false,
+   "sources": [
+    {
+     "type": "video/webm; codecs=\"av01.0.05M.08\"",
+     "src": "assets/video/av1/kaplya.webm",
+     "bytes": 1134056,
+     "codec": "AV1"
+    },
+    {
+     "type": "video/mp4",
+     "src": "assets/video/kaplya.mp4",
+     "bytes": 1621001,
+     "codec": "H.264"
+    }
+   ],
+   "outDuration": "00:00:10.00",
+   "poster": {
+    "src": "assets/img/poster-kaplya.jpg",
+    "avif": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-kaplya-320.avif",
+      "bytes": 14227
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-kaplya-640.avif",
+      "bytes": 41653
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-kaplya-1280.avif",
+      "bytes": 94645
+     }
+    ],
+    "webp": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-kaplya-320.webp",
+      "bytes": 18490
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-kaplya-640.webp",
+      "bytes": 57384
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-kaplya-1280.webp",
+      "bytes": 130252
+     }
+    ],
+    "lqip": "data:image/webp;base64,UklGRsIAAABXRUJQVlA4ILYAAABwBACdASocABAAPvFcokakoqGYBABLDwT2AE6ZQjuX4ABRzSvDfIjQs6YHqAD+vIZ2wGBVOlEX3rezoTm6eLRieHo6izGAJ2lGPMRHpCqP9bv/NcOqfQ+E8x9XaXqhPDVCPPf7tAOwitAr+nYh4Dytpxm3v8B2I4OPvwhfc4HoVsTS2K2kelTZlyK7NSQYvZXyb431yATPzzRncP02+GktP958KHaFHd2T8Cdf7SotDZLNZMaQAA=="
+   },
+   "encodeSeconds": 46
+  },
+  {
+   "src": "assets/video/lovlya.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": "00:00:10.00",
+   "usedIn": [
+    "istoria.html"
+   ],
+   "hasAudio": false,
+   "sources": [
+    {
+     "type": "video/webm; codecs=\"av01.0.05M.08\"",
+     "src": "assets/video/av1/lovlya.webm",
+     "bytes": 1797051,
+     "codec": "AV1"
+    },
+    {
+     "type": "video/mp4",
+     "src": "assets/video/lovlya.mp4",
+     "bytes": 3106422,
+     "codec": "H.264"
+    }
+   ],
+   "outDuration": "00:00:10.00",
+   "poster": {
+    "src": "assets/img/poster-lovlya.jpg",
+    "avif": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-lovlya-320.avif",
+      "bytes": 4008
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-lovlya-640.avif",
+      "bytes": 9356
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-lovlya-1280.avif",
+      "bytes": 17068
+     }
+    ],
+    "webp": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-lovlya-320.webp",
+      "bytes": 5658
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-lovlya-640.webp",
+      "bytes": 14216
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-lovlya-1280.webp",
+      "bytes": 26544
+     }
+    ],
+    "lqip": "data:image/webp;base64,UklGRroAAABXRUJQVlA4IK4AAADQAwCdASocABAAPvFgpUckoqGYBABLDwTgCdAGlrIL8f+e88vni9AA/vs/9YmvS63mzeT6/vIUbQQrwhxGlS/112BtYH0l06/5ubenuexXPn/x/H6qziy2jFSHE3YuUubYk3i7dz7QhXF88WL3uAkRxjNOBkT/kwj5y4s/W+Bfhe3rH2bJmLmJZHRa3TFMVULid/cYWtVv/NQh2yt1weUUgU/+diNugQxNgP6wAAA="
+   },
+   "encodeSeconds": 154
+  },
+  {
+   "src": "assets/video/film-amber.mp4",
+   "w": 1920,
+   "h": 1080,
+   "duration": "00:00:35.79",
+   "usedIn": [],
+   "hasAudio": false,
+   "sources": [
+    {
+     "type": "video/webm; codecs=\"av01.0.05M.08\"",
+     "src": "assets/video/av1/film-amber.webm",
+     "bytes": 3196758,
+     "codec": "AV1"
+    },
+    {
+     "type": "video/mp4",
+     "src": "assets/video/film-amber.mp4",
+     "bytes": 5913113,
+     "codec": "H.264"
+    }
+   ],
+   "outDuration": "00:00:35.79",
+   "poster": {
+    "src": "assets/img/poster-film-amber.jpg",
+    "avif": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-film-amber-320.avif",
+      "bytes": 2602
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-film-amber-640.avif",
+      "bytes": 6572
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-film-amber-1280.avif",
+      "bytes": 12046
+     },
+     {
+      "w": 1920,
+      "h": 1080,
+      "src": "assets/img/rsp/poster-film-amber-1920.avif",
+      "bytes": 15887
+     }
+    ],
+    "webp": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-film-amber-320.webp",
+      "bytes": 3774
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-film-amber-640.webp",
+      "bytes": 10512
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-film-amber-1280.webp",
+      "bytes": 20662
+     },
+     {
+      "w": 1920,
+      "h": 1080,
+      "src": "assets/img/rsp/poster-film-amber-1920.webp",
+      "bytes": 32408
+     }
+    ],
+    "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASocABAAPvFaokakoqGYBABLDwTxgE6AEO9+Fx4ocaLa5vIA/vKfFhmrohHpe4EtHfatMbhrgnTX0moa6dZERSGHLpeBc/udMZZbp6lwF4oan96UXdsmAgDXsQAAAA=="
+   },
+   "encodeSeconds": 565
+  },
+  {
+   "src": "assets/video/film-amber-lite.mp4",
+   "w": 1280,
+   "h": 720,
+   "duration": "00:00:35.79",
+   "usedIn": [
+    "istoria.html"
+   ],
+   "hasAudio": false,
+   "sources": [
+    {
+     "type": "video/webm; codecs=\"av01.0.05M.08\"",
+     "src": "assets/video/av1/film-amber-lite.webm",
+     "bytes": 1868474,
+     "codec": "AV1"
+    },
+    {
+     "type": "video/mp4",
+     "src": "assets/video/film-amber-lite.mp4",
+     "bytes": 1533942,
+     "codec": "H.264"
+    }
+   ],
+   "outDuration": "00:00:35.79",
+   "poster": {
+    "src": "assets/img/poster-film-amber-lite.jpg",
+    "avif": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-film-amber-lite-320.avif",
+      "bytes": 2511
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-film-amber-lite-640.avif",
+      "bytes": 6008
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-film-amber-lite-1280.avif",
+      "bytes": 10613
+     }
+    ],
+    "webp": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-film-amber-lite-320.webp",
+      "bytes": 3548
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-film-amber-lite-640.webp",
+      "bytes": 9192
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-film-amber-lite-1280.webp",
+      "bytes": 17874
+     }
+    ],
+    "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAABwAwCdASocABAALqF4vF4hpKSkhLCgTgCdMoAF9AWJKTDg8CAA/vnZIo22wOam/4KtEILNFty+uZVfPkkFsDz45eh30QI6V5nB5DjgQhuKFCl7sAA="
+   },
+   "encodeSeconds": 226
+  },
+  {
+   "src": "assets/video/oblet.mp4",
+   "w": 1920,
+   "h": 1080,
+   "duration": "00:00:10.00",
+   "usedIn": [
+    "index.html"
+   ],
+   "hasAudio": false,
+   "sources": [
+    {
+     "type": "video/webm; codecs=\"av01.0.05M.08\"",
+     "src": "assets/video/av1/oblet.webm",
+     "bytes": 1066489,
+     "codec": "AV1"
+    },
+    {
+     "type": "video/mp4",
+     "src": "assets/video/oblet.mp4",
+     "bytes": 3987293,
+     "codec": "H.264"
+    }
+   ],
+   "outDuration": "00:00:10.00",
+   "poster": {
+    "src": "assets/img/poster-oblet.jpg",
+    "avif": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-oblet-320.avif",
+      "bytes": 3812
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-oblet-640.avif",
+      "bytes": 9904
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-oblet-1280.avif",
+      "bytes": 17415
+     },
+     {
+      "w": 1600,
+      "h": 900,
+      "src": "assets/img/rsp/poster-oblet-1600.avif",
+      "bytes": 19573
+     }
+    ],
+    "webp": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-oblet-320.webp",
+      "bytes": 5346
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-oblet-640.webp",
+      "bytes": 14692
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-oblet-1280.webp",
+      "bytes": 29786
+     },
+     {
+      "w": 1600,
+      "h": 900,
+      "src": "assets/img/rsp/poster-oblet-1600.webp",
+      "bytes": 36992
+     }
+    ],
+    "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACwBACdASocABAAPvFgpUckoqGYBABLDwTzAE6ZQjuAFOGTQX3xo/b+c6OXgLVgAP70I4Yi7Ng206yIVFZqS4QRqLo1k8JH4mvY3a+RTxyK7zHd8Gw3+LI3sPJvIomBpWUvTi2KXdAsq5WXCbEg2jc/zfVHonfuIdjViAJKaPOUVKzXjWAAAA=="
+   },
+   "encodeSeconds": 198
+  },
+  {
+   "src": "assets/video/posol.mp4",
+   "w": 1920,
+   "h": 1080,
+   "duration": "00:00:05.04",
+   "usedIn": [
+    "opt.html"
+   ],
+   "hasAudio": false,
+   "sources": [
+    {
+     "type": "video/webm; codecs=\"av01.0.05M.08\"",
+     "src": "assets/video/av1/posol.webm",
+     "bytes": 403460,
+     "codec": "AV1"
+    },
+    {
+     "type": "video/mp4",
+     "src": "assets/video/posol.mp4",
+     "bytes": 1303570,
+     "codec": "H.264"
+    }
+   ],
+   "outDuration": "00:00:05.04",
+   "poster": {
+    "src": "assets/img/poster-posol.jpg",
+    "avif": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-posol-320.avif",
+      "bytes": 3600
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-posol-640.avif",
+      "bytes": 7326
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-posol-1280.avif",
+      "bytes": 11834
+     },
+     {
+      "w": 1600,
+      "h": 900,
+      "src": "assets/img/rsp/poster-posol-1600.avif",
+      "bytes": 13334
+     }
+    ],
+    "webp": [
+     {
+      "w": 320,
+      "h": 180,
+      "src": "assets/img/rsp/poster-posol-320.webp",
+      "bytes": 5742
+     },
+     {
+      "w": 640,
+      "h": 360,
+      "src": "assets/img/rsp/poster-posol-640.webp",
+      "bytes": 13054
+     },
+     {
+      "w": 1280,
+      "h": 720,
+      "src": "assets/img/rsp/poster-posol-1280.webp",
+      "bytes": 23942
+     },
+     {
+      "w": 1600,
+      "h": 900,
+      "src": "assets/img/rsp/poster-posol-1600.webp",
+      "bytes": 30210
+     }
+    ],
+    "lqip": "data:image/webp;base64,UklGRr4AAABXRUJQVlA4ILIAAACQBACdASocABAAPvFepEckoqGYBABLDwT2AE6ZQAGxE+6iXmgdp64PB1d1BQAA/uMt17vcSg/9elUTVhkwSX70bWkYd8O4CKlY0q5iUpGwy9ncItXk7wwDePi158Mwt++/LpRfeDlbd/eFwXW//Oq0quA9gbsRs3mjf8iWwBze5/69QFxBJ/bpSrJnvMXRHJwTILknQd7x/k1EumePFys1tlLvPa/dQH2X5vBu/cZMPAAA"
+   },
+   "encodeSeconds": 100
+  }
+ ],
+ "totals": {
+  "imageCount": 37,
+  "variantCount": 292,
+  "imageJpegBytes": 7246890,
+  "imageAvifTopBytes": 2329491,
+  "imageWebpTopBytes": 3995566,
+  "videoCount": 6,
+  "videoMp4Bytes": 17465341,
+  "videoWebmAv1Bytes": 9466288
+ }
+}

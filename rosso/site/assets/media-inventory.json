@@ -1,0 +1,538 @@
+{
+ "site": "rosso-site",
+ "generated": "2026-09-01",
+ "images": [
+  {
+   "src": "assets/img/vyalenie.jpg",
+   "w": 1363,
+   "h": 784,
+   "bytes": 286169,
+   "usedIn": [
+    "index.html",
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/cheshuya.jpg",
+   "w": 1363,
+   "h": 784,
+   "bytes": 278932,
+   "usedIn": [
+    "magazin.html",
+    "price.html"
+   ]
+  },
+  {
+   "src": "assets/img/karton.jpg",
+   "w": 1024,
+   "h": 1024,
+   "bytes": 276319,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/podacha-lesch.jpg",
+   "w": 1600,
+   "h": 1600,
+   "bytes": 212322,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/posol.jpg",
+   "w": 768,
+   "h": 1376,
+   "bytes": 184351,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/poster-kino-30.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 144111,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/sol.jpg",
+   "w": 1024,
+   "h": 1024,
+   "bytes": 130928,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-oblet.jpg",
+   "w": 3840,
+   "h": 2158,
+   "bytes": 120902,
+   "usedIn": [
+    "index.html",
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-posol-live.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 114711,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/posol-03.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 108826,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/priyomka.jpg",
+   "w": 1584,
+   "h": 672,
+   "bytes": 103222,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/poster-hero-loop.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 101861,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/veshala-04.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 100064,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/sushilka-03.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 99997,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/sushilka-02.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 98940,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/magazin.jpg",
+   "w": 1376,
+   "h": 768,
+   "bytes": 95032,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/cimla-night.jpg",
+   "w": 1408,
+   "h": 768,
+   "bytes": 93697,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/1tv/ryba-02.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 91378,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/sol-zhabry-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 89746,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/sushilka-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 88523,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/flagman.jpg",
+   "w": 848,
+   "h": 1264,
+   "bytes": 85186,
+   "usedIn": [
+    "index.html",
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/sushilka-04.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 82592,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/veshala-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 81657,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/veshala-02.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 81275,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/posol-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 79593,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/corridor.jpg",
+   "w": 1344,
+   "h": 768,
+   "bytes": 73665,
+   "usedIn": [
+    "404.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-priyomka-live.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 73217,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/sklad.jpg",
+   "w": 1377,
+   "h": 768,
+   "bytes": 64997,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/veshala-03.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 63850,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-prilavok-live.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 62576,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/zamorozka-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 62337,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/posol-02.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 57423,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/ryba-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 55604,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-cimla-loop.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 49436,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/1tv/sol-01.jpg",
+   "w": 1280,
+   "h": 736,
+   "bytes": 49075,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-dostavka-live.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 47575,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-istoria.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 47350,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-svet-loop.jpg",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 42217,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/hero-t1.jpg",
+   "w": 1584,
+   "h": 672,
+   "bytes": 40468,
+   "usedIn": []
+  },
+  {
+   "src": "assets/img/og/og-magazin.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 39946,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/img/poster-istoria-1tv.jpg",
+   "w": 640,
+   "h": 480,
+   "bytes": 34275,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-opt.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 24721,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-index.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 24166,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-price.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 22196,
+   "usedIn": [
+    "price.html"
+   ]
+  },
+  {
+   "src": "assets/img/og/og-dostavka.jpg",
+   "w": 1200,
+   "h": 630,
+   "bytes": 21925,
+   "usedIn": [
+    "dostavka.html"
+   ]
+  }
+ ],
+ "videos": [
+  {
+   "src": "assets/video/cimla-loop.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 511777,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/video/dostavka-live.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 1511514,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "dostavka.html",
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/video/hero-loop-full.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 7995050,
+   "duration": "00:00:11.04",
+   "hasAudio": false,
+   "usedIn": []
+  },
+  {
+   "src": "assets/video/hero-loop.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 2507220,
+   "duration": "00:00:11.04",
+   "hasAudio": false,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/video/istoria-1tv.mp4",
+   "w": 640,
+   "h": 480,
+   "bytes": 16178776,
+   "duration": "00:03:40.59",
+   "hasAudio": true,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/video/kino-30.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 7579244,
+   "duration": "00:00:35.79",
+   "hasAudio": false,
+   "usedIn": [
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/video/oblet.mp4",
+   "w": 3840,
+   "h": 2158,
+   "bytes": 3360678,
+   "duration": "00:00:10.00",
+   "hasAudio": false,
+   "usedIn": [
+    "index.html",
+    "istoria.html"
+   ]
+  },
+  {
+   "src": "assets/video/posol-live.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 2122140,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "index.html"
+   ]
+  },
+  {
+   "src": "assets/video/prilavok-live.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 1210226,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "magazin.html"
+   ]
+  },
+  {
+   "src": "assets/video/priyomka-live.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 2576547,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "opt.html"
+   ]
+  },
+  {
+   "src": "assets/video/svet-loop.mp4",
+   "w": 1920,
+   "h": 1080,
+   "bytes": 1014153,
+   "duration": "00:00:05.04",
+   "hasAudio": false,
+   "usedIn": [
+    "istoria.html"
+   ]
+  }
+ ],
+ "totals": {
+  "imageCount": 45,
+  "imageBytes": 4187353,
+  "videoCount": 11,
+  "videoBytes": 46567325
+ }
+}

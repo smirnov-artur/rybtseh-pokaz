@@ -3,316 +3,312 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Рыбцех Клевцова — 12 концептов нового сайта</title>
+<meta name="robots" content="noindex, nofollow">
+<title>Рыбцех Клевцова — показ: два концепта, два формата</title>
+<meta name="description" content="Показ нового сайта Рыбцеха Клевцова: концепты «Россо» и «Артефакт», каждый в двух форматах — одностраничник и многостраничник.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0b'/%3E%3Cpath d='M5 16c4-5 10-7 14-7 3 0 5 1 6 2l2-3v16l-2-3c-1 1-3 2-6 2-4 0-10-2-14-7z' fill='none' stroke='%23ece9e3' stroke-width='1.4'/%3E%3Ccircle cx='11' cy='14.6' r='1' fill='%23ece9e3'/%3E%3C/svg%3E">
 <style>
   :root{
-    --void:#08090a;
-    --panel:#0d0f11;
-    --panel-hi:#131619;
-    --hair:#1c2023;
-    --hair-hi:#2b3136;
-    --bone:#f2f0ec;
-    --stone:#9a978f;
-    --ash:#63625e;
-    --maxw:1420px;
+    --void:#0a0a0b;
+    --panel:#101113;
+    --panel-hi:#16181b;
+    --hair:#202327;
+    --hair-hi:#31363b;
+    --bone:#ece9e3;
+    --stone:#97948c;
+    --ash:#5e5c58;
+    --steel:#8b9aa6;
+    --maxw:1280px;
     --ease:cubic-bezier(.22,.61,.36,1);
-    --mono:ui-monospace,"SF Mono","Cascadia Mono","Segoe UI Mono",Consolas,monospace;
+    --mono:ui-monospace,"SF Mono","Cascadia Mono","Segoe UI Mono",Consolas,"Liberation Mono",monospace;
     --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
   body{
-    background:var(--void);
-    color:var(--bone);
-    font-family:var(--sans);
-    font-size:16px;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
+    background:var(--void);color:var(--bone);
+    font-family:var(--sans);font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
     min-height:100vh;
   }
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  a{color:inherit}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,34px)}
 
-  /* ---------- шапка ---------- */
-  header{padding:76px 0 46px;border-bottom:1px solid var(--hair)}
+  /* ---------------- шапка ---------------- */
+  header{padding:clamp(48px,8vw,86px) 0 clamp(30px,4vw,44px);border-bottom:1px solid var(--hair)}
   .eyebrow{
-    display:flex;flex-wrap:wrap;gap:10px 18px;align-items:baseline;
-    font-family:var(--mono);font-size:10px;letter-spacing:.18em;
-    text-transform:uppercase;color:var(--ash);margin-bottom:26px;
+    display:flex;flex-wrap:wrap;gap:8px 22px;align-items:baseline;
+    font-family:var(--mono);font-size:10px;letter-spacing:.19em;
+    text-transform:uppercase;color:var(--ash);margin-bottom:28px;
   }
   .eyebrow b{color:var(--stone);font-weight:400}
   h1{
-    font-size:clamp(28px,4.6vw,58px);
-    line-height:1.06;
-    font-weight:600;
-    letter-spacing:-.022em;
-    max-width:24ch;
-    text-wrap:balance;
+    font-size:clamp(27px,4.4vw,54px);line-height:1.05;font-weight:600;
+    letter-spacing:-.023em;max-width:20ch;text-wrap:balance;
   }
-  h1 span{color:var(--ash);font-weight:400}
-  .lede{
-    margin-top:22px;max-width:60ch;
-    font-size:15px;line-height:1.62;color:var(--stone);
-  }
+  h1 em{font-style:normal;color:var(--ash);font-weight:400}
+  .lede{margin-top:20px;max-width:62ch;font-size:15px;line-height:1.65;color:var(--stone)}
 
-  /* ---------- сетка ---------- */
-  .grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:1px;
-    background:var(--hair);
-    border:1px solid var(--hair);
-    margin:0 0 0;
+  /* ---------------- легенда форматов ---------------- */
+  .legend{
+    display:grid;gap:1px;background:var(--hair);
+    border-block:1px solid var(--hair);
+    grid-template-columns:1fr;margin-top:clamp(30px,4vw,46px);
   }
-  @media (min-width:640px){ .grid{grid-template-columns:repeat(2,1fr)} }
-  @media (min-width:1000px){ .grid{grid-template-columns:repeat(3,1fr)} }
-  @media (min-width:1340px){ .grid{grid-template-columns:repeat(4,1fr)} }
+  @media(min-width:760px){ .legend{grid-template-columns:1fr 1fr} }
+  .legend > div{background:var(--void);padding:22px 24px}
+  .legend h3{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--steel);font-weight:400;margin-bottom:10px;
+  }
+  .legend p{font-size:14px;line-height:1.62;color:var(--stone);max-width:52ch}
+
+  /* ---------------- блок концепта ---------------- */
+  .concept{padding:clamp(42px,6vw,72px) 0 0}
+  .chead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;margin-bottom:22px}
+  .cnum{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ash)}
+  .cname{font-size:clamp(21px,2.7vw,31px);font-weight:600;letter-spacing:-.017em}
+  .ctag{
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--stone);border:1px solid var(--hair-hi);padding:4px 9px;
+  }
+  .cdesc{font-size:14.5px;line-height:1.66;color:var(--stone);max-width:70ch;margin-bottom:26px}
+
+  .grid{display:grid;gap:1px;background:var(--hair);border:1px solid var(--hair);grid-template-columns:1fr}
+  @media(min-width:820px){ .grid{grid-template-columns:1fr 1fr} }
 
   .card{
-    position:relative;
-    display:flex;flex-direction:column;
-    background:var(--panel);
-    padding:26px 24px 22px;
-    text-decoration:none;color:inherit;
-    min-height:250px;
-    transition:background .32s var(--ease);
-    isolation:isolate;
+    position:relative;display:flex;flex-direction:column;
+    background:var(--panel);text-decoration:none;color:inherit;
+    transition:background .3s var(--ease);isolation:isolate;
   }
   .card::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:2px;
-    background:var(--ac);
-    transform:scaleX(0);transform-origin:left;
-    transition:transform .42s var(--ease);
+    content:"";position:absolute;inset:0 0 auto 0;height:2px;background:var(--steel);
+    transform:scaleX(0);transform-origin:left;transition:transform .42s var(--ease);z-index:2;
   }
   .card:hover,.card:focus-visible{background:var(--panel-hi);outline:none}
   .card:hover::before,.card:focus-visible::before{transform:scaleX(1)}
-  .card:focus-visible{box-shadow:inset 0 0 0 1px var(--ac)}
+  .card:focus-visible{box-shadow:inset 0 0 0 1px var(--steel)}
 
-  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-  .num{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--ash)}
-  .dot{width:7px;height:7px;border-radius:50%;background:var(--ac);opacity:.75;
-       transition:opacity .32s var(--ease),transform .32s var(--ease)}
-  .card:hover .dot{opacity:1;transform:scale(1.35)}
+  .shot{
+    position:relative;aspect-ratio:16/9;overflow:hidden;
+    background:
+      radial-gradient(120% 90% at 50% 8%, #1a1d20 0%, #0c0d0f 62%, #08090a 100%);
+    border-bottom:1px solid var(--hair);
+  }
+  .shot img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    filter:grayscale(.32) contrast(1.04) brightness(.82);
+    transform:scale(1.012);
+    transition:filter .5s var(--ease),transform .7s var(--ease);
+  }
+  .card:hover .shot img{filter:grayscale(0) contrast(1.02) brightness(.94);transform:scale(1.045)}
+  .shot::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to top,rgba(8,9,10,.62) 0%,rgba(8,9,10,0) 46%);
+  }
+  /* каркас-заглушка, видна если превью не загрузилось */
+  .shot .fallback{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:#2f3337;
+    background-image:linear-gradient(var(--hair) 1px,transparent 1px),linear-gradient(90deg,var(--hair) 1px,transparent 1px);
+    background-size:44px 44px;opacity:.85;
+  }
+  .shot img{position:relative;z-index:1}
 
-  .name{
-    font-size:26px;line-height:1.1;font-weight:600;letter-spacing:-.02em;
-    transition:color .32s var(--ease);
+  .body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
+  .kicker{
+    font-family:var(--mono);font-size:10px;letter-spacing:.19em;text-transform:uppercase;
+    color:var(--steel);margin-bottom:11px;
   }
-  .card:hover .name{color:var(--ac)}
-  .ref{
-    margin-top:9px;
-    font-family:var(--mono);font-size:10px;letter-spacing:.13em;
-    text-transform:uppercase;color:var(--stone);
+  .card h2{font-size:19px;font-weight:600;letter-spacing:-.012em;margin-bottom:9px}
+  .card p{font-size:13.5px;line-height:1.62;color:var(--stone);margin-bottom:18px}
+  .meta{
+    margin-top:auto;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;
+    padding-top:15px;border-top:1px solid var(--hair);
+    font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ash);
   }
-  .twist{
-    margin-top:14px;font-size:13.5px;line-height:1.55;color:var(--ash);
-    max-width:32ch;
-  }
+  .meta .sz{color:var(--stone)}
+  .go{margin-left:auto;display:inline-flex;align-items:center;gap:9px;color:var(--bone)}
+  .go svg{width:15px;height:15px;transition:transform .34s var(--ease)}
+  .card:hover .go svg{transform:translateX(4px)}
 
-  .pal{margin-top:auto;padding-top:24px}
-  .strip{display:flex;gap:3px;height:11px}
-  .strip i{
-    flex:1;display:block;
-    box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);
-    transition:flex-grow .42s var(--ease);
-  }
-  .card:hover .strip i:first-child{flex-grow:1.55}
-  .hex{
-    display:flex;gap:10px;flex-wrap:wrap;margin-top:9px;
-    font-family:var(--mono);font-size:9px;letter-spacing:.07em;
-    color:var(--ash);opacity:.72;text-transform:uppercase;
-  }
-  .open{
-    display:flex;align-items:center;gap:7px;margin-top:18px;
-    font-family:var(--mono);font-size:10px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--stone);
-    transition:color .32s var(--ease);
-  }
-  .open s{text-decoration:none;transition:transform .38s var(--ease);display:inline-block}
-  .card:hover .open{color:var(--ac)}
-  .card:hover .open s{transform:translateX(6px)}
-
-  /* ---------- подвал ---------- */
+  /* ---------------- подвал ---------------- */
   footer{
-    padding:34px 0 60px;
-    font-family:var(--mono);font-size:10px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--ash);
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    margin-top:clamp(52px,7vw,88px);border-top:1px solid var(--hair);
+    padding:30px 0 clamp(46px,7vw,80px);
   }
+  .fnote{
+    font-family:var(--mono);font-size:10.5px;line-height:1.9;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--ash);max-width:80ch;
+  }
+  .fnote b{color:var(--stone);font-weight:400}
 
-  @media (max-width:600px){
-    .wrap{padding:0 18px}
-    header{padding:48px 0 34px}
-    .card{min-height:0;padding:22px 20px 20px}
-  }
   @media (prefers-reduced-motion:reduce){
-    *{transition:none!important}
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
   }
 </style>
 </head>
 <body>
 
 <div class="wrap">
+
   <header>
     <div class="eyebrow">
-      <b>РЫБЦЕХ.РФ</b><span>Вяленая рыба Цимлянского водохранилища</span><span>30.08.2026</span>
+      <span>Рыбцех Клевцова</span>
+      <b>показ нового сайта</b>
+      <span>Волгодонск · с 1967</span>
+      <b data-k="date">02.09.2026</b>
     </div>
-    <h1>Рыбцех Клевцова — 12 концептов <span>нового сайта</span></h1>
-    <p class="lede">Двенадцать самостоятельных направлений на одних и тех же данных: один и тот же товар, прайс и производство, двенадцать разных характеров. Каждый концепт — отдельный самодостаточный файл, открывается в новой вкладке.</p>
+    <h1>Два концепта. <em>У каждого — два формата.</em></h1>
+    <p class="lede">
+      Ниже четыре ссылки. Два дизайн-концепта нового сайта — «Россо» и «Артефакт»,
+      и каждый показан дважды: одной длинной страницей и полноценным многостраничным сайтом.
+      Смотреть можно в любом порядке; вернуться сюда — кнопкой «назад» в браузере.
+    </p>
+
+    <div class="legend">
+      <div>
+        <h3>Одностраничник</h3>
+        <p>
+          Вся история — от героя до контактов — в одном непрерывном скролле. Один файл,
+          всё медиа вшито внутрь: открывается даже без интернета, но грузится дольше первые секунды.
+          Так быстрее всего оценить характер концепта целиком.
+        </p>
+      </div>
+      <div>
+        <h3>Многостраничник</h3>
+        <p>
+          Тот же концепт, разложенный на реальный сайт: главная, история, магазин, опт, прайс,
+          доставка — с меню, переходами и отдельными адресами страниц. Так сайт будет работать
+          в проде: легче, быстрее, каждая страница со своим смыслом.
+        </p>
+      </div>
+    </div>
   </header>
 
-  <main class="grid">
+  <!-- ======================= РОССО ======================= -->
+  <section class="concept" id="rosso">
+    <div class="chead">
+      <span class="cnum">01</span>
+      <span class="cname">Россо</span>
+      <span class="ctag">Чёрное кино</span>
+    </div>
+    <p class="cdesc">
+      Строгая сетка автомобильного дизайн-системного языка, переложенная на чёрное кино:
+      ступени тёмных поверхностей, микротипографика в капсе, нулевые радиусы, ноль теней.
+      Один красный акцент на всю страницу и белое техническое досье под прайсом — единственный
+      светлый разрыв в чёрном.
+    </p>
+    <div class="grid">
 
-    <a class="card" style="--ac:#cfa53b" href="./Рыбцех — Янтарь.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">01</span><span class="dot"></span></div>
-      <div class="name">Янтарь</div>
-      <div class="ref">Assembly Coffee</div>
-      <p class="twist">Вяленая рыба как янтарь: тёплая тьма, курсивная проза, антикварное золото.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#cfa53b"></i><i style="background:#dfdbca"></i><i style="background:#7a2010"></i><i style="background:#100e0b"></i></div>
-        <div class="hex"><span>#CFA53B</span><span>#DFDBCA</span><span>#7A2010</span><span>#100E0B</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
+      <a class="card" href="rosso/one/">
+        <span class="shot">
+          <span class="fallback">ROSSO · ONE PAGE</span>
+          <img src="rosso/site/assets/img/og/og-index.jpg" alt="Концепт «Россо», главный экран" loading="lazy" decoding="async" onerror="this.remove()">
+        </span>
+        <span class="body">
+          <span class="kicker">Формат 01 — одна страница</span>
+          <h2>Россо — одностраничник</h2>
+          <p>Весь концепт одним скроллом: герой, Цимла, хроника, цех, витрина, прайс, опт, магазин, пресса, контакты.</p>
+          <span class="meta">
+            <span>Один файл</span>
+            <span class="sz" data-k="rosso-one">15.8 МБ</span>
+            <span class="go">Открыть
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </span>
+      </a>
 
-    <a class="card" style="--ac:#8052ff" href="./Рыбцех — Косяк.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">02</span><span class="dot"></span></div>
-      <div class="name">Косяк</div>
-      <div class="ref">Dala Observatory</div>
-      <p class="twist">Живой косяк на canvas в чистой пустоте: ни карточек, ни теней — только волосяные линии.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#8052ff"></i><i style="background:#ffb829"></i><i style="background:#ffffff"></i><i style="background:#000000"></i></div>
-        <div class="hex"><span>#8052FF</span><span>#FFB829</span><span>#FFFFFF</span><span>#000000</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
+      <a class="card" href="rosso/site/">
+        <span class="shot">
+          <span class="fallback">ROSSO · SITE</span>
+          <img src="rosso/site/assets/img/og/og-istoria.jpg" alt="Концепт «Россо», страница истории" loading="lazy" decoding="async" onerror="this.remove()">
+        </span>
+        <span class="body">
+          <span class="kicker">Формат 02 — шесть страниц</span>
+          <h2>Россо — многостраничник</h2>
+          <p>Главная · История · Магазин · Опт · Прайс · Доставка. Живое меню, отдельные адреса, лёгкие страницы.</p>
+          <span class="meta">
+            <span>6 страниц</span>
+            <span class="sz" data-k="rosso-site">61.0 МБ</span>
+            <span class="go">Открыть
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </span>
+      </a>
 
-    <a class="card" style="--ac:#0071e3" href="./Рыбцех — Собор.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">03</span><span class="dot"></span></div>
-      <div class="name">Собор</div>
-      <div class="ref">Apple España</div>
-      <p class="twist">Белый собор воздуха: гигантские заголовки и свой пастельный цвет каждому виду рыбы.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#0071e3"></i><i style="background:#f0e4d3"></i><i style="background:#f5f5f7"></i><i style="background:#1d1d1f"></i></div>
-        <div class="hex"><span>#0071E3</span><span>#F0E4D3</span><span>#F5F5F7</span><span>#1D1D1F</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
+    </div>
+  </section>
 
-    <a class="card" style="--ac:#5266eb" href="./Рыбцех — Синий час.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">04</span><span class="dot"></span></div>
-      <div class="name">Синий час</div>
-      <div class="ref">Mercury</div>
-      <p class="twist">Сумерки над Цимлой: глубина набирается шагом светлоты, а не тенью. Кобальт на ониксе.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#5266eb"></i><i style="background:#ededf3"></i><i style="background:#272735"></i><i style="background:#171721"></i></div>
-        <div class="hex"><span>#5266EB</span><span>#EDEDF3</span><span>#272735</span><span>#171721</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
+  <!-- ======================= АРТЕФАКТ ======================= -->
+  <section class="concept" id="artefakt">
+    <div class="chead">
+      <span class="cnum">02</span>
+      <span class="cname">Артефакт</span>
+      <span class="ctag">Музейная витрина</span>
+    </div>
+    <p class="cdesc">
+      Вяленый лещ подан как музейный экспонат в тёплой тьме: каталожная нумерация секций,
+      пунктирные хайрлайны вместо рамок, гигантская номерная пластина «РЫБЦЕХЪ» во всю ширину.
+      Ноль интерфейсного хрома — вся выразительность в кремовой типографике и весовой линейке леща.
+    </p>
+    <div class="grid">
 
-    <a class="card" style="--ac:#ff4704" href="./Рыбцех — Бумага.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">05</span><span class="dot"></span></div>
-      <div class="name">Бумага</div>
-      <div class="ref">ElevenLabs</div>
-      <p class="twist">Гастро-издание на кремовой бумаге: чёрные пилюли в хроме, цвет живёт только внутри визуалов.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#ff4704"></i><i style="background:#0447ff"></i><i style="background:#fdfcfc"></i><i style="background:#000000"></i></div>
-        <div class="hex"><span>#FF4704</span><span>#0447FF</span><span>#FDFCFC</span><span>#000000</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
+      <a class="card" href="artefakt/one/">
+        <span class="shot">
+          <span class="fallback">ARTEFAKT · ONE PAGE</span>
+          <img src="artefakt/site/assets/img/og/og-index.jpg" alt="Концепт «Артефакт», главный экран" loading="lazy" decoding="async" onerror="this.remove()">
+        </span>
+        <span class="body">
+          <span class="kicker">Формат 01 — одна страница</span>
+          <h2>Артефакт — одностраничник</h2>
+          <p>Каталог из двенадцати секций одним скроллом: манифест, происхождение, экспонат, технология, экспозиция, пресса.</p>
+          <span class="meta">
+            <span>Один файл</span>
+            <span class="sz" data-k="artefakt-one">8.7 МБ</span>
+            <span class="go">Открыть
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </span>
+      </a>
 
-    <a class="card" style="--ac:#dc5000" href="./Рыбцех — Артефакт.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">06</span><span class="dot"></span></div>
-      <div class="name">Артефакт</div>
-      <div class="ref">ORYZO · Lusion</div>
-      <p class="twist">Лещ подан как музейный экспонат в тёплой тьме: секции по 100vh, ноль UI-хрома.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#dc5000"></i><i style="background:#ffedd7"></i><i style="background:#382416"></i><i style="background:#100904"></i></div>
-        <div class="hex"><span>#DC5000</span><span>#FFEDD7</span><span>#382416</span><span>#100904</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
+      <a class="card" href="artefakt/site/">
+        <span class="shot">
+          <span class="fallback">ARTEFAKT · SITE</span>
+          <img src="artefakt/site/assets/img/og/og-istoria.jpg" alt="Концепт «Артефакт», страница истории" loading="lazy" decoding="async" onerror="this.remove()">
+        </span>
+        <span class="body">
+          <span class="kicker">Формат 02 — шесть страниц</span>
+          <h2>Артефакт — многостраничник</h2>
+          <p>Главная · История · Магазин · Опт · Прайс · Доставка. Тот же музейный язык, разложенный на рабочий сайт.</p>
+          <span class="meta">
+            <span>6 страниц</span>
+            <span class="sz" data-k="artefakt-site">41.6 МБ</span>
+            <span class="go">Открыть
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+            </span>
+          </span>
+        </span>
+      </a>
 
-    <a class="card" style="--ac:#0071e3" href="./Рыбцех — Фрост.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">07</span><span class="dot"></span></div>
-      <div class="name">Фрост</div>
-      <div class="ref">Apple</div>
-      <p class="twist">Apple Store для рыбы: лещ — флагманский продукт, остальные виды — линейка на белом.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#0071e3"></i><i style="background:#f5f5f7"></i><i style="background:#d2d2d7"></i><i style="background:#1d1d1f"></i></div>
-        <div class="hex"><span>#0071E3</span><span>#F5F5F7</span><span>#D2D2D7</span><span>#1D1D1F</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
-
-    <a class="card" style="--ac:#da291c" href="./Рыбцех — Россо.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">08</span><span class="dot"></span></div>
-      <div class="name">Россо</div>
-      <div class="ref">Ferrari</div>
-      <p class="twist">Три ступени поверхностей вместо пустоты между секциями. Rosso Corsa — только интерактив.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#da291c"></i><i style="background:#9d2211"></i><i style="background:#2e2e2e"></i><i style="background:#000000"></i></div>
-        <div class="hex"><span>#DA291C</span><span>#9D2211</span><span>#2E2E2E</span><span>#000000</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
-
-    <a class="card" style="--ac:#ffc000" href="./Рыбцех — Джалло.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">09</span><span class="dot"></span></div>
-      <div class="name">Джалло</div>
-      <div class="ref">Lamborghini</div>
-      <p class="twist">Чёрно-белый мир и ровно один жёлтый на экран. Нулевые радиусы, ноль теней, UPPERCASE.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#ffc000"></i><i style="background:#f5f5f5"></i><i style="background:#181818"></i><i style="background:#000000"></i></div>
-        <div class="hex"><span>#FFC000</span><span>#F5F5F5</span><span>#181818</span><span>#000000</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
-
-    <a class="card" style="--ac:#060daa" href="./Рыбцех — Фарфор.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">10</span><span class="dot"></span></div>
-      <div class="name">Фарфор</div>
-      <div class="ref">Bang &amp; Olufsen</div>
-      <p class="twist">Белая галерея-салон, рыба как hi-fi объект. Ультрамарин — ровно одна полнокадровая сцена.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#060daa"></i><i style="background:#fcfaee"></i><i style="background:#e5e5e5"></i><i style="background:#191817"></i></div>
-        <div class="hex"><span>#060DAA</span><span>#FCFAEE</span><span>#E5E5E5</span><span>#191817</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
-
-    <a class="card" style="--ac:#e3a36e" href="./Рыбцех — Крафт.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">11</span><span class="dot"></span></div>
-      <div class="name">Крафт</div>
-      <div class="ref">Fallen Grape</div>
-      <p class="twist">Рыбная лавка: каждый вид — бирка на бечёвке, прайс — складская ведомость на перфорации.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#e3a36e"></i><i style="background:#e1c6ab"></i><i style="background:#ece0d2"></i><i style="background:#573d21"></i></div>
-        <div class="hex"><span>#E3A36E</span><span>#E1C6AB</span><span>#ECE0D2</span><span>#573D21</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
-
-    <a class="card" style="--ac:#d99a3e" href="./Рыбцех — Глубина.html" target="_blank" rel="noopener">
-      <div class="top"><span class="num">12</span><span class="dot"></span></div>
-      <div class="name">Глубина</div>
-      <div class="ref">Авторский · «Подводное кино»</div>
-      <p class="twist">Погружение на 30 метров: фон темнеет от лунной поверхности ко дну, справа — глубиномер.</p>
-      <div class="pal">
-        <div class="strip"><i style="background:#d99a3e"></i><i style="background:#cfe3e0"></i><i style="background:#0d2b30"></i><i style="background:#04100f"></i></div>
-        <div class="hex"><span>#D99A3E</span><span>#CFE3E0</span><span>#0D2B30</span><span>#04100F</span></div>
-      </div>
-      <div class="open">Открыть <s>→</s></div>
-    </a>
-
-  </main>
+    </div>
+  </section>
 
   <footer>
-    <span>ИП Клевцов Д.А. · РЫБЦЕХ.РФ · прототипы</span>
-    <span>12 концептов · 30.08.2026</span>
+    <p class="fnote">
+      Как смотреть — <b>сначала одностраничник, потом многостраничник того же концепта</b>: так видно,
+      что сохранилось при разборке на страницы. Одностраничники тяжёлые, дайте им догрузиться
+      до конца перед скроллом. На телефоне всё работает так же, как на компьютере.<br>
+      Материал показа, не публичный сайт. Тексты, цены и телефоны — рабочие, но проверяются отдельно.
+      <b data-k="stamp">Собрано 02.09.2026</b>
+    </p>
   </footer>
+
 </div>
 
 </body>

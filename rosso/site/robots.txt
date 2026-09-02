@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Служебные каталоги сборки — не индексировать
+Disallow: /_check/
+Disallow: /_backup-prod/
+Disallow: /_smoke.html
+
+Sitemap: https://xn--90ai5awd2a.xn--p1ai/sitemap.xml

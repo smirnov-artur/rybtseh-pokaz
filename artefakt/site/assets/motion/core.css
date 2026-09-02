@@ -1,0 +1,26 @@
+/* assets/motion/core.css — фундамент движения «Артефакт» (волна 1 плана).
+   Шкала времени токенами --t-120…--t-1200 (мс в имени, секунды в значении) —
+   единый ритм для GSAP (T в core.js) и для чистого CSS transition/animation.
+   Аппроксимации шести кривых IGLOO под именами --ca-* — для страниц/контекстов,
+   где ещё не объявлены --e-* самого сайта; имена --e-* в artefakt.css не трогаем. */
+:root{
+  --t-120:.12s;
+  --t-240:.24s;
+  --t-420:.42s;
+  --t-700:.7s;
+  --t-1200:1.2s;
+
+  --ca-entry:cubic-bezier(.36,0,.28,1);
+  --ca-entry2:cubic-bezier(.388,.082,.924,.862);
+  --ca-entry3:cubic-bezier(.3,0,.3,1);
+  --ca-igloo:cubic-bezier(.662,.073,.047,1);
+  --ca-inout3:cubic-bezier(.6,0,0,1);
+  --ca-inout4:cubic-bezier(.4,0,0,1);
+}
+
+/* тот же приём, что у --d-* в artefakt.css: не 0s (ломает transitionend), а .001s */
+@media (prefers-reduced-motion:reduce){
+  :root{
+    --t-120:.001s;--t-240:.001s;--t-420:.001s;--t-700:.001s;--t-1200:.001s;
+  }
+}
