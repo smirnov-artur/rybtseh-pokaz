@@ -130,7 +130,10 @@
       if (/^mailto:/i.test(h)) return { s: 'label', l: own || L.mail, p: 0 };
       if (outer(node)) return { s: 'ext', l: own || '', p: 0 };
     }
-    return { s: 'label', l: own || fromText(node), p: 0 };
+    /* Куратор глазами (02.09): бирка, повторяющая собственный текст кнопки или пункта
+       меню, — шум. Без явной data-cursor обычный интерактив получает тихое кольцо. */
+    if (own) return { s: 'label', l: own, p: 0 };
+    return { s: 'act', l: '', p: 0 };
   }
 
   /* нативный курсор: прячем ТОЛЬКО пока компонент реально работает */

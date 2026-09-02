@@ -43,6 +43,19 @@
   /* ---------- 2. МЕЛОЧИ ---------- */
 
   function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
+  /* object-position картинки → доли [x, y] 0..1 (проценты и ключевые слова; иначе центр) */
+  function objPos(el) {
+    try {
+      var v = getComputedStyle(el).objectPosition.split(/\s+/);
+      var f = function (t) {
+        if (/%$/.test(t)) return Math.min(1, Math.max(0, parseFloat(t) / 100));
+        if (t === 'left' || t === 'top') return 0;
+        if (t === 'right' || t === 'bottom') return 1;
+        return 0.5;
+      };
+      return [f(v[0] || '50%'), f(v[1] || '50%')];
+    } catch (e) { return [0.5, 0.5]; }
+  }
   function num(el, attr, def) {
     var v = parseFloat(el.getAttribute(attr));
     return isNaN(v) ? def : v;
@@ -324,6 +337,7 @@
     'uniform float uProgress;\n' +
     'uniform vec2  uCov0;\n' +
     'uniform vec2  uCov1;\n' +
+    'uniform vec2  uPos;\n' +          /* object-position картинки, доли 0..1 */
     'uniform sampler2D uTex0;\n' +
     'uniform sampler2D uTex1;\n' +
     'uniform float uMono;\n' +
@@ -335,7 +349,7 @@
     'uniform sampler2D uNoise;\n' +
     'const vec3 ROSSO = vec3(0.855,0.161,0.110);\n' +   /* #da291c */
     // object-fit: cover в UV-пространстве
-    'vec2 cov(vec2 uv, vec2 s){ return (uv-0.5)*s + 0.5; }\n' +
+    'vec2 cov(vec2 uv, vec2 s){ return uv*s + (1.0-s)*uPos; }\n' +   /* центр = uPos .5/.5; иначе окно едет по object-position */
     'vec3 mono(vec3 c, float k){ float l = dot(c, vec3(0.2126,0.7152,0.0722)); return mix(c, vec3(l), k); }\n' +
     // igloo: мягкая полоса, идущая сверху вниз при p 0→1
     'float falloffsmooth(float v, float hi, float lo, float feather, float p){\n' +
@@ -729,6 +743,7 @@
     this.canvas.width = pw; this.canvas.height = ph;
     this.w = pw; this.h = ph;
     this.boxAspect = w / h;
+    this.pos = objPos(this.img);   /* object-position живёт в CSS и меняется с медиазапросом */
     this.gl.viewport(0, 0, pw, ph);
     /* Смена размера очищает буфер. Если не перерисовать сразу, до следующего
        кадра на месте картинки будет дыра (исходная <img> уже скрыта). */
@@ -776,6 +791,7 @@
     var c0 = this.cover(a), c1 = this.cover(b);
     gl.uniform2f(this.uloc('uCov0'), c0[0], c0[1]);
     gl.uniform2f(this.uloc('uCov1'), c1[0], c1[1]);
+    gl.uniform2f(this.uloc('uPos'), this.pos ? this.pos[0] : 0.5, this.pos ? this.pos[1] : 0.5);
 
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.texs[a] || this.texs[0]);

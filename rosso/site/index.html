@@ -61,7 +61,7 @@
   border-bottom:1px solid var(--s4);padding:16px 0;
   display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;
 }
-.steps li i{font-style:normal;font-family:var(--fm);font-size:10px;letter-spacing:var(--tr-10);color:var(--rosso);flex:0 0 26px}
+.steps li i{font-style:normal;font-family:var(--fm);font-size:10px;letter-spacing:var(--tr-10);color:var(--rosso-txt);flex:0 0 26px}
 .steps li b{font-family:var(--ff);font-weight:600;font-size:clamp(15px,1.5vw,19px);letter-spacing:var(--tr-18)}
 .steps li span{color:var(--fumo);font-size:12px;flex:1;min-width:180px;text-align:right}
 @media(max-width:560px){.steps li span{flex-basis:100%;text-align:left;padding-left:44px}}
@@ -177,7 +177,13 @@
            единственный цвет — далёкая кримзонная лампа. Светлая студийная петля снята 02.09:
            «чёрное кино» не может выходить из черноты в серую студию. Кадр неподвижный:
            медленный наезд (rosso-drift) + WebGL-проявление по времени (RossoGL.drive). -->
-      <picture class="pic"><source type="image/avif" sizes="100vw" srcset="assets/img/rsp/hero-dark-640.avif 640w, assets/img/rsp/hero-dark-1280.avif 1280w, assets/img/rsp/hero-dark-1920.avif 1920w, assets/img/rsp/hero-dark-2560.avif 2560w"><source type="image/webp" sizes="100vw" srcset="assets/img/rsp/hero-dark-640.webp 640w, assets/img/rsp/hero-dark-1280.webp 1280w, assets/img/rsp/hero-dark-1920.webp 1920w, assets/img/rsp/hero-dark-2560.webp 2560w"><img class="hero-poster hero-still" src="assets/img/hero-dark.jpg" alt="" width="3000" height="1273" data-gl="reveal" data-plx="8" aria-hidden="true" decoding="async" fetchpriority="high"></picture>
+      <picture class="pic"><source type="image/avif" sizes="100vw" srcset="assets/img/rsp/hero-dark-640.avif 640w, assets/img/rsp/hero-dark-1280.avif 1280w, assets/img/rsp/hero-dark-1920.avif 1920w, assets/img/rsp/hero-dark-2560.avif 2560w"><source type="image/webp" sizes="100vw" srcset="assets/img/rsp/hero-dark-640.webp 640w, assets/img/rsp/hero-dark-1280.webp 1280w, assets/img/rsp/hero-dark-1920.webp 1920w, assets/img/rsp/hero-dark-2560.webp 2560w"><img class="hero-poster hero-still" src="assets/img/hero-dark.jpg" alt="" width="3000" height="1686" data-gl="reveal" data-plx="8" aria-hidden="true" decoding="async" fetchpriority="high"></picture>
+      <!-- Петля облёта того же кадра: поднимается кроссфейдом после холодного старта
+           (hero-cold-open.js → liftVideo). Узкий экран / экономия трафика / reduced-motion —
+           остаёмся на постере. Пинг-понг 20 с без склейки: вперёд и назад. -->
+      <video class="hero-video" id="hero-video" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1" data-plx="8">
+        <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/hero-oblet.webm"><source src="assets/video/hero-oblet.mp4" type="video/mp4">
+      </video>
     </div>
     <span class="hero-signal" id="hero-signal" aria-hidden="true"></span>
     <div class="hero-black" id="hero-black" aria-hidden="true"></div>
@@ -259,11 +265,9 @@
           <picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/flagman-320.avif 320w, assets/img/rsp/flagman-640.avif 640w, assets/img/rsp/flagman-848.avif 848w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 1440px" srcset="assets/img/rsp/flagman-320.webp 320w, assets/img/rsp/flagman-640.webp 640w, assets/img/rsp/flagman-848.webp 848w"><img class="ph-img" loading="lazy" width="848" height="1264" src="assets/img/flagman.jpg" alt="Вяленый цимлянский лещ целиком, студийный кадр на чёрном" data-gl="reveal" decoding="async"></picture>
         </figure>
         <div class="prod-side" data-rv="up">
-          <figure class="ph r169">
-            <video data-autoplay muted playsinline loop preload="none"
-                   poster="assets/img/poster-oblet.jpg" aria-label="Медленный облёт вяленого леща">
-              <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/oblet.webm"><source src="assets/video/oblet.mp4" type="video/mp4">
-            </video>
+          <figure class="ph r169 grain">
+            <!-- Облёт ушёл в герой главной; здесь — лещ в руках, кадр постановочной съёмки (кино о вялении, 21-я секунда) -->
+            <picture class="pic"><source type="image/avif" sizes="(max-width: 1024px) 100vw, 760px" srcset="assets/img/rsp/leshch-v-ruke-640.avif 640w, assets/img/rsp/leshch-v-ruke-1280.avif 1280w, assets/img/rsp/leshch-v-ruke-1920.avif 1920w"><source type="image/webp" sizes="(max-width: 1024px) 100vw, 760px" srcset="assets/img/rsp/leshch-v-ruke-640.webp 640w, assets/img/rsp/leshch-v-ruke-1280.webp 1280w, assets/img/rsp/leshch-v-ruke-1920.webp 1920w"><img class="ph-img" loading="lazy" width="1920" height="1080" src="assets/img/leshch-v-ruke.jpg" alt="Вяленый цимлянский лещ в руках: чешуя снята, видно мякоть — кадр постановочной съёмки" data-gl="reveal" decoding="async"></picture>
           </figure>
           <div class="prod-txt">
             <h3 class="hd">Цимлянский лещ</h3>

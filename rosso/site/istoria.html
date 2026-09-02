@@ -138,11 +138,10 @@
 
   <!-- HERO -->
   <section class="hero short vig">
-    <div class="hero-media" data-cursor="Смотреть">
-      <video data-autoplay muted playsinline loop preload="none" data-plx="8"
-             poster="assets/img/poster-oblet.jpg" aria-hidden="true">
-        <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/oblet.webm"><source src="assets/video/oblet.mp4" type="video/mp4">
-      </video>
+    <div class="hero-media">
+      <!-- Облёт леща ушёл в герой главной; здесь — начало «Кино о вялении»: невод на Цимле
+           (кадр фильма, 4-я секунда) с WebGL-проявлением и медленным наездом -->
+      <picture class="pic"><source type="image/avif" sizes="100vw" srcset="assets/img/rsp/hero-nevod-640.avif 640w, assets/img/rsp/hero-nevod-1280.avif 1280w, assets/img/rsp/hero-nevod-1920.avif 1920w"><source type="image/webp" sizes="100vw" srcset="assets/img/rsp/hero-nevod-640.webp 640w, assets/img/rsp/hero-nevod-1280.webp 1280w, assets/img/rsp/hero-nevod-1920.webp 1920w"><img class="hero-poster" src="assets/img/hero-nevod.jpg" alt="" width="1920" height="1080" data-gl="reveal" data-plx="8" aria-hidden="true" decoding="async" fetchpriority="high"></picture>
     </div>
     <div class="hero-inner">
       <p class="hero-eyebrow" data-rv="up">Волгодонск · с&nbsp;1967 года</p>
@@ -200,6 +199,11 @@
           </article>
         </div>
       </div>
+      <div class="chron-nav wrap" aria-label="Листать хронику">
+        <button type="button" class="chron-btn" data-chron="-1" aria-label="Раньше"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <span class="chron-hint micro dim2">Лента листается вбок · шесть записей, 1967 → 2026</span>
+        <button type="button" class="chron-btn" data-chron="1" aria-label="Позже"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      </div>
     </div>
   </section>
 
@@ -214,10 +218,11 @@
         <p class="sec-note">Тридцать пять секунд · постановочная съёмка, 2026</p>
       </div>
       <div class="film-stage rev">
-        <video controls playsinline preload="none" poster="assets/img/poster-kino-30.jpg"
+        <video data-film playsinline preload="none" poster="assets/img/poster-kino-30.jpg"
                aria-label="Постановочный ролик о&nbsp;вялении рыбы, 35 секунд">
           <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/kino-30.webm"><source src="assets/video/kino-30.mp4" type="video/mp4">
         </video>
+        <button class="film-play" type="button" aria-label="Смотреть"><i aria-hidden="true"></i></button>
       </div>
       <div class="film-cap rev" data-delay="1">
         <span class="micro dim">Постановочная съёмка, 2026</span>
@@ -237,10 +242,11 @@
         <p class="sec-note">Эфир 25 августа 2008 года · репортаж Юлии Погореловой</p>
       </div>
       <div class="report-stage rev">
-        <video controls preload="none" poster="assets/img/poster-istoria-1tv.jpg"
+        <video data-film preload="none" poster="assets/img/poster-istoria-1tv.jpg"
                aria-label="Репортаж Первого канала о&nbsp;рыбцехе, эфир 25 августа 2008 года">
           <source type='video/webm; codecs="av01.0.05M.08"' src="assets/video/av1/istoria-1tv.webm"><source src="assets/video/istoria-1tv.mp4" type="video/mp4">
         </video>
+        <button class="film-play" type="button" aria-label="Смотреть"><i aria-hidden="true"></i></button>
       </div>
       <div class="report-cap rev" data-delay="1">
         <span class="micro dim">Первый канал, 2008</span>

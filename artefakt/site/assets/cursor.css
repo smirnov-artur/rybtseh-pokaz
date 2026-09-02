@@ -141,3 +141,7 @@ html.rc-cur-hide :is(input,textarea,select,[contenteditable="true"]){cursor:auto
   width:118px;height:46px;contain:none}
 .rc-cur--inline .rc-cur__slow,.rc-cur--inline .rc-cur__fast{
   position:absolute;left:50%;top:50%;transform:none}
+
+/* act — обычная ссылка/кнопка без бирки: кольцо раскрывается, точка сжимается */
+.rc-cur[data-state="act"] .rc-cur__ring{transform:scale(1.9);opacity:.85}
+.rc-cur[data-state="act"] .rc-cur__dot{transform:scale(.55)}

@@ -27,6 +27,7 @@
   var heroBlack = document.getElementById('hero-black');
   var signal = document.getElementById('hero-signal');
   var heroMedia = hero.querySelector('.hero-media');
+  var video = document.getElementById('hero-video');
   var eyebrowLine = document.getElementById('hero-eyebrow-line');
   var eyebrowText = document.getElementById('hero-eyebrow-text');
   var title = document.getElementById('hero-title');
@@ -35,6 +36,30 @@
 
   var REDUCED = false;
   try { REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+  /* ---------- петля облёта поверх постера ----------
+     Постер = первый кадр облёта; он держит холодный старт, после проявления
+     поднимаем петлю кроссфейдом — кадр тот же, движение приходит без скачка.
+     Узкий экран, экономия трафика, reduced-motion — остаёмся на постере. */
+  var videoLifted = false;
+  function liftVideo() {
+    if (videoLifted || !video) return;
+    videoLifted = true;
+    var small = window.innerWidth < 700;
+    var saveData = !!(navigator.connection && navigator.connection.saveData);
+    if (small || saveData || REDUCED) { if (video.parentNode) video.parentNode.removeChild(video); video = null; return; }
+    var shown = false;
+    function show() {
+      if (shown) return; shown = true;
+      if (window.gsap) window.gsap.to(video, { opacity: 1, duration: 1.4, ease: 'igloo', overwrite: true });
+      else video.style.opacity = '1';
+    }
+    video.addEventListener('playing', show, { once: true });
+    if (video.preload === 'none') video.preload = 'auto';
+    try { video.load(); } catch (e) {}
+    var p = video.play();
+    if (p && p.catch) p.catch(function () { /* автоплей запрещён — остаёмся на постере */ });
+  }
 
   if (!window.gsap || !window.RossoMotion) return; // без фундамента — остаёмся на CSS-фолбэке
   var gsap = window.gsap;
@@ -68,6 +93,7 @@
     if (btnGray) gsap.set(btnGray, { opacity: 1, y: 0, willChange: 'auto' });
     if (chars && chars.length) gsap.set(chars, { yPercent: 0, willChange: 'auto' });
     else if (title) gsap.set(title, { opacity: 1, y: 0 });
+    liftVideo();
     settled = true;
   }
 
@@ -141,6 +167,7 @@
       onComplete: function () {
         if (heroMedia) gsap.set(heroMedia, { clipPath: openClip });
         if (poster && window.RossoGL && window.RossoGL.release) window.RossoGL.release(poster);
+        liftVideo();
       }
     }, .32 * k);
 

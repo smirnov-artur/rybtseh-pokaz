@@ -533,3 +533,48 @@
     });
   }
 })();
+
+/* ---------- фильмы: постер + кнопка, системные контролы только после первого клика ---------- */
+(function () {
+  var stages = document.querySelectorAll('.film-stage, .report-stage');
+  for (var i = 0; i < stages.length; i++) (function (box) {
+    var v = box.querySelector('video[data-film]'), b = box.querySelector('.film-play');
+    if (!v || !b) return;
+    var started = false;
+    function start() {
+      if (started) return; started = true;
+      if (v.preload === 'none') v.preload = 'auto';
+      v.controls = true; box.classList.add('is-playing');
+      var p = v.play(); if (p && p.catch) p.catch(function () { /* браузер не дал — контролы уже на месте */ });
+    }
+    b.addEventListener('click', start);
+    v.addEventListener('click', function () { if (!started) start(); });
+    v.addEventListener('play', function () { started = true; v.controls = true; box.classList.add('is-playing'); });
+  })(stages[i]);
+})();
+
+/* ---------- хроника: стрелки листают ленту на ширину карточки ---------- */
+(function () {
+  var view = document.querySelector('.chron-view'); if (!view) return;
+  var btns = document.querySelectorAll('.chron-btn[data-chron]'); if (!btns.length) return;
+  var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function step() {
+    var items = view.querySelectorAll('.chron-item');
+    if (items.length > 1) return items[1].getBoundingClientRect().left - items[0].getBoundingClientRect().left;
+    return view.clientWidth * .8;
+  }
+  function sync() {
+    var max = view.scrollWidth - view.clientWidth - 1;
+    for (var i = 0; i < btns.length; i++) {
+      var d = +btns[i].getAttribute('data-chron');
+      btns[i].disabled = d < 0 ? view.scrollLeft <= 0 : view.scrollLeft >= max;
+    }
+  }
+  for (var i = 0; i < btns.length; i++) btns[i].addEventListener('click', function () {
+    var d = +this.getAttribute('data-chron');
+    view.scrollBy({ left: d * step(), top: 0, behavior: RM ? 'auto' : 'smooth' });
+  });
+  view.addEventListener('scroll', sync, { passive: true });
+  window.addEventListener('resize', sync);
+  sync();
+})();

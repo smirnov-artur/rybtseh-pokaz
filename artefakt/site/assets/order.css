@@ -47,7 +47,7 @@
   --ord-bg:#1a0f07;
   --ord-bg-2:#100904;
   --ord-fg:#ffedd7;
-  --ord-dim:#6c5f51;
+  --ord-dim:#9e8d7a;        /* был #6c5f51 = 3,2:1 на #100904; drift-тон даёт 5,9:1 */
   --ord-line:#40372e;
   --ord-line-2:#40372e;
   --ord-accent:#dc5000;
