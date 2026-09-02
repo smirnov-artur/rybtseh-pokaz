@@ -184,10 +184,26 @@
     if (!('IntersectionObserver' in window)) { this.preload(); return; }
     var io = new IntersectionObserver(function (entries) {
       for (var i = 0; i < entries.length; i++) {
-        if (entries[i].isIntersecting) { io.disconnect(); self.preload(); }
+        if (entries[i].isIntersecting) { io.disconnect(); self.preloadAfterLoad(); }
       }
     }, { rootMargin: '150% 0px' });
     io.observe(this.el);
+  };
+
+  /* Куратор (02.09): на главной «Артефакта» дорожка — второй экран, и 60 кадров
+     (~2,4 МБ) уходили в сеть вместе с героем, шрифтами и скриптами. Теперь ждём
+     события load (критичное для первого экрана уже пришло) и первую паузу
+     главного потока; постер дорожки виден всё это время. */
+  Scrub.prototype.preloadAfterLoad = function () {
+    var self = this;
+    if (self._queued) return;
+    self._queued = true;
+    function go() {
+      if ('requestIdleCallback' in window) window.requestIdleCallback(function () { self.preload(); }, { timeout: 1200 });
+      else setTimeout(function () { self.preload(); }, 200);
+    }
+    if (document.readyState === 'complete') go();
+    else window.addEventListener('load', go, { once: true });
   };
 
   Scrub.prototype.preload = function () {

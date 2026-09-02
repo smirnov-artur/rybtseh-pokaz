@@ -1447,3 +1447,5 @@ body.menu-open .ord-fab{opacity:0;visibility:hidden;pointer-events:none}
 /* Широкий разворот .reveal--wide: боковые колонки узкие (≈345 px на 1440), слово
    «ПРЕРЫВАЕТСЯ.» в --heading уходило под картинку. Заголовок подчиняется ширине колонки. */
 @media (min-width:1181px){ .reveal--wide .reveal__col .h{font-size:min(var(--heading),2.4vw)} }  /* 2.4vw: «ПРЕРЫВАЕТСЯ.» (12 знаков × .72em) влезает в колонку 345 px на 1440 и 270 px на 1181 */
+/* Касание без серой вспышки на iOS/Android */
+html{-webkit-tap-highlight-color:transparent}

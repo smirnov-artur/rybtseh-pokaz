@@ -1229,3 +1229,11 @@ a[href^="mailto:"]::before{content:'';position:absolute;inset:-15px -6px}
 .chron-btn:hover,.chron-btn:focus-visible{border-color:var(--rosso-txt);background:var(--rosso);outline:none}
 .chron-btn[disabled]{opacity:.32;cursor:default;background:none;border-color:var(--s4)}
 .chron-hint{margin-right:auto}
+/* 7. Касание без серой вспышки; главная кнопка — заливка белым снизу вверх, текст уходит в чёрный */
+html{-webkit-tap-highlight-color:transparent}
+.btn-red{position:relative;overflow:hidden;isolation:isolate;transition:color var(--tq),background var(--tq)}
+.btn-red::after{content:'';position:absolute;inset:0;background:#fff;z-index:-1;transform:translateY(101%);
+  transition:transform .42s cubic-bezier(.2,.7,.3,1)}
+.btn-red:hover,.btn-red:focus-visible{background:var(--rosso);color:#000}
+.btn-red:hover::after,.btn-red:focus-visible::after{transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){ .btn-red::after{transition:none} }
