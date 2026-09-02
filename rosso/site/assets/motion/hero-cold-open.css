@@ -34,7 +34,7 @@
    opacity:1 по умолчанию — если JS не стартовал, видео ведёт себя как раньше
    (автоплей из rosso.js, без нашего слоя). JS сам уводит его в opacity:0
    перед тем как навесить кроссфейд. */
-#hero-video{opacity:1}
+/* #hero-video{opacity:1} — снято 02.09: петля идёт через слой WebGL (RossoGL.feed), элемент остаётся невидимым; без слоя его поднимает hero-cold-open.js инлайн-стилем */
 
 /* ---- надглазник: волосяная линия под текстом ---- */
 .hero-eyebrow{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:8px}

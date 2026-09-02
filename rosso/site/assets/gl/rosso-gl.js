@@ -793,6 +793,20 @@
     gl.uniform2f(this.uloc('uCov1'), c1[0], c1[1]);
     gl.uniform2f(this.uloc('uPos'), this.pos ? this.pos[0] : 0.5, this.pos ? this.pos[1] : 0.5);
 
+    /* Видео-подача (RossoGL.feed): пока петля играет, каждый кадр уходит в
+       текстуру слота 0 — тот же шейдер, то же зерно и градиент, что у постера.
+       Первый кадр петли = постер, поэтому переключение невидимо. */
+    var v = this.video;
+    if (v && v.readyState >= 2 && !v.paused && !v.ended && this.texs[0]) {
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, this.texs[0]);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
+      try {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, v);
+        if (v.videoWidth) this.aspect[0] = v.videoWidth / v.videoHeight;
+        this.videoFed = true;
+      } catch (e) { this.video = null; }
+    }
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.texs[a] || this.texs[0]);
     gl.uniform1i(this.uloc('uTex0'), 0);
@@ -967,6 +981,7 @@
   /* Нужен ли этому элементу настоящий кадр прямо сейчас. */
   function needsDraw(it, t) {
     if (it.drawnAt === undefined) return true;                 /* первый кадр */
+    if (it.video && !it.video.paused && !it.video.ended) return true; /* петля играет */
     if (it.mode === 'displace' && it.transition) return true;  /* идёт смена кадра */
     if (it.mode === 'ripple' && (t - it.lastSpawn) < 4) return true; /* волны ещё живут */
     if (it.progress !== it.drawnP) return true;                /* проявление движется */
@@ -1131,6 +1146,21 @@
       if (!it.ready) { if (!it.starting && !it.failed) it.init(); return false; }
       start();
       return true;
+    },
+    /* Подать видео в слот 0: слой рисует петлю вместо постера через тот же
+       шейдер. Возвращает true, если слой поднят и принял видео. */
+    feed: function (target, video) {
+      var el = typeof target === 'string' ? document.querySelector(target) : target;
+      if (!el || !el.__rgl || !video) return false;
+      var it = el.__rgl;
+      if (!it.ready || it.failed) return false;
+      it.video = video;
+      start();
+      return true;
+    },
+    unfeed: function (target) {
+      var el = typeof target === 'string' ? document.querySelector(target) : target;
+      if (el && el.__rgl) { el.__rgl.video = null; }
     },
     /* Вернуть проявление под управление прокрутки. */
     release: function (target) {

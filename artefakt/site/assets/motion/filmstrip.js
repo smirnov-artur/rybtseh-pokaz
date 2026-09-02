@@ -65,10 +65,15 @@
   }
   measure();
 
+  /* Куратор (02.09, раскадровка): с границей max=0 первые два кадра не могли встать
+     под риску — кнопка «позже» меняла год, а лента стояла на месте. Лента — скраббер:
+     риска по центру, любой кадр можно подвести под неё, поэтому границы —
+     от «первый кадр под риской» до «последний кадр под риской». */
   function bounds() {
     var vw = vp.clientWidth;
-    var tw = track.scrollWidth;
-    return { min: Math.min(0, vw - tw), max: 0, vw: vw };
+    var n = centers.length;
+    if (!n) return { min: 0, max: 0, vw: vw };
+    return { min: Math.min(0, vw / 2 - centers[n - 1]), max: Math.max(0, vw / 2 - centers[0]), vw: vw };
   }
 
   function frameTargetX(i) {

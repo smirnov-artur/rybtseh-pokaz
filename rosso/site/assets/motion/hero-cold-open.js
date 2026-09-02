@@ -51,10 +51,25 @@
     var shown = false;
     function show() {
       if (shown) return; shown = true;
+      /* Слой WebGL берёт петлю себе (RossoGL.feed): постер и видео идут через
+         один шейдер, зерно и градиент те же — стыка нет, элемент <video>
+         остаётся невидимым. Без слоя — прежний кроссфейд элемента. */
+      var poster = heroMedia ? heroMedia.querySelector('img[data-gl]') : null;
+      var fed = !!(poster && window.RossoGL && window.RossoGL.feed && window.RossoGL.feed(poster, video));
+      if (fed) return;
       if (window.gsap) window.gsap.to(video, { opacity: 1, duration: 1.4, ease: 'igloo', overwrite: true });
       else video.style.opacity = '1';
     }
     video.addEventListener('playing', show, { once: true });
+    /* Герой ушёл с экрана — петлю на паузу (не греть GPU впустую), вернулся — дальше. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) {
+        for (var i = 0; i < en.length; i++) {
+          if (en[i].isIntersecting) { var pp = video.play(); if (pp && pp.catch) pp.catch(function () {}); }
+          else video.pause();
+        }
+      }, { threshold: 0.05 }).observe(hero);
+    }
     if (video.preload === 'none') video.preload = 'auto';
     try { video.load(); } catch (e) {}
     var p = video.play();
