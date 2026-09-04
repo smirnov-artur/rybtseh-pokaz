@@ -30,7 +30,9 @@
   };
 
   var DRAFT_KEY = 'rybadm-draft';
+  var DRAFT_CATALOG_KEY = 'rybadm-draft-catalog';
   var DEMO_KEY = 'rybadm-demo';
+  var DEMO_CATALOG_KEY = 'rybadm-demo-catalog';
   var DEMO_AUTH_KEY = 'rybadm-demo-authed';
   var DEMO_LOCK_KEY = 'rybadm-demo-lock';
 
@@ -49,7 +51,11 @@
     items: [],        // рабочая копия строк (+ _key, + _new у новых)
     backups: [],       // [{name,time,positions}]
     pendingRestore: null,
-    draftTimer: null
+    draftTimer: null,
+    catalogBaseline: null,  // {updated, products:[]} — см. _СПЕК-V2.md §0; null пока не загружен
+    catalog: null,          // рабочая копия {updated, products:[+_key,+_new]}
+    catalogDraftTimer: null
+    // pendingPhotos — необязательное поле, выставляет admin-cards.js (счётчик «Фото загружено» в листе публикации)
   };
 
   /* ---------- 2. утилиты ---------- */
@@ -156,6 +162,35 @@
     var base = slugify(item.name + ' ' + (item.variant || ''));
     if (!base) { item.id = ''; return; }
     item.id = uniqueId(base, item);
+  }
+
+  /* ---------- 2а. шина событий (для модулей admin-import.js / admin-cards.js /
+     admin-extra.js — подписка через RYBADM.on, публикация через RYBADM.emit).
+     События: 'items-changed' (после любой правки/добавления/удаления/отмены
+     правок/применения импорта — и после правки карточки, раз предпросмотр
+     слушает одно и то же событие для обеих вкладок), 'published' (после
+     успешной публикации, аргумент — сводка результата), 'tab' (после смены
+     вкладки, аргумент — её имя: 'price'|'cards'|'history'), 'data-loaded'
+     (после того как S.baseline/S.catalogBaseline получили данные — старт,
+     обновление после публикации, восстановление из истории). ---------- */
+  var LISTENERS = {};
+  function on(evt, fn) {
+    if (typeof fn !== 'function') return function () {};
+    (LISTENERS[evt] = LISTENERS[evt] || []).push(fn);
+    return function off() {
+      var arr = LISTENERS[evt];
+      if (!arr) return;
+      var i = arr.indexOf(fn);
+      if (i !== -1) arr.splice(i, 1);
+    };
+  }
+  function emit(evt) {
+    var arr = LISTENERS[evt];
+    if (!arr || !arr.length) return;
+    var args = Array.prototype.slice.call(arguments, 1);
+    arr.slice().forEach(function (fn) {
+      try { fn.apply(null, args); } catch (e) { if (window.console) console.error('RYBADM: обработчик события "' + evt + '" упал', e); }
+    });
   }
 
   /* ---------- 3. слой API (сервер) ---------- */
@@ -305,6 +340,47 @@
     try { localStorage.removeItem(DEMO_LOCK_KEY); } catch (e) {}
   }
 
+  /* ---------- 4а. слой демо для каталога карточек (localStorage, отдельный
+     ключ от прайса — п. 0 _СПЕК-V2.md). Без сервера (PHP ещё не реализовал
+     catalog_get/catalog_save) это единственный источник каталога в демо;
+     на сервере — до тех пор, пока `get` не начнёт отдавать catalog,
+     applyLoadedData() падает на window.CATALOG / пустой каталог сама. ---------- */
+  function loadDemoCatalogStore() {
+    var raw = null;
+    try { raw = localStorage.getItem(DEMO_CATALOG_KEY); } catch (e) {}
+    if (raw) {
+      try { var parsed = JSON.parse(raw); if (parsed && parsed.data) return parsed; } catch (e) {}
+    }
+    var initial = { data: deepClone(window.CATALOG || { updated: null, products: [] }) };
+    saveDemoCatalogStore(initial);
+    return initial;
+  }
+  function saveDemoCatalogStore(store) {
+    try { localStorage.setItem(DEMO_CATALOG_KEY, JSON.stringify(store)); } catch (e) {}
+  }
+  function demoCatalogGet() {
+    return new Promise(function (resolve) {
+      var store = loadDemoCatalogStore();
+      resolve({ data: store.data });
+    });
+  }
+  function demoCatalogSave(products) {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        try {
+          var store = loadDemoCatalogStore();
+          var today = todayIsoDate();
+          var newDoc = { updated: today, products: products };
+          store.data = newDoc;
+          saveDemoCatalogStore(store);
+          resolve({ ok: true, updated: newDoc.updated, time: new Date().toISOString().slice(0, 19), warnings: [] });
+        } catch (e) {
+          reject({ message: 'Не удалось сохранить карточки в этом браузере.', code: 'server' });
+        }
+      }, 250);
+    });
+  }
+
   /* ---------- 5. данные: базовая версия / рабочая копия / различия ---------- */
   function cleanItemForSave(it) {
     return {
@@ -313,9 +389,22 @@
       in_stock: !!it.in_stock, notes: it.notes
     };
   }
-  function applyLoadedData(data, backups) {
+  function applyLoadedData(data, backups, catalog) {
     S.baseline = deepClone(data);
     S.backups = backups || [];
+    /* catalog — необязательный третий аргумент: сервер (после того как PHP-агент
+       реализует §7 _СПЕК-V2.md) отдаёт его как data.catalog внутри ответа `get`;
+       в демо — тот же документ идёт из localStorage через RYBADM.demo.catalogGet.
+       Пока ни то ни другое не пришло (undefined) — держим прежний baseline, если
+       он уже был (обновление после публикации без catalog в ответе не должно
+       откатывать локально обновлённый каталог); при самой первой загрузке
+       baseline ещё нет — берём window.CATALOG (../assets/catalog.js) или пустой
+       каталог, если файла ещё нет (агент «медиа» его не создал). */
+    if (catalog !== undefined && catalog !== null) {
+      S.catalogBaseline = deepClone(catalog);
+    } else if (!S.catalogBaseline) {
+      S.catalogBaseline = deepClone(window.CATALOG || { updated: null, products: [] });
+    }
   }
   function workingCopyFromBaseline() {
     return S.baseline.items.map(function (it) {
@@ -368,6 +457,68 @@
       added: added, deleted: deleted,
       total: changed.length + added.length + deleted.length
     };
+  }
+
+  /* ---------- 5а. каталог карточек: рабочая копия / различия (§0, §3 _СПЕК-V2.md).
+     Полноценное редактирование карточек делает admin-cards.js — здесь только
+     модель данных, чтобы «Опубликовать» и лист подтверждения работали, даже
+     если модуль карточек ещё не подключён (тогда каталог просто никогда не
+     меняется и catalogDirty() всегда 0). ---------- */
+  var CATALOG_FIELDS = ['name', 'latin', 'origin', 'blurb', 'photo', 'order', 'hidden'];
+  function cleanCatalogItemForSave(p) {
+    return {
+      key: p.key, name: p.name, latin: p.latin, origin: p.origin,
+      blurb: p.blurb, photo: p.photo, order: p.order, hidden: !!p.hidden
+    };
+  }
+  function catalogWorkingCopyFromBaseline() {
+    var base = S.catalogBaseline || { updated: null, products: [] };
+    return {
+      updated: base.updated,
+      products: (base.products || []).map(function (p) {
+        var c = deepClone(p);
+        c._new = false;
+        c._key = 'ck' + (KEY_SEQ++);
+        return c;
+      })
+    };
+  }
+  function catalogBaselineMap() {
+    var m = {};
+    if (S.catalogBaseline) (S.catalogBaseline.products || []).forEach(function (p) { m[p.key] = p; });
+    return m;
+  }
+  function catalogFieldsDiff(b, it) {
+    var out = [];
+    CATALOG_FIELDS.forEach(function (f) {
+      var bv = b[f], iv = it[f];
+      if (f === 'name' || f === 'latin' || f === 'origin' || f === 'blurb' || f === 'photo') {
+        bv = bv == null ? '' : String(bv).trim();
+        iv = iv == null ? '' : String(iv).trim();
+      } else if (f === 'hidden') {
+        bv = !!bv; iv = !!iv;
+      } else if (f === 'order') {
+        bv = (bv == null) ? null : Number(bv); iv = (iv == null) ? null : Number(iv);
+      }
+      if (bv !== iv) out.push(f);
+    });
+    return out;
+  }
+  /* число изменённых карточек (новые и удалённые тоже считаются «изменением») —
+     RYBADM.catalogDirty(), см. _СПЕК-V2.md §3 и задание агента «ядро» */
+  function catalogDirty() {
+    if (!S.catalog) return 0;
+    var baseMap = catalogBaselineMap();
+    var n = 0, currentKeys = {};
+    (S.catalog.products || []).forEach(function (it) {
+      if (it._new) { n++; return; }
+      currentKeys[it.key] = true;
+      var b = baseMap[it.key];
+      if (!b) { n++; return; }
+      if (catalogFieldsDiff(b, it).length) n++;
+    });
+    var deletedCount = (S.catalogBaseline ? (S.catalogBaseline.products || []) : []).filter(function (b) { return !currentKeys[b.key]; }).length;
+    return n + deletedCount;
   }
 
   /* ---------- 6. поиск / группировка (как на сайте) ---------- */
@@ -557,9 +708,14 @@
   function updateHeaderButtons() {
     var diff = computeDiff();
     var n = diff.total;
+    /* «Отменить правки» revertEdits() откатывает только прайс — держим её disabled-логику
+       на price-диффе (n), иначе кнопка включалась бы от одних правок каталога и ничего
+       не делала бы по клику. А счётчик на «Опубликовать» — общий: кнопка публикует и то,
+       и другое (см. doPublish), число должно отражать всё, что реально уйдёт на публикацию. */
     [$('#btn-revert'), $('#menu-revert')].forEach(function (b) { if (b) b.disabled = (n === 0); });
     if (!S.pendingPublish) {
-      var label = n > 0 ? ('Опубликовать · ' + n) : 'Опубликовать';
+      var total = n + catalogDirty();
+      var label = total > 0 ? ('Опубликовать · ' + total) : 'Опубликовать';
       [$('#btn-publish'), $('#btn-publish-mobile')].forEach(function (b) { if (b) b.textContent = label; });
     }
   }
@@ -608,6 +764,7 @@
     markDirtyCell(el, item);
     scheduleDraftSave();
     updateHeaderButtons();
+    emit('items-changed');
   }
   function deleteItem(item) {
     var idx = S.items.indexOf(item);
@@ -616,6 +773,7 @@
     renderTable();
     scheduleDraftSave();
     updateHeaderButtons();
+    emit('items-changed');
     showToast({
       kind: 'ok', text: 'Позиция удалена', actionText: 'Вернуть', duration: 6000, focusAction: true,
       onAction: function () {
@@ -623,6 +781,7 @@
         renderTable({ focusKey: item._key, focusField: 'name' });
         scheduleDraftSave();
         updateHeaderButtons();
+        emit('items-changed');
       }
     });
   }
@@ -636,14 +795,17 @@
     renderTable({ focusKey: item._key, focusField: 'name', scrollTo: true });
     scheduleDraftSave();
     updateHeaderButtons();
+    emit('items-changed');
   }
   function revertEdits() {
     if (computeDiff().total === 0) return;
     S.items = workingCopyFromBaseline();
     clearDraft();
+    refreshDraftBar();
     renderTable();
     updateHeaderButtons();
-    closeMenu();
+    closeAllDropdowns();
+    emit('items-changed');
   }
 
   /* ---------- 10. делегирование событий в таблице ---------- */
@@ -684,6 +846,7 @@
       markDirtyCell(el, item);
       scheduleDraftSave();
       updateHeaderButtons();
+      emit('items-changed');
       if (field === 'category' && el.value !== oldCat) {
         renderTable({ focusKey: item._key, focusField: 'category' });
       }
@@ -700,6 +863,7 @@
         markDirtyCell(sw, item);
         scheduleDraftSave();
         updateHeaderButtons();
+        emit('items-changed');
       } else if (del) {
         var it2 = findItemFromEl(del);
         if (it2) deleteItem(it2);
@@ -770,6 +934,8 @@
     addModalRow('Новых позиций', diff.added.length);
     addModalRow('Удалено', diff.deleted.length);
     addModalRow('Прочие правки', diff.changedOther.length);
+    addModalRow('Карточек изменено', catalogDirty());
+    if (S.pendingPhotos != null) addModalRow('Фото загружено', S.pendingPhotos);
     $('#modal-backdrop').hidden = false;
     trapFocus($('#modal-publish'));
     $('#modal-confirm').focus();
@@ -814,23 +980,35 @@
   }
   function formatPublishedTime(iso) { return dateTimeRu(iso); }
 
-  function onPublishSuccess(res) {
+  /* result = { priceRes, catalogRes } — catalogRes есть только если каталог
+     был изменён (catalogDirty()>0) и его тоже опубликовали, см. doPublish() */
+  function onPublishSuccess(result) {
+    var res = result.priceRes;
+    var catalogWasSaved = !!result.catalogRes;
     closeModal();
     clearDraft();
+    if (catalogWasSaved) {
+      S.catalogBaseline = deepClone(S.catalog);
+      clearCatalogDraft();
+    }
+    refreshDraftBar();
     var refreshTask = S.serverMode ? apiCall('get', {}, { needsToken: false }) : demoGet();
     refreshTask.then(function (getRes) {
-      applyLoadedData(getRes.data, getRes.backups);
+      applyLoadedData(getRes.data, getRes.backups, getRes.catalog);
       S.items = workingCopyFromBaseline();
+      S.catalog = catalogWorkingCopyFromBaseline();
       renderTable();
       renderHistory();
       updateHeaderStatus();
       updateHeaderButtons();
+      emit('data-loaded');
     }).catch(function () {
       updateHeaderStatus();
     });
     var timeText = formatPublishedTime(res.time || res.updated);
     var extra = (res.warnings && res.warnings.length) ? (' Предупреждения: ' + res.warnings.join('; ')) : '';
     showToast({ kind: 'ok', text: 'Опубликовано · ' + timeText + extra, linkHref: '../price.html', linkText: 'Открыть прайс', duration: 8000 });
+    emit('published', result);
   }
   function onPublishError(err) {
     if (err && err.code === 'unauthorized') { closeModal(); triggerReauth(); return; }
@@ -847,8 +1025,20 @@
     if (S.pendingPublish) return;
     setPublishPending(true);
     var payload = S.items.map(cleanItemForSave);
-    var task = S.serverMode ? apiCall('save', { data: { items: payload } }, { needsToken: true }) : demoSave(payload);
-    task.then(onPublishSuccess).catch(onPublishError).then(function () { setPublishPending(false); });
+    var priceTask = S.serverMode ? apiCall('save', { data: { items: payload } }, { needsToken: true }) : demoSave(payload);
+    /* каталог публикуется вторым шагом, только если реально изменён (_СПЕК-V2.md §3:
+       «Опубликовать» публикует прайс и, если каталог изменён, — catalog_save) */
+    priceTask.then(function (priceRes) {
+      var cd = catalogDirty();
+      if (cd > 0 && S.catalog) {
+        var catPayload = S.catalog.products.map(cleanCatalogItemForSave);
+        var catalogTask = S.serverMode
+          ? apiCall('catalog_save', { data: { products: catPayload } }, { needsToken: true })
+          : demoCatalogSave(catPayload);
+        return catalogTask.then(function (catalogRes) { return { priceRes: priceRes, catalogRes: catalogRes }; });
+      }
+      return { priceRes: priceRes, catalogRes: null };
+    }).then(onPublishSuccess).catch(onPublishError).then(function () { setPublishPending(false); });
   }
   function openPublishFlow() {
     var offender = null;
@@ -913,15 +1103,18 @@
       closeRestoreConfirm();
       var refreshTask = S.serverMode ? apiCall('get', {}, { needsToken: false }) : demoGet();
       return refreshTask.then(function (getRes) {
-        applyLoadedData(getRes.data, getRes.backups);
+        applyLoadedData(getRes.data, getRes.backups, getRes.catalog);
         clearDraft();
+        refreshDraftBar();
         S.items = workingCopyFromBaseline();
         renderTable(); renderHistory(); updateHeaderStatus(); updateHeaderButtons();
+        emit('items-changed');
+        emit('data-loaded');
         /* closeRestoreConfirm() уже вернул фокус на кнопку «Вернуть» в #history-list —
            но renderHistory() только что пересоздал этот список, узел уничтожен.
-           Переставляем фокус на стабильный элемент — заголовок блока истории. */
-        var historySummary = $('#history summary');
-        if (historySummary) historySummary.focus();
+           Переставляем фокус на стабильный элемент — заголовок вкладки «История». */
+        var historyHeading = $('#history-heading');
+        if (historyHeading) historyHeading.focus();
         showToast({ kind: 'ok', text: 'Прайс возвращён · ' + formatPublishedTime(res.time || res.updated), duration: 6000 });
       });
     }).catch(function (err) {
@@ -930,34 +1123,55 @@
     }).then(function () { setRestorePending(false); });
   }
 
-  /* ---------- 14. черновик (localStorage) ---------- */
-  function scheduleDraftSave() {
-    clearTimeout(S.draftTimer);
-    S.draftTimer = setTimeout(saveDraftNow, 400);
+  /* ---------- 14. черновик (localStorage). Прайс и каталог карточек хранятся
+     отдельными ключами (rybadm-draft / rybadm-draft-catalog — см. _СПЕК-V2.md
+     §3), но показываются одной полосой над вкладками: если несохранённые
+     правки есть в обоих — текст перечисляет оба, «Продолжить»/«Отбросить»
+     применяется к обоим сразу (кнопка одна на весь экран, не по вкладкам). ---------- */
+  function scheduleDraftSave(kind) {
+    if (kind === 'catalog') {
+      clearTimeout(S.catalogDraftTimer);
+      S.catalogDraftTimer = setTimeout(saveCatalogDraftNow, 400);
+    } else {
+      clearTimeout(S.draftTimer);
+      S.draftTimer = setTimeout(saveDraftNow, 400);
+    }
   }
   function saveDraftNow() {
     if (!S.baseline) return;
     var payload = { items: S.items.map(cleanItemForSave), updatedBase: S.baseline.updated, savedAt: new Date().toISOString() };
     try { localStorage.setItem(DRAFT_KEY, JSON.stringify(payload)); } catch (e) {}
   }
+  function saveCatalogDraftNow() {
+    if (!S.catalogBaseline || !S.catalog) return;
+    var payload = { products: S.catalog.products.map(cleanCatalogItemForSave), updatedBase: S.catalogBaseline.updated, savedAt: new Date().toISOString() };
+    try { localStorage.setItem(DRAFT_CATALOG_KEY, JSON.stringify(payload)); } catch (e) {}
+  }
   function clearDraft() {
     try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
     clearTimeout(S.draftTimer);
-    $('#draft-bar').hidden = true;
+  }
+  function clearCatalogDraft() {
+    try { localStorage.removeItem(DRAFT_CATALOG_KEY); } catch (e) {}
+    clearTimeout(S.catalogDraftTimer);
   }
   function sortForCompare(arr) {
     return arr.slice().sort(function (a, b) { return (a.id || '').localeCompare(b.id || ''); });
   }
+  function sortCatalogForCompare(arr) {
+    return arr.slice().sort(function (a, b) { return (a.key || '').localeCompare(b.key || ''); });
+  }
+  /* возвращает ISO-время черновика, если он есть и отличается от baseline, иначе null (и сам чистит совпадающий черновик) */
   function resolveDraftOnBoot() {
     var raw = null;
     try { raw = localStorage.getItem(DRAFT_KEY); } catch (e) {}
-    if (!raw) return;
+    if (!raw) return null;
     var draft = null;
     try { draft = JSON.parse(raw); } catch (e) {}
-    if (!draft || !draft.items || !draft.items.length) return;
+    if (!draft || !draft.items || !draft.items.length) return null;
     var baseNorm = S.baseline.items.map(cleanItemForSave);
     var same = JSON.stringify(sortForCompare(baseNorm)) === JSON.stringify(sortForCompare(draft.items));
-    if (same) { clearDraft(); return; }
+    if (same) { clearDraft(); return null; }
     var baseIds = {};
     S.baseline.items.forEach(function (b) { baseIds[b.id] = true; });
     S.items = draft.items.map(function (it) {
@@ -966,8 +1180,60 @@
       c._new = !(c.id && baseIds[c.id]);
       return c;
     });
-    $('#draft-bar-text').textContent = 'Есть несохранённые правки от ' + dateTimeRuNoYear(draft.savedAt) + '.';
+    return draft.savedAt;
+  }
+  function resolveCatalogDraftOnBoot() {
+    var raw = null;
+    try { raw = localStorage.getItem(DRAFT_CATALOG_KEY); } catch (e) {}
+    if (!raw) return null;
+    var draft = null;
+    try { draft = JSON.parse(raw); } catch (e) {}
+    if (!draft || !draft.products || !draft.products.length) return null;
+    var baseNorm = (S.catalogBaseline.products || []).map(cleanCatalogItemForSave);
+    var same = JSON.stringify(sortCatalogForCompare(baseNorm)) === JSON.stringify(sortCatalogForCompare(draft.products));
+    if (same) { clearCatalogDraft(); return null; }
+    var baseKeys = {};
+    (S.catalogBaseline.products || []).forEach(function (b) { baseKeys[b.key] = true; });
+    S.catalog = {
+      updated: S.catalogBaseline.updated,
+      products: draft.products.map(function (p) {
+        var c = deepClone(p);
+        c._key = 'ck' + (KEY_SEQ++);
+        c._new = !(c.key && baseKeys[c.key]);
+        return c;
+      })
+    };
+    return draft.savedAt;
+  }
+  /* одна полоса «Есть несохранённые правки…» на прайс и каталог сразу */
+  function applyDraftBar(priceSavedAt, catalogSavedAt) {
+    if (!priceSavedAt && !catalogSavedAt) { $('#draft-bar').hidden = true; return; }
+    var text;
+    if (priceSavedAt && catalogSavedAt) {
+      var latest = (new Date(catalogSavedAt) > new Date(priceSavedAt)) ? catalogSavedAt : priceSavedAt;
+      text = 'Есть несохранённые правки в прайсе и карточках от ' + dateTimeRuNoYear(latest) + '.';
+    } else if (catalogSavedAt) {
+      text = 'Есть несохранённые правки в карточках от ' + dateTimeRuNoYear(catalogSavedAt) + '.';
+    } else {
+      text = 'Есть несохранённые правки от ' + dateTimeRuNoYear(priceSavedAt) + '.';
+    }
+    $('#draft-bar-text').textContent = text;
     $('#draft-bar').hidden = false;
+  }
+  /* перечитать оба ключа localStorage и обновить полосу — используется везде,
+     где один из черновиков мог исчезнуть (отмена правок, сброс, публикация,
+     восстановление), чтобы не тащить время черновика через кучу параметров */
+  function refreshDraftBar() {
+    var priceSavedAt = null, catalogSavedAt = null;
+    try {
+      var rawP = localStorage.getItem(DRAFT_KEY);
+      if (rawP) { var dp = JSON.parse(rawP); priceSavedAt = dp && dp.savedAt; }
+    } catch (e) {}
+    try {
+      var rawC = localStorage.getItem(DRAFT_CATALOG_KEY);
+      if (rawC) { var dc = JSON.parse(rawC); catalogSavedAt = dc && dc.savedAt; }
+    } catch (e) {}
+    applyDraftBar(priceSavedAt, catalogSavedAt);
   }
 
   /* ---------- 15. тосты ---------- */
@@ -1028,26 +1294,85 @@
     if (!$('#modal-backdrop').hidden) { closeModal(); return; }
     if (!$('#modal-restore-backdrop').hidden) { closeRestoreConfirm(); return; }
     if (!$('#modal-logout-backdrop').hidden) { closeLogoutConfirm(); return; }
-    if (!$('#hdr-menu').hidden) { closeMenu(); return; }
+    if (!$('#sheet-backdrop').hidden) { closeSheet(); return; }
+    closeAllDropdowns();
   }
 
-  /* ---------- 17. меню «⋯» на телефоне ---------- */
-  function onDocClickCloseMenu(e) {
-    var menu = $('#hdr-menu'), more = $('#hdr-more');
-    if (!menu.contains(e.target) && e.target !== more) closeMenu();
+  /* ---------- 16а. RYBADM.modal.open/close — универсальный лист поверх
+     существующей модалки (та же ловушка фокуса и Esc, что у публикации/
+     восстановления/выхода). Для будущих модулей: смена пароля, диффы
+     импорта, кроп фото и т.п. — они сами наполняют #sheet-body и кнопки.
+     openSheet({ title, body: Node, actions: [{label, kind, onClick, disabled, id}], wide }) */
+  function openSheet(opts) {
+    opts = opts || {};
+    closeAllDropdowns();
+    var dialog = $('#sheet-dialog');
+    dialog.classList.toggle('modal--wide', !!opts.wide);
+    $('#sheet-title').textContent = opts.title || '';
+    var body = $('#sheet-body');
+    body.innerHTML = '';
+    if (opts.body) {
+      if (opts.body.nodeType) body.appendChild(opts.body);
+      else { var p = document.createElement('p'); p.textContent = String(opts.body); body.appendChild(p); }
+    }
+    var actionsEl = $('#sheet-actions');
+    actionsEl.innerHTML = '';
+    (opts.actions || []).forEach(function (a) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      var kindClass = a.kind === 'solid' ? 'btn--solid' : (a.kind === 'text' ? 'btn--text' : 'btn--ghost');
+      btn.className = 'btn ' + kindClass;
+      btn.textContent = a.label || '';
+      if (a.id) btn.id = a.id;
+      if (a.disabled) btn.disabled = true;
+      btn.addEventListener('click', function () { if (a.onClick) a.onClick(); });
+      actionsEl.appendChild(btn);
+    });
+    $('#sheet-backdrop').hidden = false;
+    trapFocus(dialog);
+    var focusTarget = body.querySelector('input, select, textarea, button:not(:disabled), [href], [tabindex]:not([tabindex="-1"])')
+      || actionsEl.querySelector('button:not(:disabled)');
+    if (focusTarget) focusTarget.focus(); else dialog.focus();
   }
-  function toggleMenu() {
-    var menu = $('#hdr-menu');
-    var open = menu.hidden;
-    menu.hidden = !open;
-    $('#hdr-more').setAttribute('aria-expanded', open ? 'true' : 'false');
-    if (open) document.addEventListener('click', onDocClickCloseMenu);
-    else document.removeEventListener('click', onDocClickCloseMenu);
+  function closeSheet() {
+    $('#sheet-backdrop').hidden = true;
+    releaseFocus();
   }
-  function closeMenu() {
-    $('#hdr-menu').hidden = true;
-    $('#hdr-more').setAttribute('aria-expanded', 'false');
-    document.removeEventListener('click', onDocClickCloseMenu);
+
+  /* ---------- 17. выпадающие меню: «⋯» на телефоне, «Ещё ▾» на десктопе,
+     «Экспорт ▾» в тулбаре — один и тот же механизм (открыть/закрыть по клику
+     на триггер, закрыть по клику вне, закрыть все по Esc, автозакрытие
+     остальных при открытии одного). Триггер с disabled (модуль не загружен)
+     просто никогда не откроет меню. ---------- */
+  var DROPDOWNS = [];
+  function registerDropdown(triggerSel, menuSel) {
+    var trigger = $(triggerSel), menu = $(menuSel);
+    if (!trigger || !menu) return null;
+    function isOpen() { return !menu.hidden; }
+    function onDocClick(e) {
+      if (!menu.contains(e.target) && e.target !== trigger) close();
+    }
+    function open() {
+      closeAllDropdowns();
+      menu.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      document.addEventListener('click', onDocClick);
+    }
+    function close() {
+      menu.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('click', onDocClick);
+    }
+    trigger.addEventListener('click', function () {
+      if (trigger.disabled) return;
+      if (isOpen()) close(); else open();
+    });
+    var api = { open: open, close: close, isOpen: isOpen };
+    DROPDOWNS.push(api);
+    return api;
+  }
+  function closeAllDropdowns() {
+    DROPDOWNS.forEach(function (d) { if (d.isOpen()) d.close(); });
   }
 
   /* ---------- 18. вход / первый вход / выход / сессия истекла ---------- */
@@ -1149,7 +1474,7 @@
     }
   }
   function logout() {
-    closeMenu();
+    closeAllDropdowns();
     if (computeDiff().total > 0) { openLogoutConfirm(); return; }
     doLogoutNow();
   }
@@ -1163,17 +1488,21 @@
   function finishBoot() {
     $('#demo-bar').hidden = S.serverMode;
     S.items = workingCopyFromBaseline();
-    resolveDraftOnBoot();
+    S.catalog = catalogWorkingCopyFromBaseline();
+    var priceDraftAt = resolveDraftOnBoot();
+    var catalogDraftAt = resolveCatalogDraftOnBoot();
+    applyDraftBar(priceDraftAt, catalogDraftAt);
     updateHeaderStatus();
     renderTable();
     renderHistory();
     updateHeaderButtons();
     hideAuth();
     $('#screen-app').hidden = false;
+    emit('data-loaded');
   }
   function loadServerData() {
     apiCall('get', {}, { needsToken: false }).then(function (res) {
-      applyLoadedData(res.data, res.backups);
+      applyLoadedData(res.data, res.backups, res.catalog);
       finishBoot();
     }).catch(function (err) {
       if (err && err.code === 'unauthorized') { showAuth({ mode: 'login' }); return; }
@@ -1183,7 +1512,8 @@
   }
   function loadDemoData() {
     var store = loadDemoStore();
-    applyLoadedData(store.data, store.backups.map(function (b) { return { name: b.name, time: b.time, positions: b.positions }; }));
+    var catalogStore = loadDemoCatalogStore();
+    applyLoadedData(store.data, store.backups.map(function (b) { return { name: b.name, time: b.time, positions: b.positions }; }), catalogStore.data);
     finishBoot();
   }
   function startDemo() {
@@ -1246,13 +1576,23 @@
     $('#btn-publish-mobile').addEventListener('click', openPublishFlow);
     $('#btn-logout').addEventListener('click', logout);
     $('#menu-logout').addEventListener('click', logout);
-    $('#hdr-more').addEventListener('click', toggleMenu);
+
+    /* выпадающие меню: «⋯» (телефон), «Ещё ▾» (десктоп) — пункты «Предпросмотр»/
+       «Сменить пароль» внутри обоих остаются disabled, пока их не включит
+       admin-extra.js; «Экспорт ▾» в тулбаре «Прайс» — так же, admin-import.js */
+    registerDropdown('#hdr-more', '#hdr-menu');
+    registerDropdown('#hdr-more-text', '#hdr-menu-text');
+    registerDropdown('#btn-export', '#export-menu');
 
     $('#draft-continue').addEventListener('click', function () { $('#draft-bar').hidden = true; });
     $('#draft-discard').addEventListener('click', function () {
       clearDraft();
+      clearCatalogDraft();
       S.items = workingCopyFromBaseline();
+      S.catalog = catalogWorkingCopyFromBaseline();
+      refreshDraftBar();
       renderTable(); updateHeaderButtons();
+      emit('items-changed');
     });
 
     $('#modal-cancel').addEventListener('click', closeModal);
@@ -1267,8 +1607,10 @@
     $('#modal-logout-backdrop').addEventListener('click', function (e) { if (e.target === this) closeLogoutConfirm(); });
     $('#modal-logout-confirm').addEventListener('click', function () { closeLogoutConfirm(); doLogoutNow(); });
 
+    $('#sheet-backdrop').addEventListener('click', function (e) { if (e.target === this) closeSheet(); });
+
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !$('#hdr-menu').hidden) closeMenu();
+      if (e.key === 'Escape') closeAllDropdowns();
     });
 
     window.addEventListener('beforeunload', function (e) {
@@ -1276,6 +1618,8 @@
         e.preventDefault(); e.returnValue = '';
       }
     });
+
+    wireTabs();
 
     /* Планшет: поле примечания стоит второй строкой под названием без подписи —
        ему нужна словесная заглушка. На десктопе колонка подписана в шапке, на
@@ -1294,9 +1638,81 @@
   var TABLET_MQ = window.matchMedia ? window.matchMedia('(min-width: 760px) and (max-width: 1099.98px)') : { matches: false };
   function notesPlaceholder() { return TABLET_MQ.matches ? 'примечание' : '—'; }
 
+  /* ---------- 20а. вкладки «Прайс · Карточки · История» (role="tablist"),
+     переключение мышью и стрелками (Left/Right/Home/End — «automatic
+     activation»: фокус сразу активирует вкладку), синхронизация с hash. ---------- */
+  var TAB_IDS = ['price', 'cards', 'history'];
+  var currentTab = 'price';
+  function activateTab(name, opts) {
+    opts = opts || {};
+    if (TAB_IDS.indexOf(name) === -1) name = 'price';
+    currentTab = name;
+    TAB_IDS.forEach(function (id) {
+      var btn = $('#tab-' + id), panel = $('#panel-' + id);
+      var active = (id === name);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      btn.tabIndex = active ? 0 : -1;
+      panel.hidden = !active;
+    });
+    if (opts.updateHash !== false) {
+      var newHash = '#' + name;
+      if (location.hash !== newHash) {
+        if (window.history && history.replaceState) history.replaceState(null, '', newHash);
+        else location.hash = newHash;
+      }
+    }
+    if (opts.focus) $('#tab-' + name).focus();
+    emit('tab', name);
+  }
+  function wireTabs() {
+    TAB_IDS.forEach(function (id) {
+      $('#tab-' + id).addEventListener('click', function () { activateTab(id); });
+    });
+    $('#tabs').addEventListener('keydown', function (e) {
+      var idx = TAB_IDS.indexOf(currentTab);
+      if (e.key === 'ArrowRight') { e.preventDefault(); activateTab(TAB_IDS[(idx + 1) % TAB_IDS.length], { focus: true }); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); activateTab(TAB_IDS[(idx - 1 + TAB_IDS.length) % TAB_IDS.length], { focus: true }); }
+      else if (e.key === 'Home') { e.preventDefault(); activateTab(TAB_IDS[0], { focus: true }); }
+      else if (e.key === 'End') { e.preventDefault(); activateTab(TAB_IDS[TAB_IDS.length - 1], { focus: true }); }
+    });
+    window.addEventListener('hashchange', function () {
+      var h = location.hash.replace('#', '');
+      if (TAB_IDS.indexOf(h) !== -1 && h !== currentTab) activateTab(h, { updateHash: false });
+    });
+    var initial = location.hash.replace('#', '');
+    activateTab(TAB_IDS.indexOf(initial) !== -1 ? initial : 'price', { updateHash: false });
+  }
+
   /* ---------- 21. старт ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     wireStatic();
     boot();
   });
+
+  /* ---------- 22. внутренний API для модулей (_СПЕК-V2.md §3) — ровно эти
+     имена; модули (admin-import.js / admin-cards.js / admin-extra.js) читают
+     и пишут через них, RYBADM.state — тот же живой объект S (не копия), так
+     что RYBADM.state.items/.catalog всегда актуальны. ---------- */
+  window.RYBADM = {
+    state: S,
+    api: apiCall,
+    demo: {
+      get: demoGet, save: demoSave, restore: demoRestore, store: loadDemoStore,
+      catalogGet: demoCatalogGet, catalogSave: demoCatalogSave
+    },
+    render: renderTable,
+    renderHistory: renderHistory,
+    markDirty: markDirtyCell,
+    scheduleDraftSave: scheduleDraftSave,
+    updateHeaderButtons: updateHeaderButtons,
+    computeDiff: computeDiff,
+    catalogDirty: catalogDirty,
+    toast: showToast,
+    modal: { open: openSheet, close: closeSheet },
+    fmt: { money: fmtNum, parseMoney: parseMoney, dateRu: dateRu, dateTimeRu: dateTimeRu },
+    slugify: slugify,
+    uniqueId: uniqueId,
+    on: on,
+    emit: emit
+  };
 })();

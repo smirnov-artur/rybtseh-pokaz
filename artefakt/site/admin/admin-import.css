@@ -1,0 +1,127 @@
+/* ============================================================
+   admin-import.css — импорт XLS/XLSX, экспорт, переоценка.
+   Модуль admin-import.js. Язык стилей — как в admin.css: те же
+   токены (--cream/--walnut/--bark/--ember/--drift/--cork), те же
+   классы кнопок/меню (.btn, .menu-pop) и модалок (.modal,
+   .modal--wide) — здесь только то, чего в admin.css ещё нет:
+   drop-зона на весь экран и содержимое листов импорта/переоценки.
+   ============================================================ */
+
+/* ---------- 1. DROP-ЗОНА (перетаскивание файла прайса) ---------- */
+.imp-drop{
+  position:fixed;inset:0;z-index:95;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.72);padding:24px;
+}
+.imp-drop__plate{
+  display:flex;align-items:center;justify-content:center;
+  width:100%;max-width:560px;min-height:220px;
+  border:2px dashed var(--ember);border-radius:var(--r-card);
+  background:rgba(220,80,0,.08);color:var(--cream);
+  font-size:18px;font-weight:600;text-align:center;padding:24px;
+}
+
+/* ---------- 2. СОДЕРЖИМОЕ ЛИСТА ИМПОРТА ---------- */
+.imp-flow{display:flex;flex-direction:column;gap:16px}
+
+.imp-cols{
+  border:1px solid var(--cork);border-radius:var(--r-card);
+  background:var(--walnut);padding:12px 14px;
+}
+.imp-cols__title{font-size:12.5px;color:var(--cream);margin-bottom:10px;line-height:1.5}
+.imp-cols__selects{display:flex;flex-wrap:wrap;gap:12px 16px}
+.imp-cols__selects label{
+  display:flex;flex-direction:column;gap:5px;font-size:11px;
+  color:var(--drift);text-transform:uppercase;letter-spacing:.05em;
+  flex:1 1 180px;min-width:150px;
+}
+.imp-cols__selects select{
+  min-height:34px;padding:2px 8px;border-radius:8px;
+  border:1px solid var(--cork);background:var(--bark-05);color:var(--cream);
+  font-size:12.5px;text-transform:none;letter-spacing:normal;cursor:pointer;
+}
+.imp-cols__selects select:focus-visible{outline:none;border-color:var(--ember)}
+
+.imp-delcheck{
+  display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--cream);
+  cursor:pointer;
+}
+.imp-delcheck input{width:16px;height:16px;accent-color:var(--ember);cursor:pointer}
+
+.imp-summary{
+  font-size:12.5px;color:var(--drift);font-family:var(--fm);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ---------- 3. ТАБЛИЦА ДИФФА ---------- */
+.imp-table-wrap{max-height:52vh;overflow-y:auto;border:1px solid var(--cork);border-radius:var(--r-card)}
+.imp-table{width:100%;border-collapse:collapse;font-size:13px}
+.imp-table thead th{
+  position:sticky;top:0;z-index:1;background:var(--bark-05);
+  text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.05em;color:var(--drift);padding:8px 10px;border-bottom:1px solid var(--cork);
+  white-space:nowrap;
+}
+.imp-table td{padding:7px 10px;vertical-align:middle;border-bottom:1px solid var(--hair)}
+.imp-table tr:last-child td{border-bottom:0}
+.imp-c-chk{width:34px}
+.imp-c-chk input{width:16px;height:16px;accent-color:var(--ember);cursor:pointer}
+.imp-table td.mono,.imp-table td.num{font-family:var(--fm);font-variant-numeric:tabular-nums}
+.imp-accent{color:var(--ember);font-weight:600}
+.imp-row--missing{opacity:.55}
+.imp-row--new td{color:var(--cream)}
+
+/* ---------- 4. ЛИСТ ПЕРЕОЦЕНКИ ---------- */
+.imp-reprice{display:flex;flex-direction:column;gap:16px}
+.imp-field{border:0;padding:0;margin:0}
+.imp-field legend{
+  padding:0;margin-bottom:8px;font-size:11px;color:var(--drift);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.imp-field__opts{display:flex;flex-wrap:wrap;gap:10px 18px}
+.imp-field label{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--cream);cursor:pointer}
+.imp-field input[type="radio"],.imp-field input[type="checkbox"]{accent-color:var(--ember);width:16px;height:16px;cursor:pointer}
+.imp-field select{
+  min-height:32px;padding:2px 8px;border-radius:8px;border:1px solid var(--cork);
+  background:var(--bark-05);color:var(--cream);font-size:12.5px;cursor:pointer;
+}
+.imp-field select:disabled{opacity:.4;cursor:not-allowed}
+.imp-field select:focus-visible{outline:none;border-color:var(--ember)}
+
+.imp-how-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.imp-how-row input[type="text"]{
+  width:88px;min-height:34px;padding:2px 10px;border-radius:8px;
+  border:1px solid var(--cork);background:var(--bark-05);color:var(--cream);
+  font-family:var(--fm);font-variant-numeric:tabular-nums;text-align:right;font-size:13px;
+}
+.imp-how-row input[type="text"]:focus-visible{outline:none;border-color:var(--ember)}
+
+.imp-round-toggle{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+.imp-preview{
+  font-size:13px;color:var(--cream);padding:10px 12px;
+  border:1px solid var(--cork);border-radius:8px;background:var(--walnut);
+  line-height:1.5;
+}
+.imp-preview b{color:var(--ember)}
+
+/* ---------- 5. АДАПТИВ: телефон — карточки вместо таблицы диффа ---------- */
+@media (max-width:759.98px){
+  .imp-table-wrap{max-height:60vh}
+  .imp-table thead{display:none}
+  .imp-table,.imp-table tbody{display:block;width:100%}
+  .imp-table tr{
+    display:grid;grid-template-columns:auto 1fr;gap:4px 10px;
+    padding:12px 10px;border-bottom:1px solid var(--hair);
+  }
+  .imp-table td{
+    padding:2px 0;border-bottom:0;grid-column:2;
+  }
+  .imp-table td.imp-c-chk{grid-column:1;grid-row:1 / span 4;align-self:start;padding-top:3px}
+  .imp-table td[data-label]::before{
+    content:attr(data-label);display:block;font-size:10px;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--drift);margin-bottom:1px;
+  }
+  .imp-cols__selects{flex-direction:column}
+  .imp-cols__selects label{min-width:0}
+}

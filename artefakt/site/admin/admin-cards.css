@@ -1,0 +1,90 @@
+/* ============================================================
+   admin-cards.css — вкладка «Карточки» (_СПЕК-V2.md §5).
+   Токены/шрифты/кнопки/переключатель/бирка — из admin.css (../admin.css
+   подключён раньше в <head>); здесь только раскладка списка-аккордеона,
+   полей карточки и зоны фото/кропа. Без анимаций, без библиотек.
+   ============================================================ */
+
+.cards-list{display:flex;flex-direction:column;gap:10px}
+
+/* ---------- строка-аккордеон ---------- */
+.card-row{border:1px solid var(--cork);border-radius:var(--r-card);background:var(--bark-05);overflow:hidden}
+.card-row__head{
+  display:flex;align-items:center;gap:12px;width:100%;min-height:60px;
+  padding:10px 14px;text-align:left;transition:background-color var(--t);
+}
+.card-row__head:hover{background:var(--bark)}
+.card-row__preview{
+  width:72px;height:72px;border-radius:8px;overflow:hidden;flex:none;
+  background:var(--bark);display:flex;align-items:center;justify-content:center;
+}
+.card-row__preview img{width:100%;height:100%;object-fit:cover;display:block}
+.card-row__preview-text{
+  font-family:var(--fm);font-style:italic;font-size:9px;line-height:1.25;
+  color:var(--cream);text-align:center;padding:4px;overflow:hidden;word-break:break-word;
+}
+.card-row__info{flex:1 1 auto;min-width:0}
+.card-row__name{
+  display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--cream);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card-row__meta{font-size:11.5px;color:var(--drift);margin-top:2px}
+.card-row__chevron{flex:none;color:var(--drift);font-size:12px;transition:transform var(--t)}
+.card-row__head[aria-expanded="true"] .card-row__chevron{transform:rotate(180deg)}
+
+/* ---------- раскрытая панель ---------- */
+.card-row__panel{padding:2px 14px 18px}
+.card-field{margin-top:14px}
+.card-field label{display:block;font-size:11.5px;color:var(--drift);margin-bottom:6px}
+.card-field input[type="text"],
+.card-field select,
+.card-field textarea{
+  width:100%;min-height:38px;padding:0 12px;border-radius:8px;
+  border:1px solid var(--cork);background:var(--walnut);color:var(--cream);
+  font-size:13px;transition:border-color var(--t);
+}
+.card-field textarea{min-height:64px;padding:8px 12px;resize:vertical;line-height:1.5}
+.card-field input::placeholder,.card-field textarea::placeholder{color:var(--drift)}
+.card-field input:focus-visible,.card-field select:focus-visible,.card-field textarea:focus-visible{
+  outline:none;border-color:var(--ember);
+}
+.card-field select{cursor:pointer}
+.card-field input[data-field="origin-custom"]{margin-top:8px}
+.card-counter{font-size:11px;color:var(--drift);text-align:right;margin-top:4px}
+
+.card-field--switch{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.card-field--switch label{margin-bottom:0}
+
+/* ---------- порядок ---------- */
+.card-order{display:flex;align-items:center;gap:10px}
+.card-order .btn{padding:0;width:36px;flex:none}
+.card-order__pos{font-family:var(--fm);color:var(--drift);font-size:12px}
+
+/* ---------- зона фото ---------- */
+.card-photo{margin-top:14px}
+.card-photo-current{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.card-photo-current img{width:96px;height:96px;object-fit:cover;border-radius:8px;border:1px solid var(--cork);flex:none}
+
+.card-dropzone{
+  border:1px dashed var(--cork);border-radius:var(--r-card);padding:22px 16px;
+  text-align:center;color:var(--drift);font-size:12.5px;line-height:1.6;
+  transition:border-color var(--t),background-color var(--t);
+}
+.card-dropzone.is-drag{border-color:var(--ember);background:rgba(220,80,0,.08);color:var(--cream)}
+.card-dropzone .btn{margin-top:8px}
+
+.card-crop{display:flex;flex-direction:column;align-items:center;gap:12px}
+.card-crop-canvas{
+  width:240px;height:240px;border-radius:8px;border:1px solid var(--cork);
+  background:var(--bark);touch-action:none;cursor:grab;
+}
+.card-crop-canvas:active{cursor:grabbing}
+.card-crop__hint{font-size:11.5px;color:var(--drift);text-align:center;max-width:280px}
+.card-crop__actions{display:flex;gap:10px}
+
+/* ---------- телефон (<760): превью мельче, поля уже в один столбец
+   по умолчанию (каждое .card-field — блочный элемент) ---------- */
+@media (max-width:759.98px){
+  .card-row__preview{width:56px;height:56px}
+  .card-row__head{padding:10px 12px}
+}

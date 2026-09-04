@@ -46,6 +46,7 @@
   --r-card:12px;
 
   --hdr-h:56px;
+  --tabs-h:44px;
   --toolbar-h:66px;
 
   --t:.2s ease;
@@ -175,19 +176,45 @@ body.no-scroll{overflow:hidden}
   transition:color var(--t),background-color var(--t);
 }
 .hdr__more:hover{color:var(--cream);background:var(--bark)}
-.hdr__menu{
-  position:absolute;top:52px;right:12px;z-index:31;min-width:180px;
-  border:1px solid var(--cork);border-radius:var(--r-card);
-  background:var(--bark-05);padding:6px;
+.hdr__menu{position:absolute;top:52px;right:12px;z-index:40}
+
+/* ---------- 4а. ВЫПАДАЮЩИЕ МЕНЮ (общий вид: «⋯» на телефоне, «Ещё ▾» на
+   десктопе, «Экспорт ▾» в тулбаре). Позиционирование — у каждого своё
+   (ниже и в §6а), вид кнопок-пунктов — общий класс .menu-pop. ---------- */
+.dropdown{position:relative;display:inline-flex}
+.dropdown--right{justify-content:flex-end}
+.menu-pop{
+  min-width:180px;border:1px solid var(--cork);border-radius:var(--r-card);
+  background:var(--bark-05);padding:6px;box-shadow:0 8px 24px rgba(0,0,0,.4);
   display:flex;flex-direction:column;gap:2px;
 }
-.hdr__menu button{
+.menu-pop button{
   text-align:left;padding:10px 12px;border-radius:6px;font-size:13px;
   min-height:44px;transition:background-color var(--t);
 }
-.hdr__menu button:hover{background:var(--bark)}
-.hdr__menu button:disabled{opacity:.4;cursor:not-allowed}
-.hdr__menu button:disabled:hover{background:none}
+.menu-pop button:hover{background:var(--bark)}
+.menu-pop button:disabled{opacity:.4;cursor:not-allowed}
+.menu-pop button:disabled:hover{background:none}
+.dropdown .menu-pop{position:absolute;top:calc(100% + 6px);left:0;z-index:40}
+.dropdown--right .menu-pop{left:auto;right:0}
+
+/* ---------- 4б. ВКЛАДКИ (Прайс · Карточки · История) ---------- */
+.tabs{
+  position:sticky;top:var(--hdr-h);z-index:28;
+  display:flex;align-items:center;gap:0;min-height:var(--tabs-h);
+  padding:0 20px;background:var(--walnut);border-bottom:1px solid var(--cork);
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none}
+.tabs__btn{
+  flex:0 0 auto;padding:13px 2px;margin-right:22px;
+  font-size:13px;font-weight:600;color:var(--drift);white-space:nowrap;
+  border-bottom:2px solid transparent;transition:color var(--t),border-color var(--t);
+}
+.tabs__btn:last-child{margin-right:0}
+.tabs__btn:hover{color:var(--cream)}
+.tabs__btn[aria-selected="true"]{color:var(--cream);border-bottom-color:var(--ember)}
+.tabpanel{outline:none}
 
 /* ---------- 5. УВЕДОМЛЕНИЯ (черновик / демо) ---------- */
 .notice{
@@ -201,7 +228,7 @@ body.no-scroll{overflow:hidden}
 
 /* ---------- 6. ПАНЕЛЬ ИНСТРУМЕНТОВ ---------- */
 .toolbar{
-  position:sticky;top:var(--hdr-h);z-index:20;
+  position:sticky;top:calc(var(--hdr-h) + var(--tabs-h));z-index:20;
   display:flex;align-items:center;gap:14px;
   min-height:var(--toolbar-h);
   padding:14px 20px;background:var(--walnut);border-bottom:1px solid var(--cork);
@@ -215,6 +242,10 @@ body.no-scroll{overflow:hidden}
 .search input::placeholder{color:var(--drift)}
 .search input:focus-visible{outline:none;border-color:var(--ember)}
 .search input::-webkit-search-cancel-button{cursor:pointer}
+/* flex:1 1 auto + min-width:0 (не 0 0 auto) — иначе вложенный flex-wrap не
+   срабатывает: без ужимаемой ширины блок меряет себя по ширине ВСЕХ кнопок
+   в один ряд (max-content) и вылезает за узкий toolbar на телефоне. */
+.toolbar__actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;flex:1 1 auto;min-width:0}
 
 /* ---------- 7. ТАБЛИЦА ---------- */
 /* без overflow-x:auto здесь: он создал бы свой скролл-контейнер и сломал бы
@@ -225,7 +256,7 @@ body.no-scroll{overflow:hidden}
 #price-table{width:100%;border-collapse:collapse}
 
 #price-table thead th{
-  position:sticky;top:calc(var(--hdr-h) + var(--toolbar-h));z-index:15;background:var(--walnut);
+  position:sticky;top:calc(var(--hdr-h) + var(--tabs-h) + var(--toolbar-h));z-index:15;background:var(--walnut);
   text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;
   letter-spacing:.06em;color:var(--drift);padding:10px 10px;
   border-bottom:1px solid var(--cork);white-space:nowrap;
@@ -306,23 +337,20 @@ body.no-scroll{overflow:hidden}
 
 .empty-state{padding:40px 10px;text-align:center;color:var(--drift);font-size:13px}
 
-/* ---------- 8. ИСТОРИЯ ПУБЛИКАЦИЙ ---------- */
-.history{margin:0 20px 60px;border-top:1px solid var(--cork);padding-top:16px}
-.history summary{
-  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--drift);
-  list-style:none;padding:6px 0;transition:color var(--t);
-}
-.history summary::-webkit-details-marker{display:none}
-.history summary::before{content:'▸ ';font-family:var(--fm)}
-.history[open] summary::before{content:'▾ '}
-.history summary:hover{color:var(--cream)}
-.history__list{margin-top:8px}
+/* ---------- 8. ИСТОРИЯ ПУБЛИКАЦИЙ (вкладка) ---------- */
+.history-tab{margin:0 20px 60px;padding-top:20px}
+.history-tab__title{font-size:15px;font-weight:600;margin-bottom:14px}
+.history-tab__title:focus-visible{outline:2px solid var(--ember);outline-offset:4px}
+.history__list{margin-top:0}
 .history__row{
   display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;
   padding:9px 4px;border-bottom:1px solid var(--hair);font-size:12.5px;
 }
 .history__meta{font-family:var(--fm);color:var(--drift)}
 .history__empty{color:var(--drift);font-size:12.5px;padding:8px 4px}
+
+/* ---------- 8а. КАРТОЧКИ (вкладка, заглушка до загрузки admin-cards.js) ---------- */
+#cards-root{padding:40px 20px}
 
 /* ---------- 9. МОДАЛЬНЫЕ ЛИСТЫ ---------- */
 .modal-backdrop{
@@ -333,6 +361,7 @@ body.no-scroll{overflow:hidden}
   width:100%;max-width:440px;border:1px solid var(--cork);border-radius:16px;
   background:var(--bark-05);padding:26px 26px 22px;
 }
+.modal.modal--wide{max-width:820px}
 .modal h2{font-size:16px;font-weight:600;margin-bottom:16px}
 .modal p{font-size:13px;color:var(--drift);line-height:1.55}
 .modal__list{margin:0 0 22px;display:flex;flex-direction:column;gap:6px}
@@ -342,6 +371,9 @@ body.no-scroll{overflow:hidden}
 }
 .modal__list li span:last-child{font-family:var(--fm);color:var(--cream)}
 .modal__actions{display:flex;justify-content:flex-end;gap:10px}
+/* содержимое универсального листа (RYBADM.modal.open) — тот же ритм, что у
+   .modal__list, но модули кладут туда что угодно (форму, таблицу диффа) */
+#sheet-body:not(:empty){margin-bottom:22px}
 
 /* ---------- 10. ТОСТЫ ---------- */
 .toasts{
@@ -410,6 +442,9 @@ body.no-scroll{overflow:hidden}
    при 760px ширины пропорционально сжимаются и прокрутки не возникает. */
 @media (min-width:760px) and (max-width:1099.98px){
   .table-wrap{padding:0 14px 32px}
+  .tabs{padding:0 14px}
+  .history-tab{margin:0 14px 40px}
+  #cards-root{padding:32px 14px}
 
   #price-table thead{display:block}
   #price-table thead tr{
@@ -459,6 +494,9 @@ body.no-scroll{overflow:hidden}
   .search input{min-height:44px}
 
   .table-wrap{padding:0 12px 24px}
+  .tabs{padding:0 12px}
+  .history-tab{margin:0 12px 30px}
+  #cards-root{padding:24px 12px}
   #price-table thead{display:none}
   #price-table tbody{display:block}
   #price-table tr.grp-row{display:block;padding:0}

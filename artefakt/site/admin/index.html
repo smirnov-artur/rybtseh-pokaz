@@ -6,6 +6,9 @@
 <title>Прайс · РЫБЦЕХЪ</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="admin-import.css">
+<link rel="stylesheet" href="admin-cards.css">
+<link rel="stylesheet" href="admin-extra.css">
 </head>
 <body>
 
@@ -51,11 +54,20 @@
       <div class="hdr__actions">
         <button type="button" class="btn btn--ghost" id="btn-revert" disabled>Отменить правки</button>
         <button type="button" class="btn btn--solid" id="btn-publish">Опубликовать</button>
+        <span class="dropdown dropdown--right" id="hdr-more-text-wrap">
+          <button type="button" class="btn btn--text" id="hdr-more-text" aria-haspopup="true" aria-expanded="false">Ещё ▾</button>
+          <div class="menu-pop" id="hdr-menu-text" hidden>
+            <button type="button" id="more-preview" disabled title="Модуль не загружен">Предпросмотр</button>
+            <button type="button" id="more-password" disabled title="Модуль не загружен">Сменить пароль</button>
+          </div>
+        </span>
         <button type="button" class="btn btn--text" id="btn-logout">Выйти</button>
       </div>
       <button type="button" class="hdr__more" id="hdr-more" aria-haspopup="true" aria-expanded="false" aria-label="Ещё действия">⋯</button>
-      <div class="hdr__menu" id="hdr-menu" hidden>
+      <div class="hdr__menu menu-pop" id="hdr-menu" hidden>
         <button type="button" id="menu-revert" disabled>Отменить правки</button>
+        <button type="button" id="menu-preview" disabled title="Модуль не загружен">Предпросмотр</button>
+        <button type="button" id="menu-password" disabled title="Модуль не загружен">Сменить пароль</button>
         <button type="button" id="menu-logout">Выйти</button>
       </div>
     </header>
@@ -67,43 +79,74 @@
     </div>
 
     <div class="notice notice--demo" id="demo-bar" hidden>
-      Демонстрация. Изменения сохраняются только в этом браузере, на сайт не попадают. На сервере владельца та же страница публикует прайс по-настоящему.
+      Демонстрация. Изменения сохраняются только в этом браузере, на сайт не попадают. На сервере владельца та же
+      страница публикует прайс по-настоящему.
     </div>
 
-    <div class="toolbar">
-      <div class="search">
-        <label for="f-search" class="sr-only">Поиск по названию, варианту, примечанию</label>
-        <input type="search" id="f-search" placeholder="Поиск по названию, варианту, примечанию…">
+    <nav class="tabs" role="tablist" aria-label="Разделы админки" id="tabs">
+      <button type="button" class="tabs__btn" id="tab-price" role="tab" aria-selected="true" aria-controls="panel-price" tabindex="0">Прайс</button>
+      <button type="button" class="tabs__btn" id="tab-cards" role="tab" aria-selected="false" aria-controls="panel-cards" tabindex="-1">Карточки</button>
+      <button type="button" class="tabs__btn" id="tab-history" role="tab" aria-selected="false" aria-controls="panel-history" tabindex="-1">История</button>
+    </nav>
+
+    <!-- ВКЛАДКА «ПРАЙС» -->
+    <section class="tabpanel" role="tabpanel" id="panel-price" aria-labelledby="tab-price" tabindex="0">
+      <div class="toolbar">
+        <div class="search">
+          <label for="f-search" class="sr-only">Поиск по названию, варианту, примечанию</label>
+          <input type="search" id="f-search" placeholder="Поиск по названию, варианту, примечанию…">
+        </div>
+        <div class="toolbar__actions">
+          <button type="button" class="btn btn--ghost" id="btn-add">+ Добавить позицию</button>
+          <button type="button" class="btn btn--ghost" id="btn-import" disabled title="Модуль не загружен">Импорт</button>
+          <span class="dropdown" id="export-dropdown">
+            <button type="button" class="btn btn--ghost" id="btn-export" aria-haspopup="true" aria-expanded="false" disabled title="Модуль не загружен">Экспорт ▾</button>
+            <div class="menu-pop" id="export-menu" hidden>
+              <button type="button" id="export-xlsx">Excel (.xlsx)</button>
+              <button type="button" id="export-print">Печать / PDF</button>
+            </div>
+          </span>
+          <button type="button" class="btn btn--ghost" id="btn-reprice" disabled title="Модуль не загружен">Переоценка</button>
+        </div>
       </div>
-      <button type="button" class="btn btn--ghost" id="btn-add">+ Добавить позицию</button>
-    </div>
 
-    <div class="table-wrap">
-      <table id="price-table">
-        <caption class="sr-only">Таблица позиций прайса — редактирование раздела, названия, вариантов, цен, наличия и примечаний</caption>
-        <thead>
-          <tr>
-            <th scope="col" class="c-cat">Раздел</th>
-            <th scope="col" class="c-name">Название</th>
-            <th scope="col" class="c-variant">Вариант</th>
-            <th scope="col" class="c-unit">Ед.</th>
-            <th scope="col" class="c-retail">Розница, ₽</th>
-            <th scope="col" class="c-opt">Опт, ₽</th>
-            <th scope="col" class="c-stock">Наличие</th>
-            <th scope="col" class="c-notes">Примечание</th>
-            <th scope="col" class="c-del"><span class="sr-only">Удалить строку</span></th>
-          </tr>
-        </thead>
-        <tbody id="tbody"></tbody>
-      </table>
-      <p class="empty-state" id="empty-state" hidden></p>
-    </div>
+      <div class="table-wrap">
+        <table id="price-table">
+          <caption class="sr-only">Таблица позиций прайса — редактирование раздела, названия, вариантов, цен, наличия и примечаний</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="c-cat">Раздел</th>
+              <th scope="col" class="c-name">Название</th>
+              <th scope="col" class="c-variant">Вариант</th>
+              <th scope="col" class="c-unit">Ед.</th>
+              <th scope="col" class="c-retail">Розница, ₽</th>
+              <th scope="col" class="c-opt">Опт, ₽</th>
+              <th scope="col" class="c-stock">Наличие</th>
+              <th scope="col" class="c-notes">Примечание</th>
+              <th scope="col" class="c-del"><span class="sr-only">Удалить строку</span></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+        <p class="empty-state" id="empty-state" hidden></p>
+      </div>
+    </section>
 
-    <details class="history" id="history">
-      <summary>История публикаций</summary>
-      <ul class="history__list" id="history-list"></ul>
-      <p class="history__empty" id="history-empty" hidden>Публикаций ещё не было.</p>
-    </details>
+    <!-- ВКЛАДКА «КАРТОЧКИ» -->
+    <section class="tabpanel" role="tabpanel" id="panel-cards" aria-labelledby="tab-cards" hidden tabindex="0">
+      <div id="cards-root">
+        <p class="empty-state">Модуль карточек не загружен.</p>
+      </div>
+    </section>
+
+    <!-- ВКЛАДКА «ИСТОРИЯ» -->
+    <section class="tabpanel" role="tabpanel" id="panel-history" aria-labelledby="tab-history" hidden tabindex="0">
+      <div class="history-tab">
+        <h2 class="history-tab__title" id="history-heading" tabindex="-1">История публикаций</h2>
+        <ul class="history__list" id="history-list"></ul>
+        <p class="history__empty" id="history-empty" hidden>Публикаций ещё не было.</p>
+      </div>
+    </section>
 
     <div class="publish-bar-mobile">
       <button type="button" class="btn btn--solid" id="btn-publish-mobile">Опубликовать</button>
@@ -146,9 +189,24 @@
     </div>
   </div>
 
+  <!-- УНИВЕРСАЛЬНЫЙ ЛИСТ (RYBADM.modal.open/close) — для модулей: смена пароля, предпросмотр-заглушка,
+       диффы импорта и т.п. Ядро только строит и открывает/закрывает контейнер; содержимое — за вызывающим. -->
+  <div class="modal-backdrop" id="sheet-backdrop" hidden>
+    <div class="modal" id="sheet-dialog" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1">
+      <h2 id="sheet-title"></h2>
+      <div id="sheet-body"></div>
+      <div class="modal__actions" id="sheet-actions"></div>
+    </div>
+  </div>
+
   <div class="toasts" id="toasts" aria-live="polite"></div>
 
   <script src="../assets/prices.js?v=20260805"></script>
+  <script src="../assets/catalog.js?v=20260904"></script>
   <script src="admin.js"></script>
+  <script src="vendor/xlsx.full.min.js" defer></script>
+  <script src="admin-import.js" defer></script>
+  <script src="admin-cards.js" defer></script>
+  <script src="admin-extra.js" defer></script>
 </body>
 </html>

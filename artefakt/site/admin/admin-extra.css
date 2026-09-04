@@ -1,0 +1,62 @@
+/* ============================================================
+   admin-extra.css — стили модуля «экстра» (_СПЕК-V2.md §6):
+   предпросмотр, «Что изменилось» в истории, смена пароля, строка
+   «Вы вошли как …». Токены/компоненты — язык admin.css (§0, §2, §4а,
+   §9); свои классы — с префиксом rybx-, чтобы не столкнуться с
+   admin-cards.css / admin-import.css.
+   ============================================================ */
+
+/* ---------- 1. меню «⋯»/«Ещё ▾» — строка «Вы вошли как …» ---------- */
+.rybx-menu-info{
+  padding:8px 12px 10px;margin-bottom:4px;
+  font-size:11px;line-height:1.4;color:var(--drift);
+  border-bottom:1px solid var(--hair);
+}
+
+/* ---------- 2. история — кнопка и раскрытие «Что изменилось» ---------- */
+.rybx-diff-btn{margin-left:auto}
+.rybx-diff-panel{
+  padding:2px 4px 16px;border-bottom:1px solid var(--hair);
+  font-size:12.5px;color:var(--cream);
+}
+.rybx-diff-summary{margin:0 0 8px;color:var(--drift)}
+.rybx-diff-empty{margin:0;color:var(--drift)}
+.rybx-diff-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
+.rybx-diff-list li{
+  padding:6px 10px;border-radius:6px;background:var(--bark-05);
+  font-family:var(--fm);font-size:12px;line-height:1.5;word-break:break-word;
+}
+.rybx-diff-more{margin:8px 0 0;color:var(--drift);font-size:11.5px}
+
+/* ---------- 3. смена пароля — форма внутри универсального листа ---------- */
+.rybx-pass-error{color:var(--ember);font-size:12.5px;margin:-4px 0 4px;line-height:1.5}
+
+/* ---------- 4. предпросмотр — панель поверх приложения ----------
+   <1280 — полноэкранный лист (inset:0), ≥1280 — сайдбар 46% справа,
+   под шапкой и вкладками; в этом случае body.has-preview ужимает
+   контент #screen-app своим padding-right (табличная шапка/тулбар —
+   position:sticky внутри #screen-app и сжимаются вместе с ним). */
+#preview-pane{
+  position:fixed;top:0;right:0;bottom:0;left:0;z-index:50;
+  display:flex;flex-direction:column;
+  background:var(--walnut);border-left:1px solid var(--cork);
+}
+.rybx-preview__bar{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  flex:0 0 auto;padding:10px 16px;
+  background:var(--bark-05);border-bottom:1px solid var(--cork);
+}
+.rybx-preview__title{font-size:13px;font-weight:600;color:var(--cream)}
+.rybx-preview__actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.rybx-preview__actions a.btn{text-decoration:none}
+.rybx-preview__body{position:relative;flex:1 1 auto;min-height:0}
+#rybx-preview-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:var(--cream)}
+.rybx-preview__filenote{
+  margin:0;padding:40px 24px;text-align:center;
+  color:var(--drift);font-size:13px;line-height:1.6;
+}
+
+@media (min-width:1280px){
+  #preview-pane{left:auto;width:46%;top:calc(var(--hdr-h) + var(--tabs-h))}
+  body.has-preview #screen-app{padding-right:46%}
+}

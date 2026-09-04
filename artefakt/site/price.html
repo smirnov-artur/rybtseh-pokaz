@@ -66,17 +66,16 @@
   .price__seg > .lbl{margin-right:2px}
   .price__count{margin-left:auto;display:flex;gap:8px 18px;align-items:baseline;flex-wrap:wrap}
 
-  /* активная колонка цены подсвечивается кремом, вторая уходит в drift */
-  .table.is-opt .pr__p--o{color:var(--cream)}
-  .table.is-opt .pr__p--r{color:var(--drift)}
-  .table .pr:hover .pr__p{color:var(--cream)}
-  .thead span.is-on{color:var(--cream)}
-  .thead{top:clamp(50px,6.4vh,62px)}
-
-  .pr__v{font-size:var(--micro);letter-spacing:.05em;text-transform:uppercase;color:var(--drift)}
   .price__hint{display:none;padding-top:14px}
-  .table.is-opt ~ .price__hint{display:block}
+  #cat.is-opt ~ .price__hint{display:block}
   .price__legal{margin-top:clamp(16px,2.4vh,26px);max-width:86ch}
+
+  /* предпросмотр из админки (?preview=1 → .is-preview на <html>, п. 2.6):
+     в iframe панели заявки и кнопке связи делать нечего */
+  html.is-preview .ord-fab,
+  html.is-preview .ord-panel,
+  html.is-preview .ord-bar,
+  html.is-preview .fab{display:none!important}
 
   /* зал «Как читать прайс» */
   .read__grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:var(--gap);align-items:center}
@@ -118,9 +117,9 @@
        (order.js ставит .ord-panel.is-on), сужаем таблицу прайса, чтобы цены
        оставались читаемы. Тот же приём, что на «Россо» (её price.html,
        :has(.ord-panel.is-on)), подогнан под разметку и переменные «Артефакта»:
-       у таблицы нет своего .wrap — сужаем #table напрямую. */
+       у карточек нет своего .wrap — сужаем #cat напрямую (карточки, п. 2). */
     @supports selector(:has(*)) {
-      body:has(.ord-panel.is-on) #table{
+      body:has(.ord-panel.is-on) #cat{
         padding-right:calc(var(--pad) + 400px);
         transition:padding-right .25s var(--e-inout3);
       }
@@ -230,12 +229,10 @@
     </div>
   </div>
 
-  <div class="table" id="table">
-    <div class="thead"><span>Наименование</span><span id="thOpt">Опт</span><span id="thRet" class="is-on">Розница</span></div>
-    <div id="tbody">
-      <noscript><p class="bs" style="padding:2em 0">Прайс собирается из единого файла цен, для этого нужен JavaScript. Если он выключен, позвоните: опт — <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>, розница — <a href="tel:+79185949685">+7&nbsp;918&nbsp;594-96-85</a>.</p></noscript>
-    </div>
+  <div class="cat" id="cat">
+    <noscript><p class="bs" style="padding:2em 0">Прайс собирается из единого файла цен, для этого нужен JavaScript. Если он выключен, позвоните: опт — <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a>, розница — <a href="tel:+79185949685">+7&nbsp;918&nbsp;594-96-85</a>.</p></noscript>
   </div>
+  <p class="empty" id="catEmpty" hidden>Ничего не нашлось. Проверьте запрос или снимите фильтры. Позиции вне прайса — по телефону: <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></p>
 
   <p class="lbl price__hint" id="optHint">Оптовая цена действует при заказе от 100&nbsp;кг в&nbsp;ассортименте, не менее 10&nbsp;кг по одной позиции. Заказ формируется за 10–14 дней, предоплата 50%.</p>
 
@@ -406,47 +403,47 @@
 <p class="nano nano--note stampnote" aria-hidden="true" data-price-tpl="* Цимлянское водохранилище · ГОСТ-92 · прайс от {d}">* Цимлянское водохранилище · ГОСТ-92 · прайс от 05.08.2026</p>
 
 <script src="assets/prices.js?v=20260805"></script>
+<script src="assets/catalog-util.js"></script>
+<script src="assets/catalog.js?v=20260904"></script>
 <script>
 /* ============================================================
-   Рендер прайса. Единственный источник данных — window.PRICES.
-   Цифры в разметку не вбиваются: всё считается из P.items.
+   Рендер прайса карточками. Источники данных — window.PRICES и
+   window.CATALOG. Цифры в разметку не вбиваются: всё считается из
+   P.items + CATALOG.products (привязка — assets/catalog-util.js, п. 0.1).
+   Карточки строятся ОДИН РАЗ (DOM-узлы не пересоздаются) — фильтр,
+   поиск и сортировка только переключают [hidden] и переставляют узлы
+   (appendChild), чтобы не терять состояние order.js и появления data-rv.
    ============================================================ */
 (function () {
   'use strict';
-  var P = window.PRICES || {};
-  var ITEMS = (P.items || []).slice();
-
   var $ = function (s) { return document.querySelector(s); };
-  var tbody = $('#tbody'), table = $('#table');
-  if (!tbody) return;
+  var catEl = $('#cat');
+  if (!catEl) return;
 
-  /* --- порядок и подписи разделов --- */
-  var ORDER = ['вяленая', 'вяленая и холодного копчения', 'холодного копчения', 'слабосолёная', 'икра'];
-  var TITLE = {
+  var CAT_ORDER = ['вяленая', 'вяленая и холодного копчения', 'холодного копчения', 'слабосолёная', 'икра'];
+  var GRP_TITLE = {
     'вяленая': 'Вяленая',
-    'вяленая и холодного копчения': 'Вяленая и холодного копчения',
     'холодного копчения': 'Холодного копчения',
+    'вяленая и холодного копчения': 'Вяленая или х/к',
     'слабосолёная': 'Слабосолёная',
     'икра': 'Икра'
   };
-
   var UNIT_TAG = { 'банка': 'за банку', 'шт': 'за штуку' };
-
-  var MONTH = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  var MONTH = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
   function norm(s) { return String(s == null ? '' : s).toLowerCase().replace(/ё/g, 'е'); }
-
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
   function money(v) {
     if (v == null || isNaN(v)) return '—';
     var r = Math.round(v * 100) / 100;
     var ip = Math.floor(r), fp = Math.round((r - ip) * 100);
-    var s = String(ip).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    var s = String(ip).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     if (fp) s += ',' + (fp < 10 ? '0' + fp : fp);
-    return s + ' ₽';
+    return s + ' ₽';
   }
   function plural(n, a, b, c) {
     var n10 = n % 10, n100 = n % 100;
@@ -460,80 +457,255 @@
     return parseInt(m[3], 10) + ' ' + MONTH[parseInt(m[2], 10) - 1] + ' ' + m[1];
   }
 
-  /* --- состояние --- */
+  /* --- данные (перечитываются в rerender() при предпросмотре) --- */
+  var P, CATALOG, ITEMS, ALL_CARDS, CARDS, ROWS;
+
+  /* --- состояние фильтров/сортировки/режима --- */
   var state = { cat: 'all', q: '', mode: 'retail', sort: 'group' };
+  var qp = new URLSearchParams(location.search);
+  if (norm(qp.get('mode')) === 'opt') state.mode = 'opt';
 
-  var params = new URLSearchParams(location.search);
-  if (norm(params.get('mode')) === 'opt') state.mode = 'opt';
+  function loadData() {
+    P = window.PRICES || {};
+    CATALOG = window.CATALOG || { updated: null, products: [] };
+    ITEMS = (P.items || []).slice();
+  }
 
-  function priceOf(it) { return state.mode === 'opt' ? it.price_opt : it.price_retail; }
+  /* --- группировка позиций в карточки (п. 0.1) --- */
+  function buildAll() {
+    var map = {}, list = [], autoSeq = 0;
+    ITEMS.forEach(function (it) {
+      var product = (window.productKeyOf && window.productKeyOf(CATALOG, it)) || null;
+      var k, rec;
+      if (product) {
+        k = product.key;
+        rec = map[k];
+        if (!rec) {
+          rec = {
+            key: product.key, name: product.name, latin: product.latin || '',
+            origin: product.origin || '', blurb: product.blurb || '', photo: product.photo || null,
+            order: (typeof product.order === 'number' ? product.order : 900), hidden: !!product.hidden,
+            items: []
+          };
+          map[k] = rec; list.push(rec);
+        }
+      } else {
+        var nm = (window.productNameOf && window.productNameOf(it)) || it.name;
+        k = 'auto:' + norm(nm);
+        rec = map[k];
+        if (!rec) {
+          rec = {
+            key: 'auto-' + (autoSeq), name: nm, latin: '', origin: '', blurb: '', photo: null,
+            order: 900 + (autoSeq++), hidden: false, items: []
+          };
+          map[k] = rec; list.push(rec);
+        }
+      }
+      rec.items.push(it);
+    });
+    list.sort(function (a, b) { return a.order - b.order; });
+    list.forEach(function (c, i) { c.num = i + 1; });
+    return list;
+  }
 
-  function match(it) {
-    if (state.cat !== 'all' && norm(it.category).indexOf(norm(state.cat)) === -1) return false;
+  /* --- одна строка-позиция внутри карточки --- */
+  function buildRowRef(item, card) {
+    var row = document.createElement('div');
+    row.className = 'pcard__row';
+    row.setAttribute('data-order-id', item.id);
+    var tags = '';
+    if (/отборн/i.test(item.name)) tags += '<span class="tag">Отборный</span>';
+    if (item.notes === 'фирменный рецепт') tags += '<span class="tag">Фирменный рецепт</span>';
+    else if (item.notes) tags += '<span class="tag tag--dim">' + esc(item.notes) + '</span>';
+    if (item.unit && item.unit !== 'кг') tags += '<span class="tag tag--dim">' + esc(UNIT_TAG[item.unit] || ('цена за ' + item.unit)) + '</span>';
+    var variantText = item.variant ? esc(item.variant) : 'целиком';
+    row.innerHTML =
+      '<span class="pcard__v">' + variantText + tags + '</span>' +
+      '<span class="pcard__price"><b data-l="Розница">' + money(item.price_retail) + '</b><small data-l="Опт">' + money(item.price_opt) + '</small></span>';
+    var ref = { el: row, item: item, card: card };
+    ROWS.push(ref);
+    return ref;
+  }
+
+  /* --- карточка целиком --- */
+  function buildCardEl(card) {
+    var el = document.createElement('article');
+    el.className = 'pcard';
+    el.setAttribute('data-product', card.key);
+    el.setAttribute('data-rv', '');
+
+    var plate = document.createElement('div');
+    plate.className = 'pcard__plate';
+    var numHtml = '<span class="pcard__num">№&nbsp;' + pad2(card.num) + '</span>';
+    if (card.photo) {
+      var base = card.photo.replace(/\.jpg$/i, '');
+      plate.innerHTML =
+        '<picture>' +
+          '<source type="image/webp" srcset="' + esc(base) + '-640.webp 640w, ' + esc(base) + '.webp 1400w" sizes="(max-width:759px) 92vw, (max-width:1179px) 46vw, 30vw">' +
+          '<img class="pcard__img" src="' + esc(card.photo) + '" srcset="' + esc(base) + '-640.jpg 640w, ' + esc(card.photo) + ' 1400w" sizes="(max-width:759px) 92vw, (max-width:1179px) 46vw, 30vw" alt="' + esc(card.name) + ' на сланце" loading="lazy" width="1400" height="1400" decoding="async">' +
+        '</picture>' +
+        '<div class="ph__corners"><i></i><i></i><i></i><i></i></div>' +
+        numHtml;
+    } else {
+      plate.className += ' pcard__plate--empty';
+      plate.innerHTML =
+        '<div class="ph__corners"><i></i><i></i><i></i><i></i></div>' +
+        '<div class="pcard__label"><b>' + esc(card.latin || card.name) + '</b><span>образец в подготовке</span></div>' +
+        numHtml;
+    }
+    el.appendChild(plate);
+
+    var head = document.createElement('header');
+    head.className = 'pcard__head';
+    var headHtml = '<h3 class="pcard__name">' + esc(card.name) + '</h3>';
+    if (card.latin) headHtml += '<p class="pcard__latin">' + esc(card.latin) + '</p>';
+    if (card.origin) headHtml += '<span class="pcard__origin lbl">' + esc(card.origin) + '</span>';
+    head.innerHTML = headHtml;
+    el.appendChild(head);
+
+    if (card.blurb) {
+      var blurb = document.createElement('p');
+      blurb.className = 'pcard__blurb bs';
+      blurb.textContent = card.blurb;
+      el.appendChild(blurb);
+    }
+
+    var rowsBox = document.createElement('div');
+    rowsBox.className = 'pcard__rows';
+
+    var catsPresent = [];
+    card.items.forEach(function (it) { if (catsPresent.indexOf(it.category) === -1) catsPresent.push(it.category); });
+    var ordered = CAT_ORDER.filter(function (c) { return catsPresent.indexOf(c) > -1; });
+    catsPresent.forEach(function (c) { if (ordered.indexOf(c) === -1) ordered.push(c); });
+    var showGrp = ordered.length > 1;
+
+    card.rowRefs = [];
+    card.groups = [];
+
+    ordered.forEach(function (c) {
+      var groupRows = [], grpEl = null;
+      if (showGrp) {
+        grpEl = document.createElement('div');
+        grpEl.className = 'pcard__grp lbl';
+        grpEl.textContent = GRP_TITLE[c] || c;
+        rowsBox.appendChild(grpEl);
+      }
+      card.items.filter(function (it) { return it.category === c; }).forEach(function (it) {
+        var ref = buildRowRef(it, card);
+        rowsBox.appendChild(ref.el);
+        card.rowRefs.push(ref);
+        groupRows.push(ref);
+      });
+      if (showGrp) card.groups.push({ el: grpEl, rows: groupRows });
+    });
+
+    el.appendChild(rowsBox);
+    return el;
+  }
+
+  function mountCards() {
+    ROWS = [];
+    ALL_CARDS = buildAll();
+    CARDS = ALL_CARDS.filter(function (c) { return !c.hidden; });
+    catEl.innerHTML = '';
+    CARDS.forEach(function (card) {
+      card.el = buildCardEl(card);
+      catEl.appendChild(card.el);
+    });
+  }
+
+  /* --- фильтр по чипу + поиск (п. 2.5): по имени карточки, латинскому
+     названию, варианту и примечанию строки --- */
+  function matchCat(it) {
+    return state.cat === 'all' || norm(it.category).indexOf(norm(state.cat)) > -1;
+  }
+  function matchSearch(card, it) {
     if (!state.q) return true;
-    var hay = norm(it.name + ' ' + (it.variant || '') + ' ' + it.category + ' ' + (it.notes || ''));
+    var hay = norm(card.name + ' ' + (card.latin || '') + ' ' + (it.variant || '') + ' ' + (it.notes || ''));
     var words = state.q.split(/\s+/);
     for (var i = 0; i < words.length; i++) { if (words[i] && hay.indexOf(words[i]) === -1) return false; }
     return true;
   }
 
-  function rowHTML(it) {
-    var tags = '';
-    if (/отборн/i.test(it.name)) tags += '<span class="tag">Отборный</span>';
-    if (it.notes === 'фирменный рецепт') tags += '<span class="tag">Фирменный рецепт</span>';
-    else if (it.notes) tags += '<span class="tag tag--dim">' + esc(it.notes) + '</span>';
-    if (it.unit && it.unit !== 'кг') tags += '<span class="tag tag--dim">' + esc(UNIT_TAG[it.unit] || ('цена за ' + it.unit)) + '</span>';
-    var v = it.variant ? '<span class="pr__v">' + esc(it.variant) + '</span>' : '';
-    return '<div class="pr">'
-      + '<div class="pr__n"><b>' + esc(it.name) + '</b>' + v + tags + '</div>'
-      + '<div class="pr__p pr__p--o" data-l="Опт">' + money(it.price_opt) + '</div>'
-      + '<div class="pr__p pr__p--r" data-l="Розница">' + money(it.price_retail) + '</div>'
-      + '</div>';
+  function applyFilter() {
+    var shown = 0;
+    ROWS.forEach(function (r) {
+      var visible = matchCat(r.item) && matchSearch(r.card, r.item);
+      r.el.hidden = !visible;
+      if (visible) shown++;
+    });
+    CARDS.forEach(function (card) {
+      var any = card.rowRefs.some(function (r) { return !r.el.hidden; });
+      card.el.hidden = !any;
+      card.groups.forEach(function (g) {
+        g.el.hidden = !g.rows.some(function (r) { return !r.el.hidden; });
+      });
+    });
+    updateCounters(shown);
   }
 
-  function render() {
-    var shown = ITEMS.filter(match);
-    var html = '';
-
-    if (!shown.length) {
-      html = '<div class="empty">Ничего не нашлось. Проверьте запрос или снимите фильтры. Позиции вне прайса — по телефону: <a href="tel:+79287702170">+7&nbsp;928&nbsp;770-21-70</a></div>';
-    } else if (state.sort === 'group') {
-      var cats = ORDER.slice();
-      shown.forEach(function (it) { if (cats.indexOf(it.category) === -1) cats.push(it.category); });
-      cats.forEach(function (c) {
-        var part = shown.filter(function (it) { return it.category === c; });
-        if (!part.length) return;
-        html += '<div class="grp"><span class="lbl lbl--cream">' + esc(TITLE[c] || c) + '</span></div>';
-        part.forEach(function (it) { html += rowHTML(it); });
-      });
-    } else {
-      var list = shown.slice();
-      if (state.sort === 'name') {
-        list.sort(function (a, b) { return (a.name + ' ' + (a.variant || '')).localeCompare(b.name + ' ' + (b.variant || ''), 'ru'); });
-      } else {
-        var sign = state.sort === 'asc' ? 1 : -1;
-        list.sort(function (a, b) { return sign * ((priceOf(a) || 0) - (priceOf(b) || 0)); });
-      }
-      list.forEach(function (it) { html += rowHTML(it); });
-    }
-
-    tbody.innerHTML = html;
-
-    /* счётчики — только из данных */
-    var total = ITEMS.length;
-    var n = shown.length;
-    var word = plural(n, 'позиция', 'позиции', 'позиций');
+  function updateCounters(shown) {
+    var total = ROWS.length;
+    var word = plural(shown, 'позиция', 'позиции', 'позиций');
     var cnt = $('#pShown');
-    if (cnt) cnt.textContent = (n === total)
+    if (cnt) cnt.textContent = (shown === total)
       ? (total + ' ' + plural(total, 'позиция', 'позиции', 'позиций'))
-      : ('Показано ' + n + ' ' + word + ' из ' + total);
+      : ('Показано ' + shown + ' ' + word + ' из ' + total);
     var reset = $('#pReset');
     if (reset) reset.hidden = (state.cat === 'all' && !state.q);
+    var emptyEl = $('#catEmpty');
+    if (emptyEl) emptyEl.hidden = shown > 0;
   }
 
-  /* --- переключение чипов --- */
-  function bindChips(sel, apply) {
-    var box = $(sel);
+  /* --- сортировка карточек (п. 2.5): переставляем существующие узлы,
+     а не пересоздаём — и order.js, и появления data-rv остаются целы --- */
+  function cardPriceExtent(card, useMax) {
+    var v = useMax ? -Infinity : Infinity;
+    card.items.forEach(function (it) {
+      var p = state.mode === 'opt' ? it.price_opt : it.price_retail;
+      if (p == null) return;
+      if (useMax) { if (p > v) v = p; } else if (p < v) v = p;
+    });
+    return v;
+  }
+  function applySort() {
+    var list = CARDS.slice();
+    if (state.sort === 'name') {
+      list.sort(function (a, b) { return a.name.localeCompare(b.name, 'ru'); });
+    } else if (state.sort === 'asc' || state.sort === 'desc') {
+      var useMax = state.sort === 'desc';
+      list.sort(function (a, b) {
+        var va = cardPriceExtent(a, useMax), vb = cardPriceExtent(b, useMax);
+        return useMax ? (vb - va) : (va - vb);
+      });
+    } else {
+      list.sort(function (a, b) { return a.order - b.order; });
+    }
+    list.forEach(function (c) { catEl.appendChild(c.el); });
+  }
+
+  /* --- режим цены: класс на #cat, без перерисовки (п. 2.4) --- */
+  function applyModePrice(push) {
+    var opt = state.mode === 'opt';
+    catEl.classList.toggle('is-opt', opt);
+    var hint = $('#optHint');
+    if (hint) hint.style.display = opt ? 'block' : 'none';
+    Array.prototype.forEach.call(document.querySelectorAll('#fMode .chip'), function (x) {
+      var on = x.getAttribute('data-m') === state.mode;
+      x.classList.toggle('is-on', on);
+      x.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (state.sort === 'asc' || state.sort === 'desc') applySort();
+    if (push && window.history && history.replaceState) {
+      var p = new URLSearchParams(location.search);
+      if (opt) p.set('mode', 'opt'); else p.delete('mode');
+      var qs = p.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+    }
+  }
+
+  /* --- чипы: категория / сортировка / режим --- */
+  function bindChip(box, onPick) {
     if (!box) return;
     box.addEventListener('click', function (e) {
       var b = e.target.closest('button.chip');
@@ -543,69 +715,70 @@
         x.classList.toggle('is-on', on);
         x.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      apply(b);
-      render();
+      onPick(b);
     });
   }
+  bindChip($('#fCat'), function (b) { state.cat = b.getAttribute('data-f'); applyFilter(); });
+  bindChip($('#fSort'), function (b) { state.sort = b.getAttribute('data-s'); applySort(); });
+  bindChip($('#fMode'), function (b) { state.mode = b.getAttribute('data-m'); applyModePrice(true); });
 
-  bindChips('#fCat', function (b) { state.cat = b.getAttribute('data-f'); });
-  bindChips('#fSort', function (b) { state.sort = b.getAttribute('data-s'); });
-  bindChips('#fMode', function (b) { state.mode = b.getAttribute('data-m'); applyMode(true); });
-
-  function applyMode(push) {
-    var opt = state.mode === 'opt';
-    if (table) table.classList.toggle('is-opt', opt);
-    var to = $('#thOpt'), tr = $('#thRet');
-    if (to) to.classList.toggle('is-on', opt);
-    if (tr) tr.classList.toggle('is-on', !opt);
-    var hint = $('#optHint');
-    if (hint) hint.style.display = opt ? 'block' : 'none';
-    Array.prototype.forEach.call(document.querySelectorAll('#fMode .chip'), function (x) {
-      var on = x.getAttribute('data-m') === state.mode;
-      x.classList.toggle('is-on', on);
-      x.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    if (push && window.history && history.replaceState) {
-      var p = new URLSearchParams(location.search);
-      if (opt) p.set('mode', 'opt'); else p.delete('mode');
-      var qs = p.toString();
-      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
-    }
-  }
-
-  var q = $('#q');
-  if (q) {
-    var t;
-    q.addEventListener('input', function () {
-      clearTimeout(t);
-      t = setTimeout(function () { state.q = norm(q.value).trim(); render(); }, 120);
+  var qInput = $('#q');
+  if (qInput) {
+    var qTimer;
+    qInput.addEventListener('input', function () {
+      clearTimeout(qTimer);
+      qTimer = setTimeout(function () { state.q = norm(qInput.value).trim(); applyFilter(); }, 120);
     });
   }
-  var reset = $('#pReset');
-  if (reset) reset.addEventListener('click', function () {
+  var resetBtn = $('#pReset');
+  if (resetBtn) resetBtn.addEventListener('click', function () {
     state.cat = 'all'; state.q = '';
-    if (q) q.value = '';
+    if (qInput) qInput.value = '';
     Array.prototype.forEach.call(document.querySelectorAll('#fCat .chip'), function (x) {
       var on = x.getAttribute('data-f') === 'all';
       x.classList.toggle('is-on', on);
       x.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-    render();
+    applyFilter();
   });
 
-  /* --- мета из файла цен --- */
-  var d = $('#pDate'); if (d) d.textContent = dateRu(P.updated);
-  var tot = $('#pTotal');
-  if (tot) { tot.textContent = String(ITEMS.length); tot.setAttribute('data-count', ITEMS.length); }
-  var totW = $('#pTotalWord');
-  if (totW) totW.textContent = plural(ITEMS.length, 'позиция', 'позиции', 'позиций') + ' в прайсе';
-  var fc = $('#footCount');
-  if (fc) fc.textContent = ITEMS.length + ' ' + plural(ITEMS.length, 'позиция', 'позиции', 'позиций') + ' прайса';
-  var legal = $('#pLegal');
-  if (legal && P.vat_note) legal.textContent = P.vat_note + ' Товар обмену и возврату не подлежит.';
+  /* --- мета из файла цен: не зависит от карточек, считается из P/ITEMS --- */
+  function fillMeta() {
+    var d = $('#pDate'); if (d) d.textContent = dateRu(P.updated);
+    var tot = $('#pTotal');
+    if (tot) { tot.textContent = String(ITEMS.length); tot.setAttribute('data-count', ITEMS.length); }
+    var totW = $('#pTotalWord');
+    if (totW) totW.textContent = plural(ITEMS.length, 'позиция', 'позиции', 'позиций') + ' в прайсе';
+    var fc = $('#footCount');
+    if (fc) fc.textContent = ITEMS.length + ' ' + plural(ITEMS.length, 'позиция', 'позиции', 'позиций') + ' прайса';
+    var legal = $('#pLegal');
+    if (legal && P.vat_note) legal.textContent = P.vat_note + ' Товар обмену и возврату не подлежит.';
+  }
 
-  applyMode(false);
-  render();
+  /* --- (пере)рендер целиком: первый запуск и предпросмотр из админки (п. 2.6) --- */
+  function rerender() {
+    loadData();
+    mountCards();
+    applyModePrice(false);
+    applySort();
+    applyFilter();
+    fillMeta();
+  }
+
+  window.addEventListener('message', function (e) {
+    if (e.origin !== location.origin) return;
+    if (e.data && e.data.type === 'rybadm-preview') {
+      window.PRICES = e.data.prices || window.PRICES;
+      window.CATALOG = e.data.catalog || window.CATALOG;
+      rerender();
+    }
+  });
+
+  if (qp.get('preview') === '1') document.documentElement.classList.add('is-preview');
+
+  rerender();
+
+  if (qp.get('print') === '1') setTimeout(function () { window.print(); }, 600);
 })();
 </script>
 <script>
@@ -669,14 +842,10 @@
   });
 })();
 </script>
-<script src="assets/order.js"
-        data-theme="artefakt"
-        data-rows=".table .pr"
-        data-root="#tbody"
-        data-name-cell=".pr__n"
-        data-page-opt="#fMode [data-m=&quot;opt&quot;]"
-        data-page-retail="#fMode [data-m=&quot;retail&quot;]"
-        data-mode-flags="#table:is-opt"></script>
+<script>
+  window.ORDER_CONFIG = { rows: '.pcard__row', nameCell: '.pcard__v', modeFlags: '#cat:is-opt' };
+</script>
+<script src="assets/order.js"></script>
 <script src="assets/schema.js"></script>
 <script>
   RybtsehSchema.inject(RybtsehSchema.breadcrumbList('Прайс'));

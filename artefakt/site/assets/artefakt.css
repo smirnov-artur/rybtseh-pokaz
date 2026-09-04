@@ -581,6 +581,10 @@ button.ph__play:hover{border-color:var(--cream)}
 .tag{
   font-family:var(--fm);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ember);
   border:1px solid var(--ember);border-radius:var(--r-ghost);padding:.25em .6em;line-height:1;
+  white-space:nowrap;
+  /* карточки прайса (.pcard__v) дают первой колонке узкую minmax(0,1fr) —
+     без nowrap длинный текст бирки («Фирменный рецепт») ломался на 2 строки
+     прямо внутри пилюли вместо того, чтобы перенести саму пилюлю целиком */
 }
 .tag--dim{color:var(--drift);border-color:var(--cork)}
 .price__note{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
@@ -1401,13 +1405,12 @@ a.lbl::before{content:"";position:absolute;inset:-5px -10px}
 body.menu-open .ord-fab{opacity:0;visibility:hidden;pointer-events:none}
 
 /* ---- price.html: кнопка «Заявка» висит fixed в правом нижнем углу и в
-   покое перекрывает розничный столбец таблицы (наезжает на последние ~50px
-   116-пиксельной колонки) и строку с датой прайса в подвале — оба элемента
-   тоже прижаты к правому краю той же вертикали. Резервируем под кнопку
-   отступ на десктопе (>860px — там же, где включается табличная раскладка
-   прайса), не трогая мобильную раскладку. */
+   покое перекрывает крайний правый столбец карточек (#cat, п. 2) и строку
+   с датой прайса в подвале — оба элемента тоже прижаты к правому краю той
+   же вертикали. Резервируем под кнопку отступ на десктопе (>860px), не
+   трогая мобильную раскладку. */
 @media (min-width:861px){
-  body.pg-price #table{padding-right:220px}
+  body.pg-price #cat{padding-right:220px}
   body.pg-price .foot__row{padding-right:220px}
 }
 
@@ -1435,6 +1438,16 @@ body.menu-open .ord-fab{opacity:0;visibility:hidden;pointer-events:none}
   .thead{position:static!important}
   .pr,.thead,.grp,.item{border-bottom-color:#ccc!important}
   .pr::before{display:none!important}
+  /* карточки прайса (п. 2.7 СПЕК-V2): 2 колонки, светлые волосяные линии,
+     без подъёма при «наведении» (курсора на бумаге не бывает) — кнопки
+     заявки уже гасит order.css (.ord-ctl{display:none!important}) */
+  #cat{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
+  .pcard{border-color:#ccc!important;transform:none!important}
+  .pcard__row,.pcard__grp{border-bottom-color:#ccc!important}
+  /* mix-blend-mode:multiply живым прогоном на печати даёт сплошной белый
+     прямоугольник вместо фото (CDP --print, вероятно и настоящая печать) —
+     на бумаге фотографии и так без подложки, блендить не с чем */
+  .pcard__img{mix-blend-mode:normal!important}
   [data-rv],[data-split],[data-mat],[data-stagger]{
     opacity:1!important;transform:none!important;filter:none!important;clip-path:none!important;
   }
@@ -1449,3 +1462,148 @@ body.menu-open .ord-fab{opacity:0;visibility:hidden;pointer-events:none}
 @media (min-width:1181px){ .reveal--wide .reveal__col .h{font-size:min(var(--heading),2.4vw)} }  /* 2.4vw: «ПРЕРЫВАЕТСЯ.» (12 знаков × .72em) влезает в колонку 345 px на 1440 и 270 px на 1181 */
 /* Касание без серой вспышки на iOS/Android */
 html{-webkit-tap-highlight-color:transparent}
+
+/* ============================================================
+   «АРТЕФАКТ» · КАРТОЧКИ ПРАЙСА .pcard (СПЕК-V2, 04.09.2026)
+   Музейные таблички экспонатов — заменяют строчную .table/.pr/.thead
+   в price.html (#cat). Старые правила .pr/.grp/.table/.thead НЕ
+   удалены (их ещё используют печать и _anim-demo.html/_smoke.html) —
+   пространства имён .pcard* с ними не пересекаются.
+   ============================================================ */
+/* 04.09 (куратор): не grid, а колонки. У «Леща» 12 позиций, у «Толстолоба» одна —
+   в grid ряд тянулся по самой высокой карточке и под короткими зияла пустота
+   в пол-экрана. Многоколоночная раскладка укладывает карточки плотно, порядок —
+   сверху вниз по колонке, затем следующая. */
+#cat{
+  /* display:block обязателен: у элемента ещё класс .cat (старый grid, строка ~514),
+     а многоколоночная раскладка работает только на блочном контейнере */
+  display:block;column-count:3;column-gap:var(--gap);
+}
+#cat .pcard{break-inside:avoid;margin:0 0 var(--gap);display:block}
+@media (max-width:1180px){ #cat{column-count:2} }
+@media (max-width:760px){ #cat{column-count:1} #cat .pcard{margin-bottom:clamp(20px,6vw,32px)} }
+/* фильтр/поиск/сортировка правят .hidden нативным атрибутом — display
+   у .pcard/.pcard__row/.pcard__grp свой (grid/flex/block), у обычного
+   [hidden] в UA-таблице специфичность (0,1,0) и он проигрывает тем
+   правилам без !important */
+#cat [hidden]{display:none!important}
+
+.pcard{
+  position:relative;isolation:isolate;display:block;
+  border:1px solid var(--cork);border-radius:var(--r-card);overflow:hidden;
+  transition:border-color var(--t),transform var(--t-700) var(--e);
+}
+.pcard:hover{border-color:var(--drift);transform:translateY(-5px)}
+
+/* табличка-витрина: КВАДРАТ 1:1 (04.09, владелец: фото — генерации серии «на сланце»,
+   портретные 3:4; квадрат из центра держит рыбу целиком, 4:3 резал бы).
+   Фон — тёплая тёмная ступень, без blend-режимов: снимки сами тёмные. */
+.pcard__plate{
+  position:relative;aspect-ratio:1/1;background:var(--bark);overflow:hidden;
+  display:grid;place-items:center;
+}
+.pcard__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* табличка без образца — ниже квадрата (4:3): двенадцать пустых квадратов подряд
+   давили страницу; с приходом фото карточка сама станет квадратной */
+.pcard__plate--empty{aspect-ratio:4/3}
+/* уголки .ph__corners живут «только в герое» по правилу .sec .ph__corners{display:none}
+   (раздел 9) — в табличке карточки их нужно вернуть, ID-селектор перебивает класс */
+#cat .ph__corners{display:block}
+#cat .ph__corners i{border-color:rgba(255,237,215,.32)}
+.pcard__num{
+  position:absolute;right:12px;bottom:10px;z-index:3;
+  font-family:var(--fm);font-size:10px;letter-spacing:.06em;color:rgba(255,237,215,.55);
+}
+/* без образца: латинское имя курсивом (синтетический наклон Golos Text — приём эталона) */
+.pcard__label{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
+  text-align:center;padding:22px;
+}
+.pcard__label b{
+  font-family:var(--ff);font-style:italic;font-weight:500;
+  font-size:clamp(22px,2.2vw,30px);line-height:1.08;color:var(--cream);
+}
+.pcard__label span{
+  font-family:var(--fm);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--drift);
+}
+
+/* шапка: имя · латинское · происхождение */
+.pcard__head{padding:20px 22px 0}
+.pcard__name{
+  font-size:clamp(22px,2.35vw,36px);line-height:.92;font-weight:500;
+  text-transform:uppercase;overflow-wrap:break-word;
+}
+.pcard__latin{margin-top:6px;font-family:var(--fm);font-size:11px;letter-spacing:.06em;color:var(--drift)}
+.pcard__origin{margin-top:9px;display:block}
+
+.pcard__blurb{padding:10px 22px 0}
+
+/* строки-позиции */
+.pcard__rows{padding:16px 22px 20px;margin-top:16px;border-top:1px solid var(--hair)}
+.pcard__grp{display:block;padding:.7em 0 .35em;border-bottom:1px solid var(--hair)}
+.pcard__grp:first-child{padding-top:0}
+.pcard__row{
+  /* align-items:start, не center — у длинного варианта («средний, 150–300 г»)
+     первая колонка переносится на 2 строки, а цену/кнопку читатель ждёт
+     на одной высоте с ПЕРВОЙ строкой варианта, не в геометрическом центре
+     между двумя строками (проверено живым прогоном на карточке «Судак») */
+  /* Три колонки в один ряд (вариант · цена · кнопка) на карточке 288px не
+     сходятся: с дорогой ценой (4 цифры + копейки, «Форель» х/к «тушка»)
+     кнопку «В заявку» срезало краем карточки (overflow:hidden), а с полом
+     у 1-й колонки короткие однословные варианты («целиком», «кольцо»)
+     ломались посреди слова — оба варианта проверены живым прогоном и оба
+     хуже, чем вторая строка. Вариант и цена делят верхнюю строку (2
+     колонки), контрол order.js — своя строка снизу, кнопка прижата вправо
+     (переопределение ниже), без растяжения на всю ширину. */
+  /* 04.09 (куратор): третья колонка вернулась — кнопка order.js в карточке
+     стала компактным кружком «+»/«−» (переопределение ниже), 30px ей хватает
+     при любой цене; строка позиции — одна, а не две. */
+  display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;
+  gap:4px 12px;padding:.6em 0;border-bottom:1px solid var(--hair);
+}
+.pcard__row:last-child{border-bottom:0}
+.pcard__v{
+  /* НЕ display:flex: на анонимном флекс-айтеме голого текста («целиком»,
+     без пробелов — переносить нечем) overflow-wrap:break-word не сработал
+     живым прогоном — колонка 43px, текст рвался за карточку. Обычный
+     блок с нормальным переносом строк держит и однословный вариант, и
+     многословный («средний, 150–300 г» у «Судак» уже переносится по
+     словам), бирка после текста — тем же потоком, с отступом слева. */
+  display:block;min-width:0;
+  font-size:var(--micro);letter-spacing:.04em;text-transform:uppercase;color:var(--drift);
+  overflow-wrap:break-word;
+}
+.pcard__v .tag{margin-left:6px;vertical-align:middle}
+.pcard__price{display:flex;align-items:baseline;gap:10px;font-variant-numeric:tabular-nums}
+.pcard__price b,.pcard__price small{
+  font-size:clamp(14px,1.1vw,17px);font-weight:500;letter-spacing:.03em;white-space:nowrap;
+  transition:color var(--tq);
+}
+.pcard__price b{color:var(--cream)}
+.pcard__price small{color:var(--drift)}
+#cat.is-opt .pcard__price b{color:var(--drift)}
+#cat.is-opt .pcard__price small{color:var(--cream)}
+
+/* контрол order.js вставляет сам в конец .pcard__row — степпер прячем;
+   кнопка «В заявку/Убрать» — своя строка на всю ширину (это уже поведение
+   order.css по умолчанию, .ord-ctl{grid-column:1/-1;width:100%} — здесь
+   только прижимаем содержимое вправо и убираем верхний отступ) */
+#cat .ord-ctl{grid-column:auto;width:auto;flex-basis:auto;margin-top:0;gap:0}
+.pcard .ord-q,.pcard .ord-ctl__note,.pcard .ord-ctl__tag{display:none}
+/* кнопка-кружок: текст «В заявку»/«Убрать» остаётся в aria-label (order.js ставит его сам),
+   визуально — «+», в заявке — «−» акцентом; область нажатия 44px через ::before у .ord-b */
+#cat .ord-ctl .ord-b{
+  width:30px;height:30px;min-height:0;padding:0;border-radius:50%;font-size:0;line-height:0;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+#cat .ord-ctl .ord-b::after{content:"+";font-size:17px;line-height:1;font-weight:500;font-family:var(--fm)}
+#cat .ord-ctl.is-in .ord-b{border-color:var(--ember);color:var(--ember)}
+#cat .ord-ctl.is-in .ord-b::after{content:"−"}
+#cat .ord-ctl .ord-b::before{content:"";position:absolute;inset:-7px}
+
+@media (prefers-reduced-motion:reduce){
+  .pcard:hover{transform:none}
+}
+@media (max-width:760px){
+  #cat .ord-ctl .ord-b{width:36px;height:36px}
+}
