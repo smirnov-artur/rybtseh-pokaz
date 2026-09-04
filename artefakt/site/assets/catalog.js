@@ -48,7 +48,7 @@ window.CATALOG = {
       "latin": "Blicca bjoerkna",
       "origin": "Цимлянское водохранилище",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/gustera.jpg",
       "order": 5,
       "hidden": false
     },
@@ -68,7 +68,7 @@ window.CATALOG = {
       "latin": "Carassius gibelio",
       "origin": "Цимлянское водохранилище",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/karas.jpg",
       "order": 7,
       "hidden": false
     },
@@ -78,7 +78,7 @@ window.CATALOG = {
       "latin": "Cyprinus carpio",
       "origin": "Цимлянское водохранилище",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/sazan.jpg",
       "order": 8,
       "hidden": false
     },
@@ -88,7 +88,7 @@ window.CATALOG = {
       "latin": "Perca fluviatilis",
       "origin": "Цимлянское водохранилище",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/okun.jpg",
       "order": 9,
       "hidden": false
     },
@@ -98,7 +98,7 @@ window.CATALOG = {
       "latin": "Hypophthalmichthys molitrix",
       "origin": "Цимлянское водохранилище",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/tolstolob.jpg",
       "order": 10,
       "hidden": false
     },
@@ -118,7 +118,7 @@ window.CATALOG = {
       "latin": "Clupea harengus",
       "origin": "Фарерские острова",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/seld.jpg",
       "order": 12,
       "hidden": false
     },
@@ -128,7 +128,7 @@ window.CATALOG = {
       "latin": "Scomber scombrus",
       "origin": "Фарерские острова",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/skumbriya.jpg",
       "order": 13,
       "hidden": false
     },
@@ -138,7 +138,7 @@ window.CATALOG = {
       "latin": "Mallotus villosus",
       "origin": "Фарерские острова",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/moyva.jpg",
       "order": 14,
       "hidden": false
     },
@@ -148,7 +148,7 @@ window.CATALOG = {
       "latin": "Oncorhynchus mykiss",
       "origin": "Дальний Восток",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/forel.jpg",
       "order": 15,
       "hidden": false
     },
@@ -158,7 +158,7 @@ window.CATALOG = {
       "latin": "Oncorhynchus gorbuscha",
       "origin": "Дальний Восток",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/gorbusha.jpg",
       "order": 16,
       "hidden": false
     },
@@ -168,7 +168,7 @@ window.CATALOG = {
       "latin": "Platichthys flesus",
       "origin": "Атлантика",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/kambala.jpg",
       "order": 17,
       "hidden": false
     },
@@ -178,7 +178,7 @@ window.CATALOG = {
       "latin": "",
       "origin": "Дальний Восток",
       "blurb": "",
-      "photo": null,
+      "photo": "assets/img/cards/ikra.jpg",
       "order": 18,
       "hidden": false
     }
