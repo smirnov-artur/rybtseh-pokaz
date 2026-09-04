@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Прайс · РЫБЦЕХЪ</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- ЭКРАН ВХОДА / ПЕРВОГО ВХОДА / ПОВТОРНОГО ВХОДА (оверлей, поверх приложения) -->
+  <main class="auth" id="screen-auth" hidden>
+    <div class="auth__card">
+      <div class="auth__brand">РЫБЦЕХЪ</div>
+      <h1 class="auth__title" id="auth-title">Прайс · вход</h1>
+      <form id="auth-form" novalidate>
+        <div class="field">
+          <label for="f-login">Логин</label>
+          <input id="f-login" name="login" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" required>
+        </div>
+        <div class="field">
+          <label for="f-pass">Пароль</label>
+          <div class="field__pass-wrap">
+            <input id="f-pass" name="password" type="password" autocomplete="current-password" required>
+            <button type="button" id="f-pass-toggle" class="pass-toggle" aria-pressed="false">Показать</button>
+          </div>
+        </div>
+        <div class="field" id="f-pass2-wrap" hidden>
+          <label for="f-pass2">Повторите пароль</label>
+          <div class="field__pass-wrap">
+            <input id="f-pass2" name="password2" type="password" autocomplete="new-password">
+            <button type="button" id="f-pass2-toggle" class="pass-toggle" aria-pressed="false">Показать</button>
+          </div>
+        </div>
+        <p class="auth__error" id="auth-error" role="alert" hidden></p>
+        <button type="submit" class="btn btn--solid btn--block" id="auth-submit">Войти</button>
+      </form>
+      <p class="auth__note" id="auth-note" hidden></p>
+    </div>
+  </main>
+
+  <!-- ПРИЛОЖЕНИЕ -->
+  <div id="screen-app" hidden>
+
+    <header class="hdr" id="hdr">
+      <div class="hdr__brand">
+        <span class="hdr__mark">РЫБЦЕХЪ</span><span class="hdr__sep">·</span><span class="hdr__sub">Прайс</span>
+      </div>
+      <div class="hdr__status" id="hdr-status" aria-live="polite"></div>
+      <div class="hdr__actions">
+        <button type="button" class="btn btn--ghost" id="btn-revert" disabled>Отменить правки</button>
+        <button type="button" class="btn btn--solid" id="btn-publish">Опубликовать</button>
+        <button type="button" class="btn btn--text" id="btn-logout">Выйти</button>
+      </div>
+      <button type="button" class="hdr__more" id="hdr-more" aria-haspopup="true" aria-expanded="false" aria-label="Ещё действия">⋯</button>
+      <div class="hdr__menu" id="hdr-menu" hidden>
+        <button type="button" id="menu-revert" disabled>Отменить правки</button>
+        <button type="button" id="menu-logout">Выйти</button>
+      </div>
+    </header>
+
+    <div class="notice notice--draft" id="draft-bar" hidden aria-live="polite">
+      <span id="draft-bar-text"></span>
+      <button type="button" class="link-btn" id="draft-continue">Продолжить</button>
+      <button type="button" class="link-btn" id="draft-discard">Отбросить</button>
+    </div>
+
+    <div class="notice notice--demo" id="demo-bar" hidden>
+      Демонстрация. Изменения сохраняются только в этом браузере, на сайт не попадают. На сервере владельца та же страница публикует прайс по-настоящему.
+    </div>
+
+    <div class="toolbar">
+      <div class="search">
+        <label for="f-search" class="sr-only">Поиск по названию, варианту, примечанию</label>
+        <input type="search" id="f-search" placeholder="Поиск по названию, варианту, примечанию…">
+      </div>
+      <button type="button" class="btn btn--ghost" id="btn-add">+ Добавить позицию</button>
+    </div>
+
+    <div class="table-wrap">
+      <table id="price-table">
+        <caption class="sr-only">Таблица позиций прайса — редактирование раздела, названия, вариантов, цен, наличия и примечаний</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="c-cat">Раздел</th>
+            <th scope="col" class="c-name">Название</th>
+            <th scope="col" class="c-variant">Вариант</th>
+            <th scope="col" class="c-unit">Ед.</th>
+            <th scope="col" class="c-retail">Розница, ₽</th>
+            <th scope="col" class="c-opt">Опт, ₽</th>
+            <th scope="col" class="c-stock">Наличие</th>
+            <th scope="col" class="c-notes">Примечание</th>
+            <th scope="col" class="c-del"><span class="sr-only">Удалить строку</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <p class="empty-state" id="empty-state" hidden></p>
+    </div>
+
+    <details class="history" id="history">
+      <summary>История публикаций</summary>
+      <ul class="history__list" id="history-list"></ul>
+      <p class="history__empty" id="history-empty" hidden>Публикаций ещё не было.</p>
+    </details>
+
+    <div class="publish-bar-mobile">
+      <button type="button" class="btn btn--solid" id="btn-publish-mobile">Опубликовать</button>
+    </div>
+  </div>
+
+  <!-- ЛИСТ ПОДТВЕРЖДЕНИЯ ПУБЛИКАЦИИ -->
+  <div class="modal-backdrop" id="modal-backdrop" hidden>
+    <div class="modal" id="modal-publish" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h2 id="modal-title">Опубликовать прайс?</h2>
+      <ul class="modal__list" id="modal-list"></ul>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--ghost" id="modal-cancel">Отмена</button>
+        <button type="button" class="btn btn--solid" id="modal-confirm">Опубликовать</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЛИСТ ПОДТВЕРЖДЕНИЯ ВОССТАНОВЛЕНИЯ -->
+  <div class="modal-backdrop" id="modal-restore-backdrop" hidden>
+    <div class="modal" id="modal-restore" role="dialog" aria-modal="true" aria-labelledby="modal-restore-title">
+      <h2 id="modal-restore-title">Вернуть прайс?</h2>
+      <p id="modal-restore-text"></p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--ghost" id="modal-restore-cancel">Отмена</button>
+        <button type="button" class="btn btn--solid" id="modal-restore-confirm">Вернуть</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЛИСТ ПОДТВЕРЖДЕНИЯ ВЫХОДА С НЕСОХРАНЁННЫМИ ПРАВКАМИ -->
+  <div class="modal-backdrop" id="modal-logout-backdrop" hidden>
+    <div class="modal" id="modal-logout" role="dialog" aria-modal="true" aria-labelledby="modal-logout-title">
+      <h2 id="modal-logout-title">Выйти без сохранения правок?</h2>
+      <p>Есть неопубликованные правки. Черновик останется в этом браузере, но на сайт не попадёт, пока вы его не опубликуете.</p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--ghost" id="modal-logout-cancel">Отмена</button>
+        <button type="button" class="btn btn--solid" id="modal-logout-confirm">Выйти</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="../assets/prices.js?v=20260805"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

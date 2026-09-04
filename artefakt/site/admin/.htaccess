@@ -1,0 +1,24 @@
+# Админка прайса «Артефакт»: закрыть служебные файлы от прямого доступа.
+# Всё обёрнуто в <IfModule>, чтобы отсутствующий на хостинге модуль
+# не уронил сайт ошибкой 500 — при отсутствии модуля блок просто не работает.
+
+# config.php хранит логин, хеш пароля и секрет — доступ из браузера запрещён.
+<IfModule mod_authz_core.c>
+<Files "config.php">
+Require all denied
+</Files>
+</IfModule>
+<IfModule !mod_authz_core.c>
+<Files "config.php">
+Deny from all
+</Files>
+</IfModule>
+
+# Папка data/ (бэкапы, лог, блокировки по IP) защищена своим .htaccess —
+# api.php создаёт его сам при первом обращении. Здесь — дополнительный
+# барьер на случай, если тот файл ещё не появился или был случайно удалён.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_URI} /admin/data/ [NC]
+RewriteRule .* - [F,L]
+</IfModule>

@@ -1,0 +1,521 @@
+/* ============================================================
+   Админка прайса «Артефакт» — самостоятельный стиль.
+   НЕ подключает assets/artefakt.css: своя, узкая палитра инструмента
+   (см. _СПЕК-АДМИНКИ.md §5), но те же токены и шрифты, что на сайте.
+   Тёмная тема одна, без переключения, без библиотек, без анимации —
+   только штатные переходы .16–.28s на цвет/фон/рамку.
+   ============================================================ */
+
+/* ---------- 0а. ШРИФТЫ (локально, ../assets/fonts/) ---------- */
+@font-face{
+  font-family:'Golos Text';font-style:normal;font-weight:400 900;font-display:swap;
+  src:url('../assets/fonts/GolosText-cyr.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face{
+  font-family:'Golos Text';font-style:normal;font-weight:400 900;font-display:swap;
+  src:url('../assets/fonts/GolosText-lat.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20BD,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('../assets/fonts/JetBrainsMono-cyr.woff2') format('woff2');
+  unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+@font-face{
+  font-family:'JetBrains Mono';font-style:normal;font-weight:400 700;font-display:swap;
+  src:url('../assets/fonts/JetBrainsMono-lat.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+20BD,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* ---------- 0. ТОКЕНЫ ---------- */
+:root{
+  --cream:#ffedd7;
+  --walnut:#100904;
+  --bark:#382416;
+  --bark-05:#1a0f07;
+  --cork:#40372e;
+  --drift:#9e8d7a;
+  --ember:#dc5000;
+  --hair:rgba(64,55,46,.62);
+
+  --ff:'Golos Text',ui-sans-serif,system-ui,'Segoe UI',sans-serif;
+  --fm:'JetBrains Mono','Courier New',Courier,monospace;
+
+  --r-pill:22.5px;
+  --r-card:12px;
+
+  --hdr-h:56px;
+  --toolbar-h:66px;
+
+  --t:.2s ease;
+  --t-fast:.16s ease;
+
+  color-scheme:dark;
+}
+
+/* ---------- 1. RESET / БАЗА ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body,h1,h2,p,ul,form,fieldset{margin:0;padding:0}
+ul{list-style:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select{font:inherit;color:inherit}
+a{color:inherit}
+
+html,body{height:100%}
+body{
+  background:var(--walnut);color:var(--cream);
+  font-family:var(--ff);font-weight:500;font-size:13px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+body.no-scroll{overflow:hidden}
+
+.mono,.num{font-family:var(--fm);font-variant-numeric:tabular-nums}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+/* фокус — виден везде по умолчанию */
+:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+
+[hidden]{display:none !important}
+
+/* ---------- 2. КНОПКИ ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:36px;padding:0 18px;border-radius:var(--r-pill);
+  border:1px solid var(--cork);background:transparent;color:var(--cream);
+  font-size:12.5px;font-weight:600;letter-spacing:.02em;white-space:nowrap;
+  transition:color var(--t),background-color var(--t),border-color var(--t),opacity var(--t);
+}
+.btn:hover{border-color:var(--drift)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:disabled:hover{border-color:var(--cork)}
+.btn--solid{background:var(--ember);border-color:var(--ember);color:var(--walnut)}
+.btn--solid:hover{background:#f05c00;border-color:#f05c00}
+.btn--solid:disabled{background:var(--ember);border-color:var(--ember);opacity:.4}
+.btn--ghost{background:transparent}
+.btn--text{border-color:transparent;color:var(--drift);padding:0 8px}
+.btn--text:hover{color:var(--cream);border-color:transparent}
+.btn--block{width:100%}
+.btn--pending{opacity:.7;cursor:progress}
+.btn__count{font-family:var(--fm)}
+
+.link-btn{
+  border:0;background:none;color:var(--cream);text-decoration:underline;
+  text-underline-offset:2px;padding:0;font-size:inherit;font-weight:600;
+  transition:color var(--t);
+}
+.link-btn:hover{color:var(--ember)}
+
+/* ---------- 3. ЭКРАН ВХОДА (оверлей, поверх всего) ---------- */
+.auth{
+  position:fixed;inset:0;z-index:80;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--walnut);padding:24px;overflow-y:auto;
+}
+.auth__card{
+  width:100%;max-width:380px;
+  border:1px solid var(--cork);border-radius:var(--r-card);
+  background:var(--bark-05);padding:32px 28px;
+}
+.auth__brand{
+  font-family:var(--fm);font-size:13px;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--cream);margin-bottom:6px;
+}
+.auth__title{font-size:15px;font-weight:600;color:var(--drift);margin-bottom:22px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11.5px;color:var(--drift);margin-bottom:6px}
+.field input{
+  width:100%;min-height:40px;padding:0 12px;border-radius:8px;
+  border:1px solid var(--cork);background:var(--walnut);color:var(--cream);
+  font-size:14px;transition:border-color var(--t);
+}
+.field input:focus-visible{outline:none;border-color:var(--ember)}
+.field__pass-wrap{display:flex;align-items:stretch;gap:6px}
+.field__pass-wrap input{flex:1 1 auto;min-width:0}
+.pass-toggle{
+  flex:0 0 auto;border:1px solid var(--cork);border-radius:8px;padding:0 12px;
+  font-size:11.5px;color:var(--drift);white-space:nowrap;
+  transition:color var(--t),border-color var(--t);
+}
+.pass-toggle:hover{color:var(--cream);border-color:var(--drift)}
+.auth__error{
+  color:var(--ember);font-size:12.5px;margin:-4px 0 16px;line-height:1.5;
+}
+.auth__note{color:var(--drift);font-size:11.5px;line-height:1.5;margin-top:16px}
+#auth-submit{margin-top:6px}
+
+/* ---------- 4. ШАПКА ПРИЛОЖЕНИЯ ---------- */
+.hdr{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;gap:16px;
+  min-height:var(--hdr-h);padding:0 20px;
+  background:var(--walnut);border-bottom:1px solid var(--cork);
+}
+.hdr__brand{display:flex;align-items:baseline;gap:8px;flex:0 0 auto}
+.hdr__mark{
+  font-family:var(--fm);font-size:12px;text-transform:uppercase;
+  letter-spacing:.12em;font-weight:600;
+}
+.hdr__sep{color:var(--drift)}
+.hdr__sub{font-size:12.5px;color:var(--drift)}
+.hdr__status{
+  flex:1 1 auto;text-align:center;font-size:11.5px;color:var(--drift);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.hdr__actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.hdr__more{
+  display:none;flex:0 0 auto;width:40px;min-height:40px;border-radius:8px;
+  font-size:18px;line-height:1;color:var(--drift);
+  transition:color var(--t),background-color var(--t);
+}
+.hdr__more:hover{color:var(--cream);background:var(--bark)}
+.hdr__menu{
+  position:absolute;top:52px;right:12px;z-index:31;min-width:180px;
+  border:1px solid var(--cork);border-radius:var(--r-card);
+  background:var(--bark-05);padding:6px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.hdr__menu button{
+  text-align:left;padding:10px 12px;border-radius:6px;font-size:13px;
+  min-height:44px;transition:background-color var(--t);
+}
+.hdr__menu button:hover{background:var(--bark)}
+.hdr__menu button:disabled{opacity:.4;cursor:not-allowed}
+.hdr__menu button:disabled:hover{background:none}
+
+/* ---------- 5. УВЕДОМЛЕНИЯ (черновик / демо) ---------- */
+.notice{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;
+  padding:11px 20px;font-size:12.5px;line-height:1.5;
+  border-bottom:1px solid var(--cork);
+}
+.notice--draft{background:rgba(220,80,0,.10);color:var(--cream)}
+.notice--draft::before{content:'';flex:0 0 3px;align-self:stretch;background:var(--ember);border-radius:2px;margin-right:2px}
+.notice--demo{background:var(--bark-05);color:var(--drift)}
+
+/* ---------- 6. ПАНЕЛЬ ИНСТРУМЕНТОВ ---------- */
+.toolbar{
+  position:sticky;top:var(--hdr-h);z-index:20;
+  display:flex;align-items:center;gap:14px;
+  min-height:var(--toolbar-h);
+  padding:14px 20px;background:var(--walnut);border-bottom:1px solid var(--cork);
+}
+.search{flex:1 1 auto;max-width:420px}
+.search input{
+  width:100%;min-height:38px;padding:0 14px;border-radius:var(--r-pill);
+  border:1px solid var(--cork);background:var(--bark-05);color:var(--cream);
+  font-size:13px;transition:border-color var(--t);
+}
+.search input::placeholder{color:var(--drift)}
+.search input:focus-visible{outline:none;border-color:var(--ember)}
+.search input::-webkit-search-cancel-button{cursor:pointer}
+
+/* ---------- 7. ТАБЛИЦА ---------- */
+/* без overflow-x:auto здесь: он создал бы свой скролл-контейнер и сломал бы
+   контекст position:sticky у thead (offset считался бы не от вьюпорта,
+   а от этого блока). Ширины колонок ниже (§12, ≥1100) в сумме дают 100% —
+   горизонтального переполнения не возникает; на <1100 шапка таблицы скрыта. */
+.table-wrap{padding:0 20px 40px}
+#price-table{width:100%;border-collapse:collapse}
+
+#price-table thead th{
+  position:sticky;top:calc(var(--hdr-h) + var(--toolbar-h));z-index:15;background:var(--walnut);
+  text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--drift);padding:10px 10px;
+  border-bottom:1px solid var(--cork);white-space:nowrap;
+}
+
+#price-table tr.grp-row td{
+  padding:16px 10px 6px;font-size:11px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--drift);border-bottom:1px solid var(--hair);
+}
+#price-table tr.grp-row:first-child td{padding-top:8px}
+.grp-count{font-family:var(--fm);margin-left:8px;color:var(--drift)}
+
+#price-table tr.row{border-bottom:1px solid transparent;transition:border-color var(--t)}
+#price-table tr.row:hover{border-color:var(--hair)}
+#price-table tr.row.is-off{opacity:.55}
+#price-table tr.row.row-error{outline:2px solid var(--ember);outline-offset:-2px}
+#price-table td{padding:6px 10px;vertical-align:middle;position:relative}
+.cell-flex{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+#price-table input,
+#price-table select{
+  width:100%;min-height:34px;padding:2px 6px;border:1px solid transparent;
+  border-radius:6px;background:transparent;color:var(--cream);font-size:13px;
+  transition:background-color var(--t),border-color var(--t);
+}
+/* длинное название не обрезается браузером само — просим многоточие;
+   в Chrome работает и для нефокусного текстового поля (§5.4, доводка 3) */
+#price-table input{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#price-table tr.row:hover input,
+#price-table tr.row:hover select{border-color:var(--hair)}
+#price-table input:focus-visible,
+#price-table select:focus-visible{
+  outline:none;border-color:transparent;background:var(--bark-05);
+  box-shadow:inset 0 -2px 0 0 var(--ember);
+}
+#price-table select{cursor:pointer}
+#price-table .c-retail input,
+#price-table .c-opt input{font-family:var(--fm);text-align:right}
+#price-table input::placeholder{color:var(--drift)}
+
+/* полоска правки слева от ячейки */
+#price-table td.dirty::before{
+  content:'';position:absolute;left:1px;top:8px;bottom:8px;width:2px;
+  background:var(--ember);border-radius:1px;
+}
+
+.badge{
+  display:inline-block;margin-left:8px;padding:2px 8px;border-radius:var(--r-pill);
+  font-size:10px;text-transform:uppercase;letter-spacing:.05em;
+  background:rgba(220,80,0,.16);color:var(--ember);vertical-align:middle;
+  font-family:var(--ff);font-weight:600;
+}
+
+.cell-lbl{display:none}
+
+/* переключатель «В наличии» */
+.switch{
+  position:relative;width:36px;height:20px;border-radius:11px;
+  border:1px solid var(--cork);background:transparent;flex:none;display:inline-block;
+  transition:background-color var(--t),border-color var(--t);
+}
+.switch::before{content:'';position:absolute;inset:-12px}
+.switch::after{
+  content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;
+  border-radius:50%;background:var(--drift);
+  transition:background-color var(--t-fast);
+}
+.switch[aria-checked="true"]{background:rgba(220,80,0,.16);border-color:var(--ember)}
+.switch[aria-checked="true"]::after{left:18px;background:var(--ember)}
+
+.del-btn{
+  position:relative;width:28px;min-height:28px;border-radius:6px;
+  font-size:16px;line-height:1;color:var(--drift);
+  transition:color var(--t),background-color var(--t);
+}
+.del-btn::before{content:'';position:absolute;inset:-8px}
+.del-btn:hover{color:var(--ember);background:rgba(220,80,0,.12)}
+
+.empty-state{padding:40px 10px;text-align:center;color:var(--drift);font-size:13px}
+
+/* ---------- 8. ИСТОРИЯ ПУБЛИКАЦИЙ ---------- */
+.history{margin:0 20px 60px;border-top:1px solid var(--cork);padding-top:16px}
+.history summary{
+  cursor:pointer;font-size:12.5px;font-weight:600;color:var(--drift);
+  list-style:none;padding:6px 0;transition:color var(--t);
+}
+.history summary::-webkit-details-marker{display:none}
+.history summary::before{content:'▸ ';font-family:var(--fm)}
+.history[open] summary::before{content:'▾ '}
+.history summary:hover{color:var(--cream)}
+.history__list{margin-top:8px}
+.history__row{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;
+  padding:9px 4px;border-bottom:1px solid var(--hair);font-size:12.5px;
+}
+.history__meta{font-family:var(--fm);color:var(--drift)}
+.history__empty{color:var(--drift);font-size:12.5px;padding:8px 4px}
+
+/* ---------- 9. МОДАЛЬНЫЕ ЛИСТЫ ---------- */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:60;background:rgba(16,9,4,.78);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+}
+.modal{
+  width:100%;max-width:440px;border:1px solid var(--cork);border-radius:16px;
+  background:var(--bark-05);padding:26px 26px 22px;
+}
+.modal h2{font-size:16px;font-weight:600;margin-bottom:16px}
+.modal p{font-size:13px;color:var(--drift);line-height:1.55}
+.modal__list{margin:0 0 22px;display:flex;flex-direction:column;gap:6px}
+.modal__list li{
+  display:flex;justify-content:space-between;gap:12px;font-size:13px;
+  padding:6px 0;border-bottom:1px solid var(--hair);
+}
+.modal__list li span:last-child{font-family:var(--fm);color:var(--cream)}
+.modal__actions{display:flex;justify-content:flex-end;gap:10px}
+
+/* ---------- 10. ТОСТЫ ---------- */
+.toasts{
+  position:fixed;left:20px;bottom:20px;z-index:90;
+  display:flex;flex-direction:column;gap:10px;max-width:380px;
+}
+.toast{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:12px 16px;border-radius:10px;border:1px solid var(--cork);
+  background:var(--bark-05);color:var(--cream);font-size:12.5px;line-height:1.5;
+  border-left:3px solid var(--drift);box-shadow:0 8px 24px rgba(0,0,0,.4);
+}
+.toast--error{border-left-color:var(--ember)}
+.toast--ok{border-left-color:var(--ember)}
+.toast a,.toast button.link-btn{font-size:inherit}
+
+/* ---------- 11. ПАНЕЛЬ «ОПУБЛИКОВАТЬ» НА ТЕЛЕФОНЕ ---------- */
+.publish-bar-mobile{
+  display:none;position:sticky;bottom:0;z-index:25;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  background:var(--walnut);border-top:1px solid var(--cork);
+}
+.publish-bar-mobile .btn{width:100%;min-height:46px}
+
+/* ============================================================
+   12. АДАПТИВ
+   ≥1100 — таблица целиком (правила выше — базовые/desktop).
+   760–1099 — «Примечание» уходит под название.
+   <760 — карточки.
+   ============================================================ */
+
+/* ---- ≥1100: ширины колонок ---- */
+/* «Раздел» и «Примечание» сужены, освобождённое место — «Названию»
+   (доводка 3: длинные названия обрезались без многоточия из-за нехватки
+   места); на опорной ширине ~1440px даёт Раздел≈140, Примечание≈170,
+   Название≈300+px, как просил владелец. */
+@media (min-width:1100px){
+  #price-table{table-layout:fixed}
+  .c-cat{width:10%}
+  .c-name{width:23%}
+  .c-variant{width:15%}
+  .c-unit{width:7%}
+  .c-retail{width:10%}
+  .c-opt{width:10%}
+  .c-stock{width:9%}
+  .c-notes{width:12%}
+  .c-del{width:4%}
+}
+
+/* ---- <1100: строка становится сеткой (общее для планшета и телефона;
+   что именно показывать в шапке и подписях — уже в блоках ниже) ---- */
+@media (max-width:1099.98px){
+  #price-table tr.row{
+    display:grid;align-items:center;
+    border-bottom:1px solid var(--hair);
+  }
+  #price-table tr.grp-row td{display:block;padding:18px 4px 6px}
+}
+
+/* ---- 760–1099: планшет — обычная таблица с шапкой, как на десктопе.
+   Колонки — CSS-грид (не table-layout): так вторая строка грид-ряда
+   («Примечание») ложится ровно под колонку «Название» без лишней
+   вёрстки в JS. Подписи внутри ячеек (.cell-lbl) не показываем —
+   их заменяет шапка. Фикс. ширины только у мелких колонок (Ед./В
+   наличии/×), Раздел/Название/Вариант/Розница/Опт — на fr, поэтому
+   при 760px ширины пропорционально сжимаются и прокрутки не возникает. */
+@media (min-width:760px) and (max-width:1099.98px){
+  .table-wrap{padding:0 14px 32px}
+
+  #price-table thead{display:block}
+  #price-table thead tr{
+    display:grid;gap:0 10px;padding:0 6px;
+    grid-template-columns:1.2fr 2.6fr 1.5fr 64px 1fr 1fr 76px 32px;
+  }
+  #price-table thead th{padding:10px 0}
+  #price-table thead th.c-notes{display:none}
+
+  #price-table tr.row{
+    grid-template-columns:1.2fr 2.6fr 1.5fr 64px 1fr 1fr 76px 32px;
+    grid-template-areas:
+      "cat name variant unit retail opt stock del"
+      ".   notes .       .    .      .   .     .  ";
+    gap:2px 10px;padding:2px 6px;
+  }
+  #price-table tr.row td{padding:0}
+  /* важно: селекторы ниже привязаны к tr.row — те же классы c-cat/c-name/…
+     висят и на <th> в шапке (index.html), а её грид не размечен именованными
+     областями; без tr.row в скоупе заголовки хватают grid-area от этих правил
+     и схлопываются в одну ячейку (баг был скрыт, пока thead был display:none) */
+  #price-table tr.row .c-cat{grid-area:cat} #price-table tr.row .c-name{grid-area:name}
+  #price-table tr.row .c-variant{grid-area:variant} #price-table tr.row .c-unit{grid-area:unit}
+  #price-table tr.row .c-retail{grid-area:retail} #price-table tr.row .c-opt{grid-area:opt}
+  #price-table tr.row .c-stock{grid-area:stock} #price-table tr.row .c-notes{grid-area:notes}
+  #price-table tr.row .c-del{grid-area:del;justify-self:end}
+
+  /* «Примечание» — маленькое поле второй строкой под названием, без подписи */
+  #price-table .c-notes input{
+    min-height:24px;padding:0 4px;font-size:12.5px;color:var(--drift);
+  }
+  #price-table .c-notes input::placeholder{color:var(--drift)}
+  #price-table select{font-size:12.5px;padding:2px 4px}
+}
+
+/* ---- <760: телефон — карточки ---- */
+@media (max-width:759.98px){
+  .hdr__status{display:none}
+  .hdr__actions{display:none}
+  .hdr__more{display:flex;align-items:center;justify-content:center;width:44px;min-height:44px}
+  .toolbar{flex-wrap:wrap}
+  .publish-bar-mobile{display:block}
+
+  /* минимальная область нажатия 44px (§5.4) — базовые .btn (36px) и поле
+     поиска (38px) на телефоне мельче; del-btn/switch/поля таблицы уже 44px ниже */
+  .btn{min-height:44px}
+  .search input{min-height:44px}
+
+  .table-wrap{padding:0 12px 24px}
+  #price-table thead{display:none}
+  #price-table tbody{display:block}
+  #price-table tr.grp-row{display:block;padding:0}
+  #price-table tr.grp-row td{display:block;padding:18px 4px 8px;border-bottom:none}
+
+  /* подписи мельче и без лишней высоты строки — на карточке считаем каждый
+     пиксель (доводка 2, бюджет ≤230px на карточку) */
+  .cell-lbl{
+    display:block;font-size:10px;line-height:1;text-transform:uppercase;
+    letter-spacing:.05em;color:var(--drift);margin-bottom:1px;
+  }
+
+  /* карточка ≤230px высотой (доводка 2): название+крестик первой строкой,
+     вариант — сразу под ним без подписи и без зазора, ниже — плотная
+     сетка 2×3 с подписями 10px и полями 32px. Тап-зона 44px у крестика
+     и переключателя уже даёт ::before (см. .del-btn/.switch выше по файлу,
+     это работает при любой физической высоте) — у остальных полей она
+     не увеличивается искусственно, только видимая высота 32px. */
+  #price-table tr.row{
+    position:relative;display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "name name"
+      "variant variant"
+      "retail opt"
+      "cat unit"
+      "stock notes";
+    row-gap:6px;column-gap:14px;
+    padding:14px 44px 14px 14px;margin-bottom:10px;
+    background:var(--bark-05);border:1px solid var(--cork);border-radius:var(--r-card);
+  }
+  #price-table tr.row td{padding:0}
+  /* скоуп на tr.row — те же классы есть и на <th> шапки (thead тут всё
+     ещё display:none, поэтому сейчас не проявляется, но не оставляем ловушку) */
+  #price-table tr.row .c-cat{grid-area:cat} #price-table tr.row .c-name{grid-area:name}
+  #price-table tr.row .c-variant{grid-area:variant} #price-table tr.row .c-unit{grid-area:unit}
+  #price-table tr.row .c-retail{grid-area:retail} #price-table tr.row .c-opt{grid-area:opt}
+  #price-table tr.row .c-stock{grid-area:stock} #price-table tr.row .c-notes{grid-area:notes}
+  /* специфичность выше, чем у базового «#price-table td{position:relative}» —
+     иначе абсолютное позиционирование крестика проигрывает по весу селектора */
+  #price-table td.c-del{position:absolute;top:10px;right:10px}
+
+  #price-table .c-name input{padding:2px 0;font-size:16px;line-height:1.2;font-weight:600;min-height:0}
+  #price-table .c-variant input{padding:0;font-size:13px;line-height:1.2;color:var(--drift);min-height:0}
+
+  #price-table input,#price-table select{min-height:32px;font-size:13px}
+  .switch{margin-top:2px}
+  .del-btn{width:44px;min-height:44px}
+
+  .modal{max-width:100%;border-radius:16px 16px 0 0;position:fixed;left:0;right:0;bottom:0;
+    max-height:82vh;overflow-y:auto}
+  .modal-backdrop{align-items:flex-end;padding:0}
+
+  .toasts{left:12px;right:12px;bottom:74px;max-width:none}
+}
+
+/* ---- очень узко: поля входа без лишних отступов ---- */
+@media (max-width:400px){
+  .auth__card{padding:26px 18px}
+}
